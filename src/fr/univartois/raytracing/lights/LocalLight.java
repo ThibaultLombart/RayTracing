@@ -18,7 +18,7 @@ public class LocalLight extends Light{
 	}
 
 	public void setVector(double x, double y, double z) {
-		this.point = new Point(x,y,z);
+		this.point = new Triplet(x,y,z);
 	}
 	
 }

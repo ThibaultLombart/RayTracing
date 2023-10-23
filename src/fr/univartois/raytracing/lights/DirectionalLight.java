@@ -18,7 +18,7 @@ public class DirectionalLight extends Light{
 	}
 
 	public void setVector(double x, double y, double z) {
-		this.vector = new Vector(x,y,z);
+		this.vector = new Triplet(x,y,z);
 	}
 	
 }
