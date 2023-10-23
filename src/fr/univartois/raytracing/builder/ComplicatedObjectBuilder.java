@@ -1,108 +1,112 @@
-package fr.univartois.raytracing;
+/**
+ * Project SAE RayTracing.
+ *
+ * (c) 2023 thibault.lombart
+ */
+
+package fr.univartois.raytracing.builder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.univartois.raytracing.builder.ComplicatedObjectBuilder;
+import fr.univartois.raytracing.Scene;
+import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.lights.Light;
 import fr.univartois.raytracing.objects.IObjectStage;
 
 /**
- * Class Scene
+ * Class ComplicatedObjectBuilder
  *
  * @author thibault.lombart
  *
  * @version 0.1.0
  */
-public class Scene {
-	
-	/**
-	 * Attribute sizeX
-	 */
-	private int sizeX;
-	/**
+public class ComplicatedObjectBuilder {
+    
+    /**
+     * Attribute sizeX
+     */
+    private int sizeX;
+    /**
      * Attribute sizeY
      */
-	private int sizeY;
-	/**
+    private int sizeY;
+    /**
      * Attribute fov
      */
-	private int fov;
-	/**
+    private int fov;
+    /**
      * Attribute shininess
      */
-	private int shininess = 0;
-	/**
+    private int shininess = 0;
+    /**
      * Attribute maxVerts
      */
-	private int maxVerts = 0; 
-	/**
+    private int maxVerts = 0; 
+    /**
      * Attribute name
      */
-	private String name = "output.png";
-	/**
+    private String name = "output.png";
+    /**
      * Attribute lookFrom
      */
-	private Triplet lookFrom;
-	/**
+    private Triplet lookFrom;
+    /**
      * Attribute lookAt
      */
-	private Triplet lookAt;
-	/**
+    private Triplet lookAt;
+    /**
      * Attribute up
      */
-	private Triplet up;
-	/**
+    private Triplet up;
+    /**
      * Attribute ambient
      */
-	private Color ambient = new Color(new Triplet(0,0,0));
-	/**
+    private Color ambient = new Color(new Triplet(0,0,0));
+    /**
      * Attribute diffuse
      */
-	private Color diffuse = new Color(new Triplet(0,0,0));
-	/**
+    private Color diffuse = new Color(new Triplet(0,0,0));
+    /**
      * Attribute specular
      */
-	private Color specular = new Color(new Triplet(0,0,0));
-	/**
+    private Color specular = new Color(new Triplet(0,0,0));
+    /**
      * Attribute lights
      */
-	private List<Light> lights = new ArrayList<>();
-	/**
+    private List<Light> lights = new ArrayList<>();
+    /**
      * Attribute points
      */
-	private List<Point> points = new ArrayList<>();
-	/**
+    private List<Point> points = new ArrayList<>();
+    /**
      * Attribute shapes
      */
-	private List<IObjectStage> shapes = new ArrayList<>();
-	
-	/**
-	 * constructor Scene
-	 * @param builder ComplicatedObjectBuilder
-	 */
-	public Scene(ComplicatedObjectBuilder builder) {
-		super();
-		this.sizeX = builder.getSizeX();
-		this.sizeY = builder.getSizeY();
-		this.name = builder.getName();
-		this.shininess = builder.getShininess();
-		this.maxVerts = builder.getMaxVerts();
-		this.ambient = builder.getAmbient();
-		this.diffuse = builder.getDiffuse();
-		this.specular = builder.getSpecular();
-		this.lookFrom = builder.getLookFrom();
-		this.lookAt = builder.getLookAt();
-		this.up = builder.getUp();
-		this.fov = builder.getFov();
-		this.lights = builder.getLights();
-		this.points = builder.getPoints();
-		this.shapes = builder.getShapes();
-		
-	}
-
+    private List<IObjectStage> shapes = new ArrayList<>();
+    
+    
+    /**
+     * constructor ComplicatedObjectBuilder.
+     */
+    private ComplicatedObjectBuilder() {
+        // 
+    }
+    
+    /**
+     * @return new Scene
+     */
+    public Scene build() {
+        return new Scene(this);
+    }
+    
+    /**
+     * @return new ComplicatedObjectBuilder
+     */
+    public static final ComplicatedObjectBuilder newInstance() {
+        return new ComplicatedObjectBuilder();
+    }
 
     
     /**
@@ -119,10 +123,11 @@ public class Scene {
      * Modify Attribute sizeX .
      *
      * @param sizeX new value Attribute sizeX .
+     * @return ComplicatedObjectBuilder
      */
-    public  void setSizeX(int sizeX) {
+    public ComplicatedObjectBuilder setSizeX(int sizeX) {
         this.sizeX = sizeX;
-         
+        return this;
     }
 
     
@@ -140,10 +145,11 @@ public class Scene {
      * Modify Attribute sizeY .
      *
      * @param sizeY new value Attribute sizeY .
+     * @return ComplicatedObjectBuilder
      */
-    public  void setSizeY(int sizeY) {
+    public ComplicatedObjectBuilder setSizeY(int sizeY) {
         this.sizeY = sizeY;
-         
+        return this;
     }
 
     
@@ -161,10 +167,11 @@ public class Scene {
      * Modify Attribute fov .
      *
      * @param fov new value Attribute fov .
+     * @return ComplicatedObjectBuilder
      */
-    public  void setFov(int fov) {
+    public ComplicatedObjectBuilder setFov(int fov) {
         this.fov = fov;
-         
+        return this;
     }
 
     
@@ -182,11 +189,11 @@ public class Scene {
      * Modify Attribute shininess .
      *
      * @param shininess new value Attribute shininess .
-       
+     * @return ComplicatedObjectBuilder
      */
-    public  void setShininess(int shininess) {
+    public ComplicatedObjectBuilder setShininess(int shininess) {
         this.shininess = shininess;
-         
+        return this;
     }
 
     
@@ -204,11 +211,11 @@ public class Scene {
      * Modify Attribute maxVerts .
      *
      * @param maxVerts new value Attribute maxVerts .
-       
+     * @return ComplicatedObjectBuilder
      */
-    public  void setMaxVerts(int maxVerts) {
+    public ComplicatedObjectBuilder setMaxVerts(int maxVerts) {
         this.maxVerts = maxVerts;
-         
+        return this;
     }
 
     
@@ -226,11 +233,11 @@ public class Scene {
      * Modify Attribute name .
      *
      * @param name new value Attribute name .
-       
+     * @return ComplicatedObjectBuilder
      */
-    public  void setName(String name) {
+    public ComplicatedObjectBuilder setName(String name) {
         this.name = name;
-         
+        return this;
     }
 
     
@@ -248,11 +255,11 @@ public class Scene {
      * Modify Attribute lookFrom .
      *
      * @param lookFrom new value Attribute lookFrom .
-       
+     * @return ComplicatedObjectBuilder
      */
-    public  void setLookFrom(Triplet lookFrom) {
+    public ComplicatedObjectBuilder setLookFrom(Triplet lookFrom) {
         this.lookFrom = lookFrom;
-         
+        return this;
     }
 
     
@@ -270,11 +277,11 @@ public class Scene {
      * Modify Attribute lookAt .
      *
      * @param lookAt new value Attribute lookAt .
-       
+     * @return ComplicatedObjectBuilder
      */
-    public  void setLookAt(Triplet lookAt) {
+    public ComplicatedObjectBuilder setLookAt(Triplet lookAt) {
         this.lookAt = lookAt;
-         
+        return this;
     }
 
     
@@ -292,11 +299,11 @@ public class Scene {
      * Modify Attribute up .
      *
      * @param up new value Attribute up .
-       
+     * @return ComplicatedObjectBuilder
      */
-    public  void setUp(Triplet up) {
+    public ComplicatedObjectBuilder setUp(Triplet up) {
         this.up = up;
-         
+        return this;
     }
 
     
@@ -314,11 +321,11 @@ public class Scene {
      * Modify Attribute ambient .
      *
      * @param ambient new value Attribute ambient .
-       
+     * @return ComplicatedObjectBuilder
      */
-    public  void setAmbient(Color ambient) {
+    public ComplicatedObjectBuilder setAmbient(Color ambient) {
         this.ambient = ambient;
-         
+        return this;
     }
 
     
@@ -336,11 +343,11 @@ public class Scene {
      * Modify Attribute diffuse .
      *
      * @param diffuse new value Attribute diffuse .
-       
+     * @return ComplicatedObjectBuilder
      */
-    public  void setDiffuse(Color diffuse) {
+    public ComplicatedObjectBuilder setDiffuse(Color diffuse) {
         this.diffuse = diffuse;
-         
+        return this;
     }
 
     
@@ -358,11 +365,11 @@ public class Scene {
      * Modify Attribute specular .
      *
      * @param specular new value Attribute specular .
-       
+     * @return ComplicatedObjectBuilder
      */
-    public  void setSpecular(Color specular) {
+    public ComplicatedObjectBuilder setSpecular(Color specular) {
         this.specular = specular;
-         
+        return this;
     }
 
     
@@ -380,11 +387,11 @@ public class Scene {
      * Modify Attribute lights .
      *
      * @param lights new value Attribute lights .
-       
+     * @return ComplicatedObjectBuilder
      */
-    public  void setLights(List<Light> lights) {
+    public ComplicatedObjectBuilder setLights(List<Light> lights) {
         this.lights = lights;
-         
+        return this;
     }
 
     
@@ -402,11 +409,11 @@ public class Scene {
      * Modify Attribute points .
      *
      * @param points new value Attribute points .
-       
+     * @return ComplicatedObjectBuilder
      */
-    public  void setPoints(List<Point> points) {
+    public ComplicatedObjectBuilder setPoints(List<Point> points) {
         this.points = points;
-         
+        return this;
     }
     
     /**
@@ -423,10 +430,15 @@ public class Scene {
      * Modify Attribute shapes .
      *
      * @param shapes new value Attribute shapes .
-       
+     * @return ComplicatedObjectBuilder
      */
-    public  void setShapes(List<IObjectStage> shapes) {
+    public ComplicatedObjectBuilder setShapes(List<IObjectStage> shapes) {
         this.shapes = shapes;
-         
+        return this;
     }
+    
+    
+    
+    
 }
+
