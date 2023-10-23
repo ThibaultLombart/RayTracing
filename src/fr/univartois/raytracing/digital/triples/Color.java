@@ -17,15 +17,15 @@ public class Color {
 		this.triplet = triplet;
 	}
 	
-	public void add(Color otherColor) {
-		setTriplet(this.triplet.addition(otherColor.getTriplet()));
+	public Color add(Color otherColor) {
+		return new Color(this.triplet.addition(otherColor.getTriplet()));
 	}
 	
-	public void multiplication(Double d) {
-		setTriplet(this.triplet.scalarMultiplication(d));
+	public Color multiplication(Double d) {
+		return new Color(this.triplet.scalarMultiplication(d));
 	}
 	
-	public void schur(Color otherColor) {
-		setTriplet(this.triplet.schurProduct(otherColor.getTriplet()));
+	public Color schur(Color otherColor) {
+		return new Color(this.triplet.schurProduct(otherColor.getTriplet()));
 	}
 }

@@ -17,12 +17,12 @@ public class Point {
 		this.triplet = triplet;
 	}
 	
-	public void substraction(Point otherPoint) {
-		setTriplet(this.triplet.substraction(otherPoint.getTriplet()));
+	public Vector substraction(Point otherPoint) {
+		return new Vector(this.triplet.substraction(otherPoint.getTriplet()));
 	}
 	
-	public void multiplication(Double d) {
-		setTriplet(this.triplet.scalarMultiplication(d));
+	public Point multiplication(Double d) {
+		return new Point(this.triplet.scalarMultiplication(d));
 	}
 	
 }
