@@ -1,5 +1,9 @@
 package fr.univartois.raytracing.lights;
 
+import fr.univartois.raytracing.Triplet;
+import fr.univartois.raytracing.digital.triples.Color;
+import fr.univartois.raytracing.digital.triples.Vector;
+
 public class DirectionalLight extends Light{
 	
 	private Vector vector;
@@ -18,7 +22,7 @@ public class DirectionalLight extends Light{
 	}
 
 	public void setVector(double x, double y, double z) {
-		this.vector = new Triplet(x,y,z);
+		this.vector = new Vector(new Triplet(x,y,z));
 	}
 	
 }
