@@ -18,7 +18,7 @@ public abstract class Light {
 	}
 	
 	public void setColor(double r, double g, double b) {
-		this.color = new Color(r,g,b);
+		this.color = new Triplet(r,g,b);
 	}
 	
 }
