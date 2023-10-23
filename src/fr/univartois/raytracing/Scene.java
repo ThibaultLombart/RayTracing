@@ -3,7 +3,10 @@ package fr.univartois.raytracing;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univartois.raytracing.digital.triples.Color;
+import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.lights.Light;
+import fr.univartois.raytracing.objects.IObjectStage;
 
 public class Scene {
 	
@@ -16,9 +19,9 @@ public class Scene {
 	private Triplet lookFrom;
 	private Triplet lookAt;
 	private Triplet up;
-	private Color ambient = new Color(0,0,0);
-	private Color diffuse = new Color(0,0,0);
-	private Color specular = new Color(0,0,0);
+	private Color ambient = new Color(new Triplet(0,0,0));
+	private Color diffuse = new Color(new Triplet(0,0,0));
+	private Color specular = new Color(new Triplet(0,0,0));
 	private List<Light> lights = new ArrayList<Light>();
 	private List<Point> points = new ArrayList<Point>();
 	private List<IObjectStage> shapes = new ArrayList<IObjectStage>();
