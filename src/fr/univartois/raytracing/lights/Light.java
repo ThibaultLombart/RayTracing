@@ -1,5 +1,8 @@
 package fr.univartois.raytracing.lights;
 
+import fr.univartois.raytracing.Triplet;
+import fr.univartois.raytracing.digital.triples.Color;
+
 public abstract class Light {
 	
 	private Color color;
@@ -18,7 +21,7 @@ public abstract class Light {
 	}
 	
 	public void setColor(double r, double g, double b) {
-		this.color = new Triplet(r,g,b);
+		this.color = new Color(new Triplet(r,g,b));
 	}
 	
 }
