@@ -133,7 +133,7 @@ public class Scene {
 		this.specular = specular;
 	}
 
-	public ArrayList<Light> getLights() {
+	public List<Light> getLights() {
 		return lights;
 	}
 
@@ -141,7 +141,7 @@ public class Scene {
 		this.lights = lights;
 	}
 
-	public ArrayList<Point> getPoints() {
+	public List<Point> getPoints() {
 		return points;
 	}
 
@@ -149,7 +149,7 @@ public class Scene {
 		this.points = points;
 	}
 
-	public ArrayList<IObjectStage> getShapes() {
+	public List<IObjectStage> getShapes() {
 		return shapes;
 	}
 
