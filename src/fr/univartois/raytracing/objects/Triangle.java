@@ -6,6 +6,9 @@
 
 package fr.univartois.raytracing.objects;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
 
@@ -34,7 +37,7 @@ public class Triangle implements IObjectStage {
      * @param color Color color
      */
     public Triangle(Point[] points, Color color) {
-        this.points = points;
+        this.points = Arrays.copyOf(points,3);
         this.color = color;
     }
     
