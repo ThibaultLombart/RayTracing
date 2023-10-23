@@ -17,32 +17,36 @@ public class Vector {
 		this.triplet = triplet;
 	}
 	
-	public void add(Vector otherVector) {
-		setTriplet(this.triplet.addition(otherVector.getTriplet()));
+	public Vector add(Vector otherVector) {
+		return new Vector(this.triplet.addition(otherVector.getTriplet()));
 	}
 	
-	public void substraction(Vector otherVector) {
-		setTriplet(this.triplet.substraction(otherVector.getTriplet()));
+	public Point add(Point otherPoint) {
+		return new Point(this.triplet.addition(otherPoint.getTriplet()));
+	}
+	
+	public Vector substraction(Vector otherVector) {
+		return new Vector(this.triplet.substraction(otherVector.getTriplet()));
 	}
 	
 	
-	public void multiplication(double d) {
-		setTriplet(this.triplet.scalarMultiplication(d));
+	public Vector multiplication(double d) {
+		return new Vector(this.triplet.scalarMultiplication(d));
 	}
 	
 	public double scalarProduct(Vector otherVector) {
 		return this.triplet.scalarProduct(otherVector.getTriplet());
 	}
 	
-	public void vectorProduct(Vector otherVector) {
-		setTriplet(this.triplet.vectorialProduct(otherVector.getTriplet()));
+	public Vector vectorProduct(Vector otherVector) {
+		return new Vector(this.triplet.vectorialProduct(otherVector.getTriplet()));
 	}
 	
 	public double length() {
 		return this.triplet.length();
 	}
 	
-	public void standardization() {
-		setTriplet(this.triplet.standardization());
+	public Vector standardization() {
+		return new Vector(this.triplet.standardization());
 	}
 }
