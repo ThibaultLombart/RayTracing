@@ -5,7 +5,7 @@
  * Tous droits réservés.
  */
 
-package main;
+package fr.univartois.raytracing;
 
 
 /**
