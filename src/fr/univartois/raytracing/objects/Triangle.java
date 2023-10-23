@@ -6,7 +6,6 @@
 
 package fr.univartois.raytracing.objects;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import fr.univartois.raytracing.digital.triples.Color;
