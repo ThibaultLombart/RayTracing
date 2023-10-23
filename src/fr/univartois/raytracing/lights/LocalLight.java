@@ -1,5 +1,9 @@
 package fr.univartois.raytracing.lights;
 
+import fr.univartois.raytracing.Triplet;
+import fr.univartois.raytracing.digital.triples.Color;
+import fr.univartois.raytracing.digital.triples.Point;
+
 public class LocalLight extends Light{
 	
 	private Point point;
@@ -18,7 +22,7 @@ public class LocalLight extends Light{
 	}
 
 	public void setVector(double x, double y, double z) {
-		this.point = new Triplet(x,y,z);
+		this.point = new Point(new Triplet(x,y,z));
 	}
 	
 }
