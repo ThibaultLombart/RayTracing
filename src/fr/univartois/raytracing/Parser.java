@@ -17,15 +17,14 @@ import fr.univartois.raytracing.objects.Triangle;
 
 public class Parser {
 	
-	public static ComplicatedObjectBuilder lecture(String nomFichier) throws Exception{
+	public static Scene lecture(String nomFichier) throws Exception{
 		ComplicatedObjectBuilder scene = ComplicatedObjectBuilder.newInstance();
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(nomFichier));
 			String line;
 			
-			Scanner scanner;
 			while ((line = reader.readLine()) != null) {
-	                scanner = new Scanner(line);
+			        Scanner scanner = new Scanner(line);
 	                String token = null;
 	                if (scanner.hasNext()) {
 	                	token = scanner.next().trim();
@@ -44,9 +43,9 @@ public class Parser {
 				        break;
 				    case "camera":
 	                	if (scanner.hasNext()) {
-	                		scene.setLookFrom(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim())));
-	                		scene.setLookAt(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim())));
-	                		scene.setUp(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim())));
+	                		scene.setLookFrom(new Point(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()))));
+	                		scene.setLookAt(new Point(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()))));
+	                		scene.setUp(new Vector(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()))));
 	                		scene.setFov(Integer.parseInt(scanner.next().trim()));
 	                	}
 						break;
@@ -164,11 +163,11 @@ public class Parser {
 					}
 	                scanner.close();
 	        }
-	            
+	            reader.close();
 	    }
 	    catch(IOException e){
 	      e.printStackTrace();
 	    }
-		return scene;
+		return scene.build();
 	  }
 }

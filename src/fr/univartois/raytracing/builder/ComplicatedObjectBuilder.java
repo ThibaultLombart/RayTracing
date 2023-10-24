@@ -13,6 +13,7 @@ import fr.univartois.raytracing.Scene;
 import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
+import fr.univartois.raytracing.digital.triples.Vector;
 import fr.univartois.raytracing.lights.Light;
 import fr.univartois.raytracing.objects.IObjectStage;
 
@@ -52,15 +53,15 @@ public class ComplicatedObjectBuilder {
     /**
      * Attribute lookFrom
      */
-    private Triplet lookFrom;
+    private Point lookFrom;
     /**
      * Attribute lookAt
      */
-    private Triplet lookAt;
+    private Point lookAt;
     /**
      * Attribute up
      */
-    private Triplet up;
+    private Vector up;
     /**
      * Attribute ambient
      */
@@ -246,7 +247,7 @@ public class ComplicatedObjectBuilder {
      *
      * @return Attribute lookFrom .
      */
-    public Triplet getLookFrom() {
+    public Point getLookFrom() {
         return lookFrom;
     }
 
@@ -257,7 +258,7 @@ public class ComplicatedObjectBuilder {
      * @param lookFrom new value Attribute lookFrom .
      * @return ComplicatedObjectBuilder
      */
-    public ComplicatedObjectBuilder setLookFrom(Triplet lookFrom) {
+    public ComplicatedObjectBuilder setLookFrom(Point lookFrom) {
         this.lookFrom = lookFrom;
         return this;
     }
@@ -268,7 +269,7 @@ public class ComplicatedObjectBuilder {
      *
      * @return Attribute lookAt .
      */
-    public Triplet getLookAt() {
+    public Point getLookAt() {
         return lookAt;
     }
 
@@ -279,7 +280,7 @@ public class ComplicatedObjectBuilder {
      * @param lookAt new value Attribute lookAt .
      * @return ComplicatedObjectBuilder
      */
-    public ComplicatedObjectBuilder setLookAt(Triplet lookAt) {
+    public ComplicatedObjectBuilder setLookAt(Point lookAt) {
         this.lookAt = lookAt;
         return this;
     }
@@ -290,7 +291,7 @@ public class ComplicatedObjectBuilder {
      *
      * @return Attribute up .
      */
-    public Triplet getUp() {
+    public Vector getUp() {
         return up;
     }
 
@@ -301,7 +302,7 @@ public class ComplicatedObjectBuilder {
      * @param up new value Attribute up .
      * @return ComplicatedObjectBuilder
      */
-    public ComplicatedObjectBuilder setUp(Triplet up) {
+    public ComplicatedObjectBuilder setUp(Vector up) {
         this.up = up;
         return this;
     }
