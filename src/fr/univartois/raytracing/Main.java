@@ -14,6 +14,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import fr.univartois.raytracing.raythrower.CalculRayThrower;
+import fr.univartois.raytracing.raythrower.RayThrower;
 
 /**
  * Le type Main
@@ -49,6 +50,7 @@ public class Main {
         System.out.println("FAIT");
         */
         
+        RayThrower.rayThrower(scene);
         
         
         
