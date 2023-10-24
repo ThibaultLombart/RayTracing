@@ -6,6 +6,7 @@ import java.util.List;
 import fr.univartois.raytracing.builder.ComplicatedObjectBuilder;
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
+import fr.univartois.raytracing.digital.triples.Vector;
 import fr.univartois.raytracing.lights.Light;
 import fr.univartois.raytracing.objects.IObjectStage;
 
@@ -45,15 +46,15 @@ public class Scene {
 	/**
      * Attribute lookFrom
      */
-	private Triplet lookFrom;
+	private Point lookFrom;
 	/**
      * Attribute lookAt
      */
-	private Triplet lookAt;
+	private Point lookAt;
 	/**
      * Attribute up
      */
-	private Triplet up;
+	private Vector up;
 	/**
      * Attribute ambient
      */
@@ -239,7 +240,7 @@ public class Scene {
      *
      * @return Attribute lookFrom .
      */
-    public Triplet getLookFrom() {
+    public Point getLookFrom() {
         return lookFrom;
     }
 
@@ -250,7 +251,7 @@ public class Scene {
      * @param lookFrom new value Attribute lookFrom .
        
      */
-    public  void setLookFrom(Triplet lookFrom) {
+    public  void setLookFrom(Point lookFrom) {
         this.lookFrom = lookFrom;
          
     }
@@ -261,7 +262,7 @@ public class Scene {
      *
      * @return Attribute lookAt .
      */
-    public Triplet getLookAt() {
+    public Point getLookAt() {
         return lookAt;
     }
 
@@ -272,7 +273,7 @@ public class Scene {
      * @param lookAt new value Attribute lookAt .
        
      */
-    public  void setLookAt(Triplet lookAt) {
+    public  void setLookAt(Point lookAt) {
         this.lookAt = lookAt;
          
     }
@@ -283,7 +284,7 @@ public class Scene {
      *
      * @return Attribute up .
      */
-    public Triplet getUp() {
+    public Vector getUp() {
         return up;
     }
 
@@ -294,7 +295,7 @@ public class Scene {
      * @param up new value Attribute up .
        
      */
-    public  void setUp(Triplet up) {
+    public  void setUp(Vector up) {
         this.up = up;
          
     }
