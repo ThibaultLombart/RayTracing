@@ -8,12 +8,14 @@ package fr.univartois.raytracing.raythrower;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import fr.univartois.raytracing.Scene;
 import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
 import fr.univartois.raytracing.objects.Circle;
+import fr.univartois.raytracing.objects.IObjectStage;
 
 /**
  * CalculRayThrower class
@@ -56,9 +58,9 @@ public class CalculRayThrower {
         
         double pixelWidth = pixelHeight*(imgWidth/imgHeight);
         
-        
         double a = (-(imgWidth/2) + (i + 0.5) * pixelWidth);
         double b = ((imgHeight/2) - (j + 0.5) * pixelHeight);
+        
         
         Vector w = calculW(scene.getLookFrom(),scene.getLookAt());
         Vector u = calculU(scene.getUp(),w);
@@ -73,6 +75,26 @@ public class CalculRayThrower {
         return d;
     }
     
+    public static fr.univartois.raytracing.digital.triples.Color parcoursObjets(Scene scene, Vector d) {
+        List<IObjectStage> objects = scene.getShapes();
+        double min = -1;
+        fr.univartois.raytracing.digital.triples.Color colorMin = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0,0,0));
+        for (int y = 0; y < objects.size(); y ++) {
+            Circle object = (Circle) objects.get(y);
+            double t = object.calculT(scene.getLookFrom(), d);
+            if(t != -1) {
+                if(min == -1) {
+                    min = t;
+                    colorMin = object.getColor();
+                } else if(min > t) {
+                    min = t;
+                    colorMin = object.getColor();
+                }
+            }
+        }
+        return colorMin;
+    }
+    
     public static BufferedImage getMyImage(Scene scene) {
         
         int imgWidth = scene.getSizeX();
@@ -83,19 +105,9 @@ public class CalculRayThrower {
         for (int i = 0; i < imgWidth; i++) {
             for(int j = 0; j < imgHeight; j++) {
                 Vector d = calculD(i,j,scene);
-                /*Point p
-                if(p != null) {
-                    Color black = new Color(0,0,0);
-                    int rgb = black.getRGB();
-                    image.setRGB(i,j,rgb);
-                } else {
-                    Color black = new Color(0,0,0);
-                    int rgb = black.getRGB();
-                    image.setRGB(i,j,rgb);
-                }
-                */
-                Color black = new Color(0,0,0);
-                int rgb = black.getRGB();
+                Triplet colAvant = parcoursObjets(scene,d).getTriplet();
+                Color col = new Color((int) colAvant.getX(),(int) colAvant.getY(),(int) colAvant.getZ());
+                int rgb = col.getRGB();
                 image.setRGB(i,j,rgb);
             }
         }

@@ -105,13 +105,13 @@ public class Circle implements IObjectStage {
     }
 
     /**
-     * @param scene scene
+     * @param lookFrom lookFrom
      * @param d Vector D
      * @return T
      */
-    public double calculT(Scene scene, Vector d) {
-        double a = 1;
-        Point o = scene.getLookFrom();
+    public double calculT(Point lookFrom, Vector d) {
+        double a = d.scalarProduct(d);
+        Point o = lookFrom;
         Point cc = point;
 
         Vector bVector = o.substraction(point);
@@ -122,6 +122,7 @@ public class Circle implements IObjectStage {
         double c = cVector2 - r * r;
 
         double delta = b * b - (4 * a * c);
+
 
         if (delta < 0) {
             return -1;
