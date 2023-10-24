@@ -13,6 +13,7 @@ import fr.univartois.raytracing.Scene;
 import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
+import fr.univartois.raytracing.objects.Circle;
 
 /**
  * CalculRayThrower class
