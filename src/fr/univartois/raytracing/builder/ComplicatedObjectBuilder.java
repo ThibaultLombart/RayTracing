@@ -394,6 +394,16 @@ public class ComplicatedObjectBuilder {
         return this;
     }
 
+    /**
+     * add Attribute light to lights .
+     *
+     * @param light new value Attribute light .
+     * @return ComplicatedObjectBuilder
+     */
+    public ComplicatedObjectBuilder addLight(Light light) {
+        this.lights.add(light);
+        return this;
+    }
     
     /**
      * Give Attribute points .
@@ -413,6 +423,17 @@ public class ComplicatedObjectBuilder {
      */
     public ComplicatedObjectBuilder setPoints(List<Point> points) {
         this.points = points;
+        return this;
+    }
+    
+    /**
+     * add Attribute point to points .
+     *
+     * @param point new value Attribute point .
+     * @return ComplicatedObjectBuilder
+     */
+    public ComplicatedObjectBuilder addPoint(Point point) {
+        this.points.add(point);
         return this;
     }
     
@@ -437,7 +458,16 @@ public class ComplicatedObjectBuilder {
         return this;
     }
     
-    
+    /**
+     * add Attribute shape to shapes .
+     *
+     * @param shape new value Attribute shape .
+     * @return ComplicatedObjectBuilder
+     */
+    public ComplicatedObjectBuilder addShape(IObjectStage shape) {
+        this.shapes.add(shape);
+        return this;
+    }
     
     
 }
