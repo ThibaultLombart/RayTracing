@@ -3,6 +3,7 @@ package fr.univartois.raytracing.lights;
 import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
+import fr.univartois.raytracing.digital.triples.Vector;
 
 public class LocalLight extends Light{
 	/**
@@ -47,5 +48,19 @@ public class LocalLight extends Light{
 	public void setPoint(double x, double y, double z) {
 		this.point = new Point(new Triplet(x,y,z));
 	}
+	
+	/*
+	 * Using the legacy method to get the color of the light
+	 */
+    public Color getColor() {
+        return super.getColor();
+    }
+	
+	/*
+	 * Calculate the direction vector from the light to the point.
+	 */
+    public Vector getDirection() {
+        return this.point.substraction(getPoint()).standardization();
+    }
 	
 }
