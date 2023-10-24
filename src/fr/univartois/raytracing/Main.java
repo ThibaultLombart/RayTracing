@@ -17,7 +17,19 @@ package fr.univartois.raytracing;
  */
 public class Main {
 
-    public static void main(String[] args) {
+    /**
+     * @param args Command Line
+     * @throws Exception Exception if no args or too much args
+     */
+    public static void main(String[] args) throws Exception {
+        Scene scene;
+        if(args.length == 1) {
+            scene = Parser.lecture(args[0]);
+        } else {
+            throw new Exception("No args or too much args in Main.main()");
+        }
+        
+        
         
     }
     
