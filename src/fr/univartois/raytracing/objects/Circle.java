@@ -103,6 +103,8 @@ public class Circle implements IObjectStage {
     public void setR(double r) {
         this.r = r;
     }
+    
+
 
     /**
      * @param lookFrom lookFrom
@@ -119,6 +121,7 @@ public class Circle implements IObjectStage {
         double b = (oc).multiplication(2).scalarProduct(d) ;
         
         double c = (oc).scalarProduct(oc) - (this.r*this.r);
+        
         
         double delta = (b * b) - (4 * c);
         

@@ -50,7 +50,7 @@ public class Triplet {
 
 
 	public Triplet addition(Triplet triple) {
-		return new Triplet(this.x+triple.getX(),this.x+triple.getY(),this.z+triple.getZ());
+		return new Triplet(this.x+triple.getX(),this.y+triple.getY(),this.z+triple.getZ());
 	}
 	
 	/*

@@ -85,6 +85,8 @@ public class CalculRayThrower {
         return v.standardization();
     }
     
+
+    
     /**
      * Calculate the direction vector for a specific pixel in the scene.
      *
@@ -114,6 +116,7 @@ public class CalculRayThrower {
         Vector w = calculW(scene.getLookFrom(),scene.getLookAt());
         Vector u = calculU(up,w);
         Vector v = calculV(w,u);
+        
         
         
         Vector d = u.multiplication(a).add(v.multiplication(b)).substraction(w);
