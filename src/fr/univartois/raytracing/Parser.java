@@ -43,16 +43,31 @@ public class Parser {
 				        break;
 				    case "camera":
 	                	if (scanner.hasNext()) {
-	                		scene.setLookFrom(new Point(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()))));
-	                		scene.setLookAt(new Point(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()))));
-	                		scene.setUp(new Vector(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()))));
+	                		scene.setLookFrom(new Point(new Triplet(
+	                		        Double.parseDouble(scanner.next().trim()),
+	                		        Double.parseDouble(scanner.next().trim()),
+	                		        Double.parseDouble(scanner.next().trim()))));
+	                		
+	                		scene.setLookAt(new Point(new Triplet(
+	                		        Double.parseDouble(scanner.next().trim()),
+	                		        Double.parseDouble(scanner.next().trim()),
+	                		        Double.parseDouble(scanner.next().trim()))));
+	                		
+	                		scene.setUp(new Vector(new Triplet(
+	                		        Double.parseDouble(scanner.next().trim()),
+	                		        Double.parseDouble(scanner.next().trim()),
+	                		        Double.parseDouble(scanner.next().trim()))));
+	                		
 	                		scene.setFov(Integer.parseInt(scanner.next().trim()));
 	                	}
 						break;
 					
 					case "ambient":
 	                	if (scanner.hasNext()) {
-	                		scene.setAmbient(new Color(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()))));
+	                		scene.setAmbient(new Color(new Triplet(
+	                		        Double.parseDouble(scanner.next().trim()),
+	                		        Double.parseDouble(scanner.next().trim()),
+	                		        Double.parseDouble(scanner.next().trim()))));
 	                	}
 						break;
 							
@@ -134,30 +149,43 @@ public class Parser {
 					case "tri":
 						
 						if (scanner.hasNext()) {
-							Color couleur = new Color(scene.getAmbient().getTriplet());
-							couleur = couleur.add(scene.getDiffuse());
+							Color couleur = scene.getAmbient();
 							if (couleur.getTriplet().getX()>1 || couleur.getTriplet().getY()>1 || couleur.getTriplet().getZ()>1) {
 								scanner.close();
 								throw new Exception("Valeur(s) supérieure(s) à 1");
 							}
 							else {
 							Point[] listePoints = {scene.getPoints().get(Integer.parseInt(scanner.next().trim())),scene.getPoints().get(Integer.parseInt(scanner.next().trim())),scene.getPoints().get(Integer.parseInt(scanner.next().trim()))};
-							scene.addShape(new Triangle(listePoints,couleur.add(scene.getDiffuse())));
+							scene.addShape(new Triangle(listePoints,couleur));
 							} 
 						}
 						break;
 					
 					case "sphere":
 						if (scanner.hasNext()) {
-							Color couleur = new Color(scene.getAmbient().getTriplet());
-							scene.addShape(new Circle(new Point(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()))), Double.parseDouble(scanner.next().trim()) ,couleur.add(scene.getDiffuse())));
+							Color couleur = scene.getAmbient();
+							scene.addShape(new Circle(new Point(new Triplet(
+							        Double.parseDouble(scanner.next().trim()),
+							        Double.parseDouble(scanner.next().trim()),
+							        Double.parseDouble(scanner.next().trim())))
+							        , 
+							        Double.parseDouble(scanner.next().trim()) ,
+							        couleur));
 						}
 						break;
 					
 					case "plane":
 						if (scanner.hasNext()) {
-							Color couleur = new Color(scene.getAmbient().getTriplet());
-							scene.addShape(new Plane(new Point(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()))), new Vector(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()))) ,couleur.add(scene.getDiffuse())));
+							Color couleur = scene.getAmbient();
+							scene.addShape(new Plane(new Point(new Triplet(
+							        Double.parseDouble(scanner.next().trim()),
+							        Double.parseDouble(scanner.next().trim()),
+							        Double.parseDouble(scanner.next().trim()))), 
+							        new Vector(new Triplet(
+							                Double.parseDouble(scanner.next().trim()),
+							                Double.parseDouble(scanner.next().trim()),
+							                Double.parseDouble(scanner.next().trim()))) ,
+							        couleur));
 						}
 						break;
 					}

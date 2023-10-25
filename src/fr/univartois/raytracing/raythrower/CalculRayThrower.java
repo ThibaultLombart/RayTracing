@@ -45,23 +45,25 @@ public class CalculRayThrower {
     }
     
     public static Vector calculW(Point lookFrom, Point lookAt) {
-        Vector w = lookFrom.substraction(lookAt).standardization();
-        return w;
+        Vector w = lookFrom.substraction(lookAt);
+        return w.standardization();
     }
     
     public static Vector calculU(Vector up, Vector w) {
-        Vector u = up.vectorProduct(w).standardization();
-        return u;
+        Vector u = up.vectorProduct(w);
+        return u.standardization();
     }
     
     public static Vector calculV(Vector w, Vector u) {
-        Vector v = w.vectorProduct(u).standardization();
-        return v;
+        Vector v = w.vectorProduct(u);
+        return v.standardization();
     }
     
     public static Vector calculD(int i, int j, Scene scene) {
         int imgWidth = scene.getSizeX();
         int imgHeight = scene.getSizeY();
+        //System.out.println("X : " + imgWidth + " Y : " + imgHeight);
+        Vector up = scene.getUp();
         
         double realHeight = realHeight(scene.getFov());
         double pixelHeight = pixelHeight(realHeight, imgHeight);
@@ -70,20 +72,27 @@ public class CalculRayThrower {
         double pixelWidth = pixelWidth(imgWidth, realWidth);
         
         
-        double a = (-(realWidth/2) + (i + 0.5) * pixelWidth);
-        double b = ((realHeight/2) - (j + 0.5) * pixelHeight);
+        double a = -(realWidth/2) + (i + 0.5) * pixelWidth;
+        double b = (realHeight/2) - (j + 0.5) * pixelHeight;
+        
+        
+        //System.out.println(pixelHeight);
         
         
         Vector w = calculW(scene.getLookFrom(),scene.getLookAt());
-        Vector u = calculU(scene.getUp(),w);
+        Vector u = calculU(up,w);
         Vector v = calculV(w,u);
         
-        Vector res1 = u.multiplication(a);
-        Vector res2 = v.multiplication(b);
+        //System.out.println("W : " + w.getTriplet().getX()+ " " + w.getTriplet().getY() + "  " + w.getTriplet().getZ());
+        //System.out.println("U : " + u.getTriplet().getX()+ " " + u.getTriplet().getY() + "  " + u.getTriplet().getZ());
+        //System.out.println("V : " + v.getTriplet().getX()+ " " + v.getTriplet().getY() + "  " + v.getTriplet().getZ());
         
-        Vector d = res1.add(res2).substraction(v).standardization();
+        //System.out.println(" A " + a);
         
-        return d;
+        Vector d = u.multiplication(a).add(v.multiplication(b)).substraction(w);
+        
+        
+        return d.standardization();
     }
     
     public static fr.univartois.raytracing.digital.triples.Color parcoursObjets(Scene scene, Vector d) {
@@ -91,7 +100,7 @@ public class CalculRayThrower {
         double min = -1;
         fr.univartois.raytracing.digital.triples.Color colorMin = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0,0,0));
         for (int y = 0; y < objects.size(); y ++) {
-            Circle object = (Circle) objects.get(y);
+            IObjectStage object = objects.get(y);
             double t = object.calculT(scene.getLookFrom(), d);
             if(t != -1) {
                 if(min == -1) {
@@ -117,7 +126,11 @@ public class CalculRayThrower {
             for(int j = 0; j < imgHeight; j++) {
                 Vector d = calculD(i,j,scene);
                 Triplet colAvant = parcoursObjets(scene,d).getTriplet();
-                Color col = new Color((int) Math.round(colAvant.getX()),(int) Math.round(colAvant.getY()),(int) Math.round(colAvant.getZ()));
+                int R = (int) Math.round(colAvant.getX()) * 255;
+                int G = (int) Math.round(colAvant.getY()) * 255;
+                int B = (int) Math.round(colAvant.getZ()) * 255;
+                    
+                Color col = new Color(R,G,B);
                 int rgb = col.getRGB();
                 image.setRGB(i,j,rgb);
             }

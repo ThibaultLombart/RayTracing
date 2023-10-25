@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
+import fr.univartois.raytracing.digital.triples.Vector;
 
 /**
  * Class Triangle
@@ -85,6 +86,18 @@ public class Triangle implements IObjectStage {
     public Color getColor() {
         // TODO Auto-generated method stub.
         return color;
+    }
+
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see fr.univartois.raytracing.objects.IObjectStage#calculT(fr.univartois.raytracing.digital.triples.Point, fr.univartois.raytracing.digital.triples.Vector)
+     */
+    @Override
+    public double calculT(Point lookFrom, Vector d) {
+        // TODO Auto-generated method stub.
+        return 0;
     }
     
     

@@ -25,4 +25,9 @@ public class Point {
 		return new Point(this.triplet.scalarMultiplication(d));
 	}
 	
+	@Override
+    public String toString() {
+        // TODO Auto-generated method stub.
+        return this.triplet.toString();
+    }
 }

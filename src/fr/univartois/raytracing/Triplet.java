@@ -41,7 +41,7 @@ public class Triplet {
 
 
 	public Triplet addition(Triplet triple) {
-		return new Triplet(this.getX()+triple.getX(),this.getY()+triple.getY(),this.getZ()+triple.getZ());
+		return new Triplet(this.x+triple.getX(),this.x+triple.getY(),this.z+triple.getZ());
 	}
 	
 	/*
@@ -49,7 +49,7 @@ public class Triplet {
 	 */
 	
 	public Triplet substraction(Triplet triple) {
-		return new Triplet(this.getX()-triple.getX(),this.getY()-triple.getY(),this.getZ()-triple.getZ());
+		return new Triplet(this.x-triple.getX(),this.y-triple.getY(),this.z-triple.getZ());
 	}
 	
 	/*
@@ -57,7 +57,7 @@ public class Triplet {
 	 */
 	
 	public Triplet scalarMultiplication(double d) {
-		return new Triplet(d*this.getX(),d*this.getY(),d*this.getZ());
+		return new Triplet(d*this.x,d*this.y,d*this.z);
 	}
 	
 	/*
@@ -65,7 +65,7 @@ public class Triplet {
 	 */
 	
 	public double scalarProduct(Triplet triple) {
-		return (this.getX()*triple.getX()+this.getY()*triple.getY()+this.getZ()*triple.getZ());
+		return (this.x*triple.getX()+this.y*triple.getY()+this.z*triple.getZ());
 	}
 	
 	/*
@@ -73,7 +73,9 @@ public class Triplet {
 	 */
 	
 	public Triplet vectorialProduct(Triplet triple) {
-		return new Triplet(this.getY()*triple.getZ()-this.getZ()*triple.getY(),this.getZ()*triple.getX()-this.getX()*triple.getZ(),this.getX()*triple.getY()-this.getY()*triple.getX());
+		return new Triplet(this.y*triple.getZ()-this.z*triple.getY(),
+		                   this.z*triple.getX()-this.x*triple.getZ(),
+		                   this.x*triple.getY()-this.y*triple.getX());
 	}
 	
 	/*
@@ -81,7 +83,7 @@ public class Triplet {
 	 */
 	
 	public Triplet schurProduct(Triplet triple) {
-		return new Triplet(this.getX()*triple.getX(),this.getY()*triple.getY(),this.getZ()*triple.getZ());
+		return new Triplet(this.x*triple.getX(),this.y*triple.getY(),this.z*triple.getZ());
 	}
 	
 	/*
@@ -89,7 +91,7 @@ public class Triplet {
 	 */
 	
 	public double length() {
-		return (Math.sqrt(this.getX()*this.getX()+this.getY()*this.getY()+this.getZ()*this.getZ()));
+		return (Math.sqrt(this.x*this.x+this.y*this.y+this.z*this.z));
 	}
 	
 	/*
@@ -97,7 +99,18 @@ public class Triplet {
 	 */
 	
 	public Triplet standardization() {
-		return scalarMultiplication((1/this.length()));
+		return (this.scalarMultiplication(1/this.length()));
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+	    // TODO Auto-generated method stub.
+	    return "" + this.x + " " + this.y + " " + this.z;
 	}
 	
 	/*
