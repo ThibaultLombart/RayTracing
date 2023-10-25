@@ -18,7 +18,7 @@ import fr.univartois.raytracing.objects.Circle;
 import fr.univartois.raytracing.objects.IObjectStage;
 
 /**
- * CalculRayThrower class
+ * The CalculRayThrower class provides methods for performing ray tracing calculations and generating images.
  *
  * @author thibault.lombart
  *
@@ -26,9 +26,14 @@ import fr.univartois.raytracing.objects.IObjectStage;
  */
 public class CalculRayThrower {
     
+    /**
+     * Calculates the pixel height based on the field of view (FOV).
+     *
+     * @param fov The field of view in degrees.
+     * @return The pixel height.
+     */
     public static double realHeight(int fov) {
         double fovr = (fov * Math.PI) / 180;
-        
         return 2*Math.tan(fovr/2);
     }
     
@@ -44,21 +49,50 @@ public class CalculRayThrower {
         return realWidth / imgWidth;
     }
     
+    /**
+     * Calculate the W vector for the camera.
+     *
+     * @param lookFrom The point representing the camera's position.
+     * @param lookAt The point representing the camera's target.
+     * @return The W vector.
+     */
     public static Vector calculW(Point lookFrom, Point lookAt) {
         Vector w = lookFrom.substraction(lookAt);
         return w.standardization();
     }
     
+    /**
+     * Calculate the U vector for the camera.
+     *
+     * @param up The up vector for the camera.
+     * @param w The W vector.
+     * @return The U vector.
+     */
     public static Vector calculU(Vector up, Vector w) {
         Vector u = up.vectorProduct(w);
         return u.standardization();
     }
     
+    /**
+     * Calculate the V vector for the camera.
+     *
+     * @param w The W vector.
+     * @param u The U vector.
+     * @return The V vector.
+     */
     public static Vector calculV(Vector w, Vector u) {
         Vector v = w.vectorProduct(u);
         return v.standardization();
     }
     
+    /**
+     * Calculate the direction vector for a specific pixel in the scene.
+     *
+     * @param i The horizontal pixel position.
+     * @param j The vertical pixel position.
+     * @param scene The Scene object.
+     * @return The direction vector.
+     */
     public static Vector calculD(int i, int j, Scene scene) {
         int imgWidth = scene.getSizeX();
         int imgHeight = scene.getSizeY();
@@ -88,11 +122,18 @@ public class CalculRayThrower {
         return d.standardization();
     }
     
+    /**
+     * Find the color by tracing rays through the scene.
+     *
+     * @param scene The Scene object.
+     * @param d The direction vector.
+     * @return The color determined by ray tracing.
+     */
     public static fr.univartois.raytracing.digital.triples.Color parcoursObjets(Scene scene, Vector d) {
         List<IObjectStage> objects = scene.getShapes();
         double min = -1;
         fr.univartois.raytracing.digital.triples.Color colorMin = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0,0,0));
-        for (int y = 0; y < objects.size(); y ++) {
+        for (int y = 0; y < objects.size(); y++) {
             IObjectStage object = objects.get(y);
             double t = object.calculT(scene.getLookFrom(), d);
             Point p = null;
@@ -112,13 +153,16 @@ public class CalculRayThrower {
         return colorMin;
     }
     
+    /**
+     * Generate an image of the scene using ray tracing.
+     *
+     * @param scene The Scene object to render.
+     * @return A BufferedImage representing the rendered image.
+     */
     public static BufferedImage getMyImage(Scene scene) {
-        
         int imgWidth = scene.getSizeX();
         int imgHeight = scene.getSizeY();
-        
-        BufferedImage image = new BufferedImage(imgWidth,imgHeight,BufferedImage.TYPE_INT_RGB);
-        
+        BufferedImage image = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
         for (int i = 0; i < imgWidth; i++) {
             for(int j = 0; j < imgHeight; j++) {
                 Vector d = calculD(i,j,scene);
@@ -129,11 +173,9 @@ public class CalculRayThrower {
                     
                 Color col = new Color(R,G,B);
                 int rgb = col.getRGB();
-                image.setRGB(i,j,rgb);
+                image.setRGB(i, j, rgb);
             }
         }
         return image;
     }
-
 }
-

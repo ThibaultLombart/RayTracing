@@ -13,7 +13,7 @@ import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
 
 /**
- * Class Triangle
+ * The Triangle class represents a triangle in a 3D scene.
  *
  * @author thibault.lombart
  *
@@ -22,73 +22,63 @@ import fr.univartois.raytracing.digital.triples.Vector;
 public class Triangle implements IObjectStage {
 
     /**
-     * Attribute point...
+     * The vertices of the triangle.
      */
     private Point[] points;
-    
+
     /**
-     * Attribute color...
+     * The color of the triangle.
      */
     private Color color;
 
     /**
-     * Triangle Constructor.
-     * @param points Point point
-     * @param color Color color
+     * Constructs a Triangle with the specified vertices and color.
+     *
+     * @param points The vertices of the triangle (array of 3 points).
+     * @param color  The color of the triangle.
      */
     public Triangle(Point[] points, Color color) {
-        this.points = Arrays.copyOf(points,3);
+        this.points = Arrays.copyOf(points, 3);
         this.color = color;
     }
-    
-    
+
     /**
-     * Give point Attribute
+     * Retrieves the vertices of the Triangle.
      *
-     * @return Attribute point
+     * @return The vertices of the triangle (array of 3 points).
      */
     public Point[] getPoints() {
         return points;
     }
 
-
     /**
-     * Modify attribute point
+     * Sets the vertices of the Triangle.
      *
-     * @param points new value point
+     * @param points The new vertices of the triangle (array of 3 points).
      */
     public void setPoints(Point[] points) {
-        this.points = points;
+        this.points = Arrays.copyOf(points, 3);
     }
 
-
-
-
-
-
     /**
-     * Modify attribute color
+     * Sets the color of the Triangle.
      *
-     * @param color new value color
+     * @param color The new color for the triangle.
      */
     public void setColor(Color color) {
         this.color = color;
     }
 
-
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see fr.univartois.raytracing.objects.IObjectStage#getColor()
+    /**
+     * Gets the color attribute of this Triangle instance.
+     *
+     * @return The color attribute of this Triangle instance.
      */
     @Override
     public Color getColor() {
-        // TODO Auto-generated method stub.
         return color;
     }
-
-
+    
     /*
      * (non-Javadoc)
      *
@@ -99,8 +89,4 @@ public class Triangle implements IObjectStage {
         // TODO Auto-generated method stub.
         return 0;
     }
-    
-    
-    
 }
-

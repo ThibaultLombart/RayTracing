@@ -14,29 +14,40 @@ import fr.univartois.raytracing.lights.LocalLight;
 import fr.univartois.raytracing.objects.Circle;
 import fr.univartois.raytracing.objects.Plane;
 import fr.univartois.raytracing.objects.Triangle;
-
+/**
+ * The Parser class is responsible for reading scene information from a text file
+ * and constructing a Scene object based on the provided data.
+ */
 public class Parser {
-	
-	public static Scene lecture(String nomFichier) throws Exception{
-		ComplicatedObjectBuilder scene = ComplicatedObjectBuilder.newInstance();
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(nomFichier));
-			String line;
-			
-			while ((line = reader.readLine()) != null) {
-			        Scanner scanner = new Scanner(line);
-	                String token = null;
-	                if (scanner.hasNext()) {
-	                	token = scanner.next().trim();
-	                }
-	                switch (token) {
-	                case "size":
-	                	if (scanner.hasNext()) {
-	                		scene.setSizeX(Integer.parseInt(scanner.next().trim()));
-	                		scene.setSizeY(Integer.parseInt(scanner.next().trim()));
-	                	}
-			            break;
+
+    /**
+     * Reads a scene description from a file and constructs a Scene object.
+     *
+     * @param nomFichier The name of the file containing the scene description.
+     * @return The constructed Scene object.
+     * @throws Exception If there is an error while parsing the file or if values exceed certain limits.
+     */
+    public static Scene lecture(String nomFichier) throws Exception {
+        ComplicatedObjectBuilder scene = ComplicatedObjectBuilder.newInstance();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(nomFichier));
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                Scanner scanner = new Scanner(line);
+                String token = null;
+                if (scanner.hasNext()) {
+                    token = scanner.next().trim();
+                }
+                switch (token) {
+                    case "size":
+                        if (scanner.hasNext()) {
+                            scene.setSizeX(Integer.parseInt(scanner.next().trim()));
+                            scene.setSizeY(Integer.parseInt(scanner.next().trim()));
+                        }
+                        break;
                     case "output":
+
 	                	if (scanner.hasNext()) {
 	                		scene.setName(scanner.next().trim());
 	                	}

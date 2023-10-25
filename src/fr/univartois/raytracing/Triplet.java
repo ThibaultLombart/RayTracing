@@ -1,43 +1,52 @@
 package fr.univartois.raytracing;
 
-/*
- * Each comment is targeting the code just ABOVE.
+/**
+ * The Triplet class represents a three-dimensional point or vector.
  */
-
 public class Triplet {
-	private double x;
-	private double y;
-	private double z;
-	
-	/*
-	 * Here is the initialization of the attributes x,y,z which are used to make the triple.
-	 */
-	
-	public Triplet(double x, double y, double z) { 
-		this.x = x;
-		this.y = y;
-		this.z = z;
-	}
-	
-	/*
-	 * Here is the constructor of the triple with the 3 attributes we declared before.
-	 */
-	
-	public double getX() {
-		return x;
-	}
+    private double x;
+    private double y;
+    private double z;
 
-	public double getY() {
-		return y;
-	}
+    /**
+     * Initializes a Triplet with the specified x, y, and z coordinates.
+     *
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     * @param z The z-coordinate.
+     */
+    public Triplet(double x, double y, double z) { 
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
 
-	public double getZ() {
-		return z;
-	}
-	
-	/*
-	 * Here are the 3 getters used to get each values of each points later in the methods.
-	 */
+    /**
+     * Gets the x-coordinate of the Triplet.
+     *
+     * @return The x-coordinate.
+     */
+    public double getX() {
+        return x;
+    }
+
+    /**
+     * Gets the y-coordinate of the Triplet.
+     *
+     * @return The y-coordinate.
+     */
+    public double getY() {
+        return y;
+    }
+    
+    /**
+     * Gets the z-coordinate of the Triplet.
+     *
+     * @return The z-coordinate.
+     */
+    public double getZ() {
+        return z;
+    }
 
 
 	public Triplet addition(Triplet triple) {
