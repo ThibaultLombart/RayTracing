@@ -7,6 +7,8 @@
 package fr.univartois.raytracing.objects;
 
 import fr.univartois.raytracing.digital.triples.Color;
+import fr.univartois.raytracing.digital.triples.Point;
+import fr.univartois.raytracing.digital.triples.Vector;
 
 /**
  * Interface ObjectStage
@@ -21,6 +23,13 @@ public interface IObjectStage {
      * @return Color
      */
     Color getColor();
+    
+    /**
+     * @param lookFrom lookFrom
+     * @param d d 
+     * @return T
+     */
+    double calculT(Point lookFrom, Vector d);
     
 }
 

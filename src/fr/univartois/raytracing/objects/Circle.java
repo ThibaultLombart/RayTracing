@@ -110,28 +110,27 @@ public class Circle implements IObjectStage {
      * @return T
      */
     public double calculT(Point lookFrom, Vector d) {
-        double a = d.scalarProduct(d);
         Point o = lookFrom;
-        Point cc = point;
+        
+        Point cc = this.point;
+        
+        Vector oc = o.substraction(cc);
 
-        Vector bVector = o.substraction(point);
-        double b = bVector.scalarProduct(d) * 2;
-
-        Vector cVector1 = o.substraction(cc);
-        double cVector2 = cVector1.scalarProduct(cVector1);
-        double c = cVector2 - r * r;
-
-        double delta = b * b - (4 * a * c);
-
+        double b = (oc).multiplication(2).scalarProduct(d) ;
+        
+        double c = (oc).scalarProduct(oc) - (this.r*this.r);
+        
+        double delta = (b * b) - (4 * c);
+        
 
         if (delta < 0) {
             return -1;
         } else if (delta == 0) {
-            double t = (-b) / 2 * a;
+            double t = (-b) / 2;
             return t;
         } else {
-            double t1 = (-b + Math.sqrt(delta)) / 2 * a;
-            double t2 = (-b - Math.sqrt(delta)) / 2 * a;
+            double t1 = (-b + Math.sqrt(delta)) / 2;
+            double t2 = (-b - Math.sqrt(delta)) / 2;
 
             if (t2 > 0) {
                 return t2;

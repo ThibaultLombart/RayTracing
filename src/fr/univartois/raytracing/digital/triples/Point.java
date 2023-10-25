@@ -17,6 +17,36 @@ public class Point {
         this.triplet = triplet;
     }
 
+
+/**
+ * Sets the Triplet for this Point.
+ *
+ * @param triplet The Triplet to set as the new coordinates for the point.
+ */
+public void setTriplet(Triplet triplet) {
+    this.triplet = triplet;
+}
+
+/**
+ * Calculates the vector representing the subtraction of another Point from this Point.
+ *
+ * @param otherPoint The Point to subtract from this Point.
+ * @return A Vector representing the subtraction of the two Points.
+ */
+public Vector substraction(Point otherPoint) {
+    return new Vector(this.triplet.substraction(otherPoint.getTriplet()));
+}
+
+/**
+ * Multiplies the coordinates of this Point by a scalar value and returns a new Point.
+ *
+ * @param d The scalar value to multiply with.
+ * @return A new Point resulting from the scalar multiplication.
+ */
+public Point multiplication(Double d) {
+    return new Point(this.triplet.scalarMultiplication(d));
+}
+	
     /**
      * Retrieves the Triplet associated with this Point.
      *
@@ -25,33 +55,10 @@ public class Point {
     public Triplet getTriplet() {
         return triplet;
     }
-
-    /**
-     * Sets the Triplet for this Point.
-     *
-     * @param triplet The Triplet to set as the new coordinates for the point.
-     */
-    public void setTriplet(Triplet triplet) {
-        this.triplet = triplet;
-    }
-
-    /**
-     * Calculates the vector representing the subtraction of another Point from this Point.
-     *
-     * @param otherPoint The Point to subtract from this Point.
-     * @return A Vector representing the subtraction of the two Points.
-     */
-    public Vector substraction(Point otherPoint) {
-        return new Vector(this.triplet.substraction(otherPoint.getTriplet()));
-    }
-
-    /**
-     * Multiplies the coordinates of this Point by a scalar value and returns a new Point.
-     *
-     * @param d The scalar value to multiply with.
-     * @return A new Point resulting from the scalar multiplication.
-     */
-    public Point multiplication(Double d) {
-        return new Point(this.triplet.scalarMultiplication(d));
-    }
+    
+	@Override
+    public String toString() {
+        // TODO Auto-generated method stub.
+        return this.triplet.toString();
+	}
 }

@@ -101,4 +101,16 @@ public class Plane implements IObjectStage {
     public void setColor(Color color) {
         this.color = color;
     }
+    
+    /*
+     * (non-Javadoc)
+     *
+     * @see fr.univartois.raytracing.objects.IObjectStage#calculT(fr.univartois.raytracing.digital.triples.Point, fr.univartois.raytracing.digital.triples.Vector)
+     */
+    @Override
+    public double calculT(Point lookFrom, Vector d) {
+        // TODO Auto-generated method stub.
+        return 0;
+    }
+
 }

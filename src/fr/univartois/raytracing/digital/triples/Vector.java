@@ -17,6 +17,7 @@ public class Vector {
         this.triplet = triplet;
     }
 
+
     /**
      * Retrieves the Triplet associated with this Vector.
      *
@@ -112,4 +113,11 @@ public class Vector {
     public Vector standardization() {
         return new Vector(this.triplet.standardization());
     }
+
+	
+	@Override
+    public String toString() {
+        // TODO Auto-generated method stub.
+        return this.triplet.toString();
+	}
 }

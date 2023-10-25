@@ -38,7 +38,7 @@ public class Triplet {
     public double getY() {
         return y;
     }
-
+    
     /**
      * Gets the z-coordinate of the Triplet.
      *
@@ -48,85 +48,81 @@ public class Triplet {
         return z;
     }
 
-    /**
-     * Adds this Triplet to another Triplet and returns a new Triplet.
-     *
-     * @param triple The Triplet to add.
-     * @return A new Triplet representing the addition of this and the provided Triplet.
-     */
-    public Triplet addition(Triplet triple) {
-        return new Triplet(this.getX() + triple.getX(), this.getY() + triple.getY(), this.getZ() + triple.getZ());
-    }
 
-    /**
-     * Subtracts another Triplet from this Triplet and returns a new Triplet.
-     *
-     * @param triple The Triplet to subtract.
-     * @return A new Triplet representing the subtraction of this and the provided Triplet.
-     */
-    public Triplet substraction(Triplet triple) {
-        return new Triplet(this.getX() - triple.getX(), this.getY() - triple.getY(), this.getZ() - triple.getZ());
-    }
-
-    /**
-     * Multiplies this Triplet by a scalar value and returns a new Triplet.
-     *
-     * @param d The scalar value to multiply with.
-     * @return A new Triplet resulting from the scalar multiplication.
-     */
-    public Triplet scalarMultiplication(double d) {
-        return new Triplet(d * this.getX(), d * this.getY(), d * this.getZ());
-    }
-
-    /**
-     * Calculates the scalar product (dot product) with another Triplet.
-     *
-     * @param triple The Triplet to calculate the scalar product with.
-     * @return The scalar product of this Triplet and the provided Triplet.
-     */
-    public double scalarProduct(Triplet triple) {
-        return (this.getX() * triple.getX() + this.getY() * triple.getY() + this.getZ() * triple.getZ());
-    }
-
-    /**
-     * Calculates the vector product (cross product) with another Triplet and returns a new Triplet.
-     *
-     * @param triple The Triplet to calculate the vector product with.
-     * @return A new Triplet representing the result of the vector product.
-     */
-    public Triplet vectorialProduct(Triplet triple) {
-        return new Triplet(
-            this.getY() * triple.getZ() - this.getZ() * triple.getY(),
-            this.getZ() * triple.getX() - this.getX() * triple.getZ(),
-            this.getX() * triple.getY() - this.getY() * triple.getX()
-        );
-    }
-
-    /**
-     * Calculates the Schur product (component-wise multiplication) with another Triplet and returns a new Triplet.
-     *
-     * @param triple The Triplet to calculate the Schur product with.
-     * @return A new Triplet representing the result of the Schur product.
-     */
-    public Triplet schurProduct(Triplet triple) {
-        return new Triplet(this.getX() * triple.getX(), this.getY() * triple.getY(), this.getZ() * triple.getZ());
-    }
-
-    /**
-     * Calculates the length (magnitude) of this Triplet.
-     *
-     * @return The length of this Triplet.
-     */
-    public double length() {
-        return Math.sqrt(this.getX() * this.getX() + this.getY() * this.getY() + this.getZ() * this.getZ());
-    }
-
-    /**
-     * Standardizes this Triplet to have a length of 1 and returns a new Triplet.
-     *
-     * @return A new Triplet with a length of 1 representing the standardized vector.
-     */
-    public Triplet standardization() {
-        return scalarMultiplication(1 / this.length());
-    }
+	public Triplet addition(Triplet triple) {
+		return new Triplet(this.x+triple.getX(),this.x+triple.getY(),this.z+triple.getZ());
+	}
+	
+	/*
+	 * This method is used to make an addition between two triples.
+	 */
+	
+	public Triplet substraction(Triplet triple) {
+		return new Triplet(this.x-triple.getX(),this.y-triple.getY(),this.z-triple.getZ());
+	}
+	
+	/*
+	 * This method is used to make a substraction between two triples.
+	 */
+	
+	public Triplet scalarMultiplication(double d) {
+		return new Triplet(this.x*d,this.y*d,this.z*d);
+	}
+	
+	/*
+	 * This method is used to make a multiplication of a triple with a scalar.
+	 */
+	
+	public double scalarProduct(Triplet triple) {
+		return (this.x*triple.getX()+this.y*triple.getY()+this.z*triple.getZ());
+	}
+	
+	/*
+	 * This method is used to make the scalar product between two triples.
+	 */
+	
+	public Triplet vectorialProduct(Triplet triple) {
+		return new Triplet(this.y*triple.getZ()-this.z*triple.getY(),
+		                   this.z*triple.getX()-this.x*triple.getZ(),
+		                   this.x*triple.getY()-this.y*triple.getX());
+	}
+	
+	/*
+	 * This method is used to make the vertical product between two triples.
+	 */
+	
+	public Triplet schurProduct(Triplet triple) {
+		return new Triplet(this.x*triple.getX(),this.y*triple.getY(),this.z*triple.getZ());
+	}
+	
+	/*
+	 * This method is used to make the schur product between two triples.
+	 */
+	
+	public double length() {
+		return (Math.sqrt(this.x*this.x+this.y*this.y+this.z*this.z));
+	}
+	
+	/*
+	 * This method is used to get the length/standard of a triple.
+	 */
+	
+	public Triplet standardization() {
+		return (this.scalarMultiplication(1/this.length()));
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+	    // TODO Auto-generated method stub.
+	    return "" + this.x + " " + this.y + " " + this.z;
+	}
+	
+	/*
+	 * This method is used to make the standardization of a triple.
+	 */
 }

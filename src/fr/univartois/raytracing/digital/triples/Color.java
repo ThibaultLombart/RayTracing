@@ -17,14 +17,6 @@ public class Color {
         this.triplet = triplet;
     }
 
-    /**
-     * Retrieves the Triplet associated with this Color.
-     *+
-     * @return The Triplet representing the color.
-     */
-    public Triplet getTriplet() {
-        return triplet;
-    }
 
     /**
      * Sets the Triplet for this Color.
@@ -63,5 +55,25 @@ public class Color {
      */
     public Color schur(Color otherColor) {
         return new Color(this.triplet.schurProduct(otherColor.getTriplet()));
+    }
+	
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+	    // TODO Auto-generated method stub.
+	    return this.triplet.toString();
+	}
+
+    /**
+     * Retrieves the Triplet associated with this Color.
+     *+
+     * @return The Triplet representing the color.
+     */
+    public Triplet getTriplet() {
+        return triplet;
     }
 }

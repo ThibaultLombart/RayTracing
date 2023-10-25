@@ -32,9 +32,21 @@ public class CalculRayThrower {
      * @param fov The field of view in degrees.
      * @return The pixel height.
      */
-    public static double pixelHeight(int fov) {
+    public static double realHeight(int fov) {
         double fovr = (fov * Math.PI) / 180;
-        return Math.tan(fovr/2);
+        return 2*Math.tan(fovr/2);
+    }
+    
+    public static double pixelHeight(double realHeight,int imgHeight) {
+        return realHeight / imgHeight;
+    }
+    
+    public static double realWidth(int imgWidth, double pixelHeight) {
+        return imgWidth * pixelHeight;
+    }
+    
+    public static double pixelWidth(int imgWidth, double realWidth) {
+        return realWidth / imgWidth;
     }
     
     /**
@@ -46,8 +58,7 @@ public class CalculRayThrower {
      */
     public static Vector calculW(Point lookFrom, Point lookAt) {
         Vector w = lookFrom.substraction(lookAt);
-        w.standardization();
-        return w;
+        return w.standardization();
     }
     
     /**
@@ -59,8 +70,7 @@ public class CalculRayThrower {
      */
     public static Vector calculU(Vector up, Vector w) {
         Vector u = up.vectorProduct(w);
-        u.standardization();
-        return u;
+        return u.standardization();
     }
     
     /**
@@ -72,8 +82,7 @@ public class CalculRayThrower {
      */
     public static Vector calculV(Vector w, Vector u) {
         Vector v = w.vectorProduct(u);
-        v.standardization();
-        return v;
+        return v.standardization();
     }
     
     /**
@@ -85,27 +94,32 @@ public class CalculRayThrower {
      * @return The direction vector.
      */
     public static Vector calculD(int i, int j, Scene scene) {
-        double pixelHeight = pixelHeight(scene.getFov());
-        
         int imgWidth = scene.getSizeX();
         int imgHeight = scene.getSizeY();
         
-        double pixelWidth = pixelHeight * (imgWidth / imgHeight);
+        Vector up = scene.getUp();
         
-        double a = (-(imgWidth/2) + (i + 0.5) * pixelWidth);
-        double b = ((imgHeight/2) - (j + 0.5) * pixelHeight);
+        double realHeight = realHeight(scene.getFov());
+        double pixelHeight = pixelHeight(realHeight, imgHeight);
         
-        Vector w = calculW(scene.getLookFrom(), scene.getLookAt());
-        Vector u = calculU(scene.getUp(), w);
-        Vector v = calculV(w, u);
+        double realWidth = realWidth(imgWidth,pixelHeight);
+        double pixelWidth = pixelWidth(imgWidth, realWidth);
         
-        Vector res1 = u.multiplication(a);
-        Vector res2 = v.multiplication(b);
         
-        Vector d = res1.add(res2);
-        d = d.substraction(v);
+        double a = -(realWidth/2) + ((i + 0.5) * pixelWidth);
+        double b = (realHeight/2) - ((j + 0.5) * pixelHeight);
         
-        return d;
+        
+        
+        Vector w = calculW(scene.getLookFrom(),scene.getLookAt());
+        Vector u = calculU(up,w);
+        Vector v = calculV(w,u);
+        
+        
+        Vector d = u.multiplication(a).add(v.multiplication(b)).substraction(w);
+        
+        
+        return d.standardization();
     }
     
     /**
@@ -120,9 +134,13 @@ public class CalculRayThrower {
         double min = -1;
         fr.univartois.raytracing.digital.triples.Color colorMin = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0,0,0));
         for (int y = 0; y < objects.size(); y++) {
-            Circle object = (Circle) objects.get(y);
+            IObjectStage object = objects.get(y);
             double t = object.calculT(scene.getLookFrom(), d);
-            if(t != -1) {
+            Point p = null;
+            if(t > -1) {
+                p = d.multiplication(t).add(scene.getLookFrom());
+            }
+            if(p != null) {
                 if(min == -1) {
                     min = t;
                     colorMin = object.getColor();
@@ -146,10 +164,14 @@ public class CalculRayThrower {
         int imgHeight = scene.getSizeY();
         BufferedImage image = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
         for (int i = 0; i < imgWidth; i++) {
-            for (int j = 0; j < imgHeight; j++) {
-                Vector d = calculD(i, j, scene);
-                Triplet colAvant = parcoursObjets(scene, d).getTriplet();
-                Color col = new Color((int) colAvant.getX(), (int) colAvant.getY(), (int) colAvant.getZ());
+            for(int j = 0; j < imgHeight; j++) {
+                Vector d = calculD(i,j,scene);
+                Triplet colAvant = parcoursObjets(scene,d).getTriplet();
+                int R = (int) Math.round(colAvant.getX()) * 255;
+                int G = (int) Math.round(colAvant.getY()) * 255;
+                int B = (int) Math.round(colAvant.getZ()) * 255;
+                    
+                Color col = new Color(R,G,B);
                 int rgb = col.getRGB();
                 image.setRGB(i, j, rgb);
             }
