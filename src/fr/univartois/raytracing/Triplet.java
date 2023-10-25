@@ -57,7 +57,7 @@ public class Triplet {
 	 */
 	
 	public Triplet scalarMultiplication(double d) {
-		return new Triplet(d*this.x,d*this.y,d*this.z);
+		return new Triplet(this.x*d,this.y*d,this.z*d);
 	}
 	
 	/*

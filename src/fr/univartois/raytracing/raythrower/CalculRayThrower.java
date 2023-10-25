@@ -32,12 +32,12 @@ public class CalculRayThrower {
         return 2*Math.tan(fovr/2);
     }
     
-    public static double realWidth(int imgWidth, double pixelHeight) {
-        return imgWidth * pixelHeight;
-    }
-    
     public static double pixelHeight(double realHeight,int imgHeight) {
         return realHeight / imgHeight;
+    }
+    
+    public static double realWidth(int imgWidth, double pixelHeight) {
+        return imgWidth * pixelHeight;
     }
     
     public static double pixelWidth(int imgWidth, double realWidth) {
@@ -62,7 +62,7 @@ public class CalculRayThrower {
     public static Vector calculD(int i, int j, Scene scene) {
         int imgWidth = scene.getSizeX();
         int imgHeight = scene.getSizeY();
-        //System.out.println("X : " + imgWidth + " Y : " + imgHeight);
+        
         Vector up = scene.getUp();
         
         double realHeight = realHeight(scene.getFov());
@@ -72,22 +72,15 @@ public class CalculRayThrower {
         double pixelWidth = pixelWidth(imgWidth, realWidth);
         
         
-        double a = -(realWidth/2) + (i + 0.5) * pixelWidth;
-        double b = (realHeight/2) - (j + 0.5) * pixelHeight;
+        double a = -(realWidth/2) + ((i + 0.5) * pixelWidth);
+        double b = (realHeight/2) - ((j + 0.5) * pixelHeight);
         
-        
-        //System.out.println(pixelHeight);
         
         
         Vector w = calculW(scene.getLookFrom(),scene.getLookAt());
         Vector u = calculU(up,w);
         Vector v = calculV(w,u);
         
-        //System.out.println("W : " + w.getTriplet().getX()+ " " + w.getTriplet().getY() + "  " + w.getTriplet().getZ());
-        //System.out.println("U : " + u.getTriplet().getX()+ " " + u.getTriplet().getY() + "  " + u.getTriplet().getZ());
-        //System.out.println("V : " + v.getTriplet().getX()+ " " + v.getTriplet().getY() + "  " + v.getTriplet().getZ());
-        
-        //System.out.println(" A " + a);
         
         Vector d = u.multiplication(a).add(v.multiplication(b)).substraction(w);
         
@@ -102,7 +95,11 @@ public class CalculRayThrower {
         for (int y = 0; y < objects.size(); y ++) {
             IObjectStage object = objects.get(y);
             double t = object.calculT(scene.getLookFrom(), d);
-            if(t != -1) {
+            Point p = null;
+            if(t > -1) {
+                p = d.multiplication(t).add(scene.getLookFrom());
+            }
+            if(p != null) {
                 if(min == -1) {
                     min = t;
                     colorMin = object.getColor();
