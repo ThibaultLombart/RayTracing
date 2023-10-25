@@ -86,7 +86,24 @@ public class Triangle implements IObjectStage {
      */
     @Override
     public double calculT(Point lookFrom, Vector d) {
-        // TODO Auto-generated method stub.
-        return 0;
+        Point a = points[0];
+        Point b = points[1];
+        Point c = points[2];
+        
+        Vector n = b.substraction(a).vectorProduct(c.substraction(a)).standardization();
+    
+        Point p = c;
+        
+        if(b.substraction(a).vectorProduct(p.substraction(a)).scalarProduct(n) < 0) {
+            return -1;
+        } else if (c.substraction(b).vectorProduct(p.substraction(b)).scalarProduct(n) < 0) {
+            return -1;
+        } else if (a.substraction(c).vectorProduct(p.substraction(c)).scalarProduct(n) < 0) {
+            return -1;
+        }
+        
+        return p.substraction(lookFrom).scalarProduct(n)/d.scalarProduct(n);
+
+    
     }
 }

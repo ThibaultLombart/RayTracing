@@ -109,8 +109,14 @@ public class Plane implements IObjectStage {
      */
     @Override
     public double calculT(Point lookFrom, Vector d) {
-        // TODO Auto-generated method stub.
-        return 0;
+        Vector n = this.vector;
+        Point q = this.point;
+        
+        if(d.scalarProduct(n) == 0) {
+            return -1;
+        }
+        
+        return q.substraction(lookFrom).scalarProduct(n)/d.scalarProduct(n);
     }
 
 }
