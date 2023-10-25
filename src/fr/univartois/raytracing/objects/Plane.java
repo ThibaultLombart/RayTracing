@@ -11,7 +11,7 @@ import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
 
 /**
- * Class Plane
+ * The Plane class represents a 2D plane in a 3D scene.
  *
  * @author thibault.lombart
  *
@@ -20,25 +20,26 @@ import fr.univartois.raytracing.digital.triples.Vector;
 public class Plane implements IObjectStage {
     
     /**
-     * Attribute point...
+     * The point on the plane.
      */
     private Point point;
     
     /**
-     * Attribute vector...
+     * The normal vector of the plane.
      */
     private Vector vector;
 
     /**
-     * Attribute color...
+     * The color of the plane.
      */
     private Color color;
 
     /**
-     * Plane Constructor.
-     * @param point Point point
-     * @param vector Vector vector
-     * @param color Color color
+     * Constructs a Plane with the specified point, normal vector, and color.
+     *
+     * @param point  The point on the plane.
+     * @param vector The normal vector of the plane.
+     * @param color  The color of the plane.
      */
     public Plane(Point point, Vector vector, Color color) {
         this.point = point;
@@ -46,71 +47,58 @@ public class Plane implements IObjectStage {
         this.color = color;
     }
 
-    
     /**
-     * Give point Attribute
+     * Retrieves the point attribute of the Plane.
      *
-     * @return Attribute point
+     * @return The point on the plane.
      */
     public Point getPoint() {
         return point;
     }
 
-
     /**
-     * Modify attribute point
+     * Sets the point attribute of the Plane.
      *
-     * @param point new value point
+     * @param point The new value for the point on the plane.
      */
     public void setPoint(Point point) {
         this.point = point;
     }
-    
+
     /**
-     * Give vector Attribute
+     * Retrieves the vector attribute of the Plane.
      *
-     * @return Attribute vector
+     * @return The normal vector of the plane.
      */
     public Vector getVector() {
         return vector;
     }
 
-
-    
     /**
-     * Modify attribute vector
+     * Sets the vector attribute of the Plane.
      *
-     * @param vector new value vector
+     * @param vector The new value for the normal vector of the plane.
      */
     public void setVector(Vector vector) {
         this.vector = vector;
     }
 
-
     /**
-     * Donne l'attribut color de cette instance de Plane.
+     * Gets the color attribute of this Plane instance.
      *
-     * @return L'attribut color de cette instance de Plane.
+     * @return The color attribute of this Plane instance.
      */
     @Override
     public Color getColor() {
         return color;
     }
 
-
-    
     /**
-     * Modifie l'attribut color de cette instance de Plane.
+     * Sets the color attribute of this Plane instance.
      *
-     * @param color La nouvelle valeur de l'attribut color pour cette instance de Plane.
+     * @param color The new value of the color attribute for this Plane instance.
      */
     public void setColor(Color color) {
         this.color = color;
     }
-
-    
-    
-    
-    
 }
-
