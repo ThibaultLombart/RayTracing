@@ -26,40 +26,52 @@ import fr.univartois.raytracing.objects.IObjectStage;
  */
 public class CalculRayThrower {
     
-    public static double pixelHeight(int fov) {
+    public static double realHeight(int fov) {
         double fovr = (fov * Math.PI) / 180;
         
-        return Math.tan(fovr/2);
+        return 2*Math.tan(fovr/2);
+    }
+    
+    public static double realWidth(int imgWidth, double pixelHeight) {
+        return imgWidth * pixelHeight;
+    }
+    
+    public static double pixelHeight(double realHeight,int imgHeight) {
+        return realHeight / imgHeight;
+    }
+    
+    public static double pixelWidth(int imgWidth, double realWidth) {
+        return realWidth / imgWidth;
     }
     
     public static Vector calculW(Point lookFrom, Point lookAt) {
-        Vector w = lookFrom.substraction(lookAt);
-        w.standardization();
+        Vector w = lookFrom.substraction(lookAt).standardization();
         return w;
     }
     
     public static Vector calculU(Vector up, Vector w) {
-        Vector u = up.vectorProduct(w);
-        u.standardization();
+        Vector u = up.vectorProduct(w).standardization();
         return u;
     }
     
     public static Vector calculV(Vector w, Vector u) {
-        Vector v = w.vectorProduct(u);
-        v.standardization();
+        Vector v = w.vectorProduct(u).standardization();
         return v;
     }
     
     public static Vector calculD(int i, int j, Scene scene) {
-        double pixelHeight = pixelHeight(scene.getFov());
-        
         int imgWidth = scene.getSizeX();
         int imgHeight = scene.getSizeY();
         
-        double pixelWidth = pixelHeight*(imgWidth/imgHeight);
+        double realHeight = realHeight(scene.getFov());
+        double pixelHeight = pixelHeight(realHeight, imgHeight);
         
-        double a = (-(imgWidth/2) + (i + 0.5) * pixelWidth);
-        double b = ((imgHeight/2) - (j + 0.5) * pixelHeight);
+        double realWidth = realWidth(imgWidth,pixelHeight);
+        double pixelWidth = pixelWidth(imgWidth, realWidth);
+        
+        
+        double a = (-(realWidth/2) + (i + 0.5) * pixelWidth);
+        double b = ((realHeight/2) - (j + 0.5) * pixelHeight);
         
         
         Vector w = calculW(scene.getLookFrom(),scene.getLookAt());
@@ -69,8 +81,7 @@ public class CalculRayThrower {
         Vector res1 = u.multiplication(a);
         Vector res2 = v.multiplication(b);
         
-        Vector d = res1.add(res2);
-        d = d.substraction(v);
+        Vector d = res1.add(res2).substraction(v).standardization();
         
         return d;
     }
@@ -106,7 +117,7 @@ public class CalculRayThrower {
             for(int j = 0; j < imgHeight; j++) {
                 Vector d = calculD(i,j,scene);
                 Triplet colAvant = parcoursObjets(scene,d).getTriplet();
-                Color col = new Color((int) colAvant.getX(),(int) colAvant.getY(),(int) colAvant.getZ());
+                Color col = new Color((int) Math.round(colAvant.getX()),(int) Math.round(colAvant.getY()),(int) Math.round(colAvant.getZ()));
                 int rgb = col.getRGB();
                 image.setRGB(i,j,rgb);
             }
