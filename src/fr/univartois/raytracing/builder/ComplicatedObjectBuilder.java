@@ -87,6 +87,12 @@ public class ComplicatedObjectBuilder {
      */
     private List<IObjectStage> shapes = new ArrayList<>();
     
+    /**
+     * Shadow Attribute 
+     */
+    private boolean shadow = false;
+    
+    
     
     /**
      * constructor ComplicatedObjectBuilder.
@@ -107,6 +113,20 @@ public class ComplicatedObjectBuilder {
      */
     public static final ComplicatedObjectBuilder newInstance() {
         return new ComplicatedObjectBuilder();
+    }
+    
+    /**
+     * @return shadow
+     */
+    public boolean getShadow() {
+        return shadow;
+    }
+    
+    /**
+     * @param shadow Boolean shadow true or false
+     */
+    public void setShadow(boolean shadow) {
+        this.shadow = shadow;
     }
 
     
