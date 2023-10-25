@@ -38,8 +38,8 @@ public class Parser {
                 String token = null;
                 if (scanner.hasNext()) {
                     token = scanner.next().trim();
-                }
-                switch (token) {
+                    
+                    switch (token) {
                     case "size":
                         if (scanner.hasNext()) {
                             scene.setSizeX(Integer.parseInt(scanner.next().trim()));
@@ -201,8 +201,9 @@ public class Parser {
 						break;
 					}
 	                scanner.close();
+                }
 	        }
-	            reader.close();
+	        reader.close();
 	    }
 	    catch(IOException e){
 	      e.printStackTrace();
