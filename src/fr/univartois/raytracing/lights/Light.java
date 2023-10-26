@@ -2,6 +2,8 @@ package fr.univartois.raytracing.lights;
 
 import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Color;
+import fr.univartois.raytracing.digital.triples.Point;
+import fr.univartois.raytracing.digital.triples.Vector;
 
 public abstract class Light {
 	/**
@@ -45,5 +47,8 @@ public abstract class Light {
 	public void setColor(double r, double g, double b) {
 		this.color = new Color(new Triplet(r,g,b));
 	}
+	
+	public abstract Vector getLdir(Point p);
+	
 	
 }

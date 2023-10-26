@@ -8,6 +8,7 @@ import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
 import fr.univartois.raytracing.lights.Light;
+import fr.univartois.raytracing.lights.LightingModel;
 import fr.univartois.raytracing.objects.IObjectStage;
 
 /**
@@ -80,6 +81,21 @@ public class Scene {
      */
 	private List<IObjectStage> shapes = new ArrayList<>();
 	
+	private LightingModel model;
+	
+	
+	public LightingModel getModel() {
+		return model;
+	}
+
+
+
+	public void setModel(LightingModel model) {
+		this.model = model;
+	}
+
+
+
 	/**
 	 * Shadow Attribute 
 	 */

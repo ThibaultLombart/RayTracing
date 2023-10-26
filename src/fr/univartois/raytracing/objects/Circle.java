@@ -145,4 +145,15 @@ public class Circle implements IObjectStage {
         }
     }
 
+    /**
+     * @param p intersection P
+     * @return Vector N
+     */
+    public Vector getN(Point p) {
+        // TODO Auto-generated method stub.
+        
+        Vector n = p.substraction(point).standardization();
+        return n;
+    }
+
 }

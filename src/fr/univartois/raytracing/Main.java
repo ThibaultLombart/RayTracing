@@ -51,6 +51,7 @@ public class Main {
         */
         
         RayThrower.rayThrower(scene);
+        System.out.println("FINI");
         
         
         

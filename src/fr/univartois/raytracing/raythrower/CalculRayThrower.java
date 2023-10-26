@@ -8,12 +8,17 @@ package fr.univartois.raytracing.raythrower;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.util.List;
 
 import fr.univartois.raytracing.Scene;
 import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
+import fr.univartois.raytracing.lights.BasicLightingModel;
+import fr.univartois.raytracing.lights.LambertianLightingDecorator;
+import fr.univartois.raytracing.lights.LightingModel;
+import fr.univartois.raytracing.lights.LocalLight;
 import fr.univartois.raytracing.objects.Circle;
 import fr.univartois.raytracing.objects.IObjectStage;
 
@@ -135,23 +140,36 @@ public class CalculRayThrower {
     public static fr.univartois.raytracing.digital.triples.Color parcoursObjets(Scene scene, Vector d) {
         List<IObjectStage> objects = scene.getShapes();
         double min = -1;
+        boolean chooseModel;
+        LightingModel model;
         fr.univartois.raytracing.digital.triples.Color colorMin = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0,0,0));
+        
+        
+        
+        if (scene.getAmbient() != null && scene.getDiffuse() != null) {
+        	chooseModel=true;
+        	model = new LambertianLightingDecorator(scene.getLights(), scene);
+        }
+        else {
+        	chooseModel=false;
+        	model = new BasicLightingModel(scene.getAmbient());
+        }	
+
+        
+        
         for (int y = 0; y < objects.size(); y++) {
-            IObjectStage object = objects.get(y);
-            double t = object.calculateT(scene.getLookFrom(), d);
-            Point p = null;
-            if(t > -1) {
-                p = d.multiplication(t).add(scene.getLookFrom());
-            }
-            if(p != null) {
-                if(min == -1) {
-                    min = t;
-                    colorMin = object.getColor();
-                } else if(min > t) {
-                    min = t;
-                    colorMin = object.getColor();
+           IObjectStage object = objects.get(y);
+           double t = object.calculateT(scene.getLookFrom(), d);
+                Point p = null;
+                if(t > -1) {
+                    p = d.multiplication(t).add(scene.getLookFrom());
                 }
-            }
+                if(p != null) {
+                    if(min == -1 || min > t) {
+                        min = t;
+                        colorMin = model.calculateColor(object,d,p);
+                    }
+                }
         }
         return colorMin;
     }
@@ -170,9 +188,13 @@ public class CalculRayThrower {
             for(int j = 0; j < imgHeight; j++) {
                 Vector d = calculD(i,j,scene);
                 Triplet colAvant = parcoursObjets(scene,d).getTriplet();
+                
+                
+                
                 float R = (float) colAvant.getX();
                 float G = (float) colAvant.getY();
                 float B = (float) colAvant.getZ();
+                
                     
                 Color col = new Color(R,G,B);
                 int rgb = col.getRGB();

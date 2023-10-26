@@ -56,11 +56,11 @@ public class LocalLight extends Light{
         return super.getColor();
     }
 	
-	/*
-	 * Calculate the direction vector from the light to the point.
-	 */
-    public Vector getDirection() {
-        return this.point.substraction(getPoint()).standardization();
+    public Vector getLdir(Point p) {
+    	return point.substraction(p).standardization();
     }
+
+
+    
 	
 }

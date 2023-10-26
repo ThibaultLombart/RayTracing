@@ -119,4 +119,13 @@ public class Plane implements IObjectStage {
         return q.substraction(lookFrom).scalarProduct(n)/d.scalarProduct(n);
     }
 
+    /**
+     * @return Vector N
+     */
+    public Vector getN(Point p) {
+        return vector;
+    }
+    
+    
+
 }
