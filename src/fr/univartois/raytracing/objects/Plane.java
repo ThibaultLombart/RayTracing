@@ -108,7 +108,7 @@ public class Plane implements IObjectStage {
      * @see fr.univartois.raytracing.objects.IObjectStage#calculT(fr.univartois.raytracing.digital.triples.Point, fr.univartois.raytracing.digital.triples.Vector)
      */
     @Override
-    public double calculT(Point lookFrom, Vector d) {
+    public double calculateT(Point lookFrom, Vector d) {
         Vector n = this.vector;
         Point q = this.point;
         

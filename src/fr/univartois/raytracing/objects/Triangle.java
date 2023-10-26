@@ -8,6 +8,7 @@ package fr.univartois.raytracing.objects;
 
 import java.util.Arrays;
 
+import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
@@ -79,30 +80,58 @@ public class Triangle implements IObjectStage {
         return color;
     }
     
+    /**
+     * @return Vector N
+     */
+    public Vector getN() {
+        Point a = points[0];
+        Point b = points[1];
+        Point c = points[2];
+        
+        return b.substraction(a).vectorProduct(c.substraction(a)).standardization();
+    }
+    
     /*
      * (non-Javadoc)
      *
      * @see fr.univartois.raytracing.objects.IObjectStage#calculT(fr.univartois.raytracing.digital.triples.Point, fr.univartois.raytracing.digital.triples.Vector)
      */
     @Override
-    public double calculT(Point lookFrom, Vector d) {
+    public double calculateT(Point lookFrom, Vector d) {
         Point a = points[0];
         Point b = points[1];
         Point c = points[2];
         
-        Vector n = b.substraction(a).vectorProduct(c.substraction(a)).standardization();
-    
-        Point p = c;
+        Vector n = getN();
         
-        if(b.substraction(a).vectorProduct(p.substraction(a)).scalarProduct(n) < 0) {
-            return -1;
-        } else if (c.substraction(b).vectorProduct(p.substraction(b)).scalarProduct(n) < 0) {
-            return -1;
-        } else if (a.substraction(c).vectorProduct(p.substraction(c)).scalarProduct(n) < 0) {
+        Plane plane = new Plane(a,n,new Color(new Triplet(0,0,0)));
+        
+        double tPlane = plane.calculateT(lookFrom, d);
+        
+        Point p = d.multiplication(tPlane).add(lookFrom);
+        
+        //System.out.println(tPlane);
+        
+        Vector verif1a = b.substraction(a);
+        Vector verif1b = p.substraction(a);
+        Vector verif1c = verif1a.vectorProduct(verif1b);
+        double verif1 = verif1c.scalarProduct(n);
+        
+        Vector verif2a = c.substraction(b);
+        Vector verif2b = p.substraction(b);
+        Vector verif2c = verif2a.vectorProduct(verif2b);
+        double verif2 = verif2c.scalarProduct(n);
+        
+        Vector verif3a = a.substraction(c);
+        Vector verif3b = p.substraction(c);
+        Vector verif3c = verif3a.vectorProduct(verif3b);
+        double verif3 = verif3c.scalarProduct(n);
+        
+        if(verif1 >= 0 && verif2 >= 0 && verif3 >= 0) {
+            return tPlane;
+        } else {
             return -1;
         }
-        
-        return p.substraction(lookFrom).scalarProduct(n)/d.scalarProduct(n);
 
     
     }

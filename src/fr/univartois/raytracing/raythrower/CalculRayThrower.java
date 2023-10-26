@@ -138,7 +138,7 @@ public class CalculRayThrower {
         fr.univartois.raytracing.digital.triples.Color colorMin = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0,0,0));
         for (int y = 0; y < objects.size(); y++) {
             IObjectStage object = objects.get(y);
-            double t = object.calculT(scene.getLookFrom(), d);
+            double t = object.calculateT(scene.getLookFrom(), d);
             Point p = null;
             if(t > -1) {
                 p = d.multiplication(t).add(scene.getLookFrom());
