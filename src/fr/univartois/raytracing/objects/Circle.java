@@ -152,7 +152,7 @@ public class Circle implements IObjectStage {
     public Vector getN(Point p) {
         // TODO Auto-generated method stub.
         
-        Vector n = p.substraction(point);
+        Vector n = p.substraction(point).standardization();
         return n;
     }
 

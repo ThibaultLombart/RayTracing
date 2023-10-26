@@ -189,9 +189,12 @@ public class CalculRayThrower {
                 Vector d = calculD(i,j,scene);
                 Triplet colAvant = parcoursObjets(scene,d).getTriplet();
                 
+                
+                
                 float R = (float) colAvant.getX();
                 float G = (float) colAvant.getY();
                 float B = (float) colAvant.getZ();
+                
                     
                 Color col = new Color(R,G,B);
                 int rgb = col.getRGB();

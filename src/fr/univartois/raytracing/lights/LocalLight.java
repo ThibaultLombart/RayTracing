@@ -57,7 +57,7 @@ public class LocalLight extends Light{
     }
 	
     public Vector getLdir(Point p) {
-    	return point.substraction(p);
+    	return point.substraction(p).standardization();
     }
 
 

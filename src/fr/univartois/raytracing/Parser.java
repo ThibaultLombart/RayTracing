@@ -103,10 +103,11 @@ public class Parser {
 					case "directional":
 	                	if (scanner.hasNext()) {
 	                		Triplet t1 = new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()));
+	                		Triplet t2 = new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()));
 	                		List<Light> l1 = scene.getLights();
-	                		double x = 0;
-	                		double y = 0;
-	                		double z = 0;
+	                		double x = t2.getX();
+	                		double y = t2.getY();
+	                		double z = t2.getZ();
 	                		for( int i=0 ; i< l1.size() ; i++ ) {
 	                			x = x + l1.get(i).getColor().getTriplet().getX();
 	                			y = y + l1.get(i).getColor().getTriplet().getY();
@@ -117,7 +118,7 @@ public class Parser {
 								throw new Exception("Valeur(s) supérieure(s) à 1");
 							}
 							else {
-	                		scene.addLight(new DirectionalLight(new Color(t1),(new Vector(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()))))));
+	                		scene.addLight(new DirectionalLight(new Color(t2),(new Vector(t1))));
 							}
 	                	}
 						break;
@@ -125,10 +126,11 @@ public class Parser {
 					case "point":
 	                	if (scanner.hasNext()) {
 	                		Triplet t1 = new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()));
+	                		Triplet t2 = new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()));
 	                		List<Light> l1 = scene.getLights();
-	                		double x = 0;
-	                		double y = 0;
-	                		double z = 0;
+	                		double x = t2.getX();
+	                		double y = t2.getY();
+	                		double z = t2.getZ();
 	                		for( int i=0 ; i< l1.size() ; i++ ) {
 	                			x = x + l1.get(i).getColor().getTriplet().getX();
 	                			y = y + l1.get(i).getColor().getTriplet().getY();
@@ -139,7 +141,7 @@ public class Parser {
 								throw new Exception("Valeur(s) supérieure(s) à 1");
 							}
 							else {
-	                		scene.addLight(new LocalLight(new Color(t1),(new Point(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()))))));
+	                		scene.addLight(new LocalLight(new Color(t2),(new Point(t1))));
 							}
 	                	}
 						break;

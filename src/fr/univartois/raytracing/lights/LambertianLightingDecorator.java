@@ -38,7 +38,7 @@ public class LambertianLightingDecorator implements LightingModel{
 	 * @param shape
 	 * @return
 	 */
-	public Color calculateLambert(IObjectStage shape, Light light, Vector toLight, Point p) {
+	public Color calculateLambert(IObjectStage shape, Light light, Point p) {
 	    
 		Vector ldir = light.getLdir(p);
 	    Vector n = shape.getN(p);
@@ -55,10 +55,10 @@ public class LambertianLightingDecorator implements LightingModel{
     public Color calculateColor(IObjectStage shape, Vector toLight, Point p) {
 
     	
-        Color sommeColor = calculateLambert(shape, lights.get(0), toLight,p);
+        Color sommeColor = calculateLambert(shape, lights.get(0),p);
         
         for (int i = 1; i < lights.size(); i++) {
-            sommeColor.add(calculateLambert(shape, lights.get(i), toLight,p));
+            sommeColor = sommeColor.add(calculateLambert(shape, lights.get(i),p));
         }
         return sommeColor.schur(shape.getColor()).add(scene.getAmbient());
     }
