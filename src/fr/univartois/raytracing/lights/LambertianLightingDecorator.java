@@ -7,13 +7,10 @@ import fr.univartois.raytracing.digital.triples.Vector;
 
 public class LambertianLightingDecorator implements LightingModel{
 	
-	Color diffuseColor;
-	Vector vector;
-
+	Light light;
 	
-	public LambertianLightingDecorator(Vector vector) {
-		super();
-		this.vector = vector;
+	public LambertianLightingDecorator(DirectionalLight light) {
+		this.light=light;
 	}
 
 	public Color calculateColor(Color point, Vector normal, Vector toLight) {
@@ -22,23 +19,17 @@ public class LambertianLightingDecorator implements LightingModel{
         if (cosTheta < 0) {
             cosTheta = 0;
         }
-        Color result = point.add(diffuseColor.multiplication(cosTheta));
+        Color result = point.add(this.light.getColor().multiplication(cosTheta));
         return result;
     }
 
-	public Color getDiffuseColor() {
-		return diffuseColor;
+	
+    
+	public DirectionalLight getLight() {
+		return light;
 	}
 
-	public void setDiffuseColor(Color diffuseColor) {
-		this.diffuseColor = diffuseColor;
+	public void setLight(DirectionalLight light) {
+		this.light = light;
 	}
-    
-	/*
-	 * Directional lights have a consistent direction.
-	 */
-    public Vector getDirection() {
-        return vector.standardization();
-    }
-    
 }

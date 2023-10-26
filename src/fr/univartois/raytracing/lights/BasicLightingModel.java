@@ -3,6 +3,7 @@ package fr.univartois.raytracing.lights;
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
+import fr.univartois.raytracing.objects.IObjectStage;
 
 /*
  * We are using a strategy for the design pattern. 
@@ -10,23 +11,11 @@ import fr.univartois.raytracing.digital.triples.Vector;
  * or with the lambertian model.
  */
 public class BasicLightingModel implements LightingModel{
-
-	Point point;
 	
+	private Color ambient;
 	
-	public BasicLightingModel(Point point) {
-		this.point = point;
+	public Color calculateColor(IObjectStage shapes, Vector toLight) {
+		return this.ambient;
 	}
 
-	public Color calculateColor(Color color, Vector normal, Vector toLight) {
-		return color;
-	}
-	
-	/*
-	 * Calculate the direction vector from the light to the point.
-	 */
-    public Vector getDirection() {
-        return point.substraction(new Point(point.getTriplet().standardization()));
-    }
-    
 }
