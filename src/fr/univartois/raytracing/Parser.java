@@ -160,7 +160,7 @@ public class Parser {
 					case "tri":
 						
 						if (scanner.hasNext()) {
-							Color couleur = scene.getAmbient();
+							Color couleur = scene.getDiffuse();
 							if (couleur.getTriplet().getX()>1 || couleur.getTriplet().getY()>1 || couleur.getTriplet().getZ()>1) {
 								scanner.close();
 								throw new Exception("Valeur(s) supérieure(s) à 1");
@@ -174,7 +174,7 @@ public class Parser {
 					
 					case "sphere":
 						if (scanner.hasNext()) {
-							Color couleur = scene.getAmbient();
+							Color couleur = scene.getDiffuse();
 							scene.addShape(new Circle(new Point(new Triplet(
 							        Double.parseDouble(scanner.next().trim()),
 							        Double.parseDouble(scanner.next().trim()),
@@ -187,7 +187,7 @@ public class Parser {
 					
 					case "plane":
 						if (scanner.hasNext()) {
-							Color couleur = scene.getAmbient();
+							Color couleur = scene.getDiffuse();
 							scene.addShape(new Plane(new Point(new Triplet(
 							        Double.parseDouble(scanner.next().trim()),
 							        Double.parseDouble(scanner.next().trim()),

@@ -14,7 +14,16 @@ public class BasicLightingModel implements LightingModel{
 	
 	private Color ambient;
 	
-	public Color calculateColor(IObjectStage shapes, Vector toLight) {
+	
+    /**
+     * Crée une nouvelle instance de BasicLightingModel.
+     */
+    public BasicLightingModel(Color ambient) {
+        // TODO Auto-generated constructor stub.
+        this.ambient = ambient;
+    }
+	
+	public Color calculateColor(IObjectStage shape, Vector toLight) {
 		return this.ambient;
 	}
 

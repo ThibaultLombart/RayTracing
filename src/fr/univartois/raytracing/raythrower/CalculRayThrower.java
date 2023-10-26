@@ -8,6 +8,7 @@ package fr.univartois.raytracing.raythrower;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.util.List;
 
 import fr.univartois.raytracing.Scene;
@@ -142,28 +143,31 @@ public class CalculRayThrower {
         boolean chooseModel;
         LightingModel model;
         fr.univartois.raytracing.digital.triples.Color colorMin = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0,0,0));
+        
+        
+        
         if (scene.getAmbient() != null && scene.getDiffuse() != null) {
         	chooseModel=true;
+        	model = new LambertianLightingDecorator(scene.getLights());
         }
         else {
         	chooseModel=false;
-        	model = new BasicLightingModel();
+        	model = new BasicLightingModel(scene.getAmbient());
         }	
 
+        
+        
         for (int y = 0; y < objects.size(); y++) {
            IObjectStage object = objects.get(y);
-           double t = object.calculT(scene.getLookFrom(), d);
+           double t = object.calculateT(scene.getLookFrom(), d);
                 Point p = null;
                 if(t > -1) {
                     p = d.multiplication(t).add(scene.getLookFrom());
                 }
                 if(p != null) {
-                    if(min == -1) {
+                    if(min == -1 || min > t) {
                         min = t;
-                        colorMin = model.calculateColor(object.getColor(),model.getDirection(), d);
-                    } else if(min > t) {
-                        min = t;
-                        colorMin = model.calculateColor(object.getColor(),model.getDirection(), d);
+                        colorMin = model.calculateColor(object,model.getDirection(), d);
                     }
                 }
         }

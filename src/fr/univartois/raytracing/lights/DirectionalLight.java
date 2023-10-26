@@ -2,6 +2,7 @@ package fr.univartois.raytracing.lights;
 
 import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Color;
+import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
 
 public class DirectionalLight extends Light{
@@ -53,11 +54,5 @@ public class DirectionalLight extends Light{
         return super.getColor();
     }
 	
-	/*
-	 * Directional lights have a consistent direction.
-	 */
-    public Vector getDirection() {
-        return this.vector.standardization();
-    }
 	
 }
