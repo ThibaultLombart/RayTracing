@@ -166,9 +166,7 @@ public class CalculRayThrower {
                         colorMin = model.calculateColor(object.getColor(),model.getDirection(), d);
                     }
                 }
-            }
         }
-        
         return colorMin;
     }
     
@@ -186,9 +184,9 @@ public class CalculRayThrower {
             for(int j = 0; j < imgHeight; j++) {
                 Vector d = calculD(i,j,scene);
                 Triplet colAvant = parcoursObjets(scene,d).getTriplet();
-                int R = (int) Math.round(colAvant.getX()) * 255;
-                int G = (int) Math.round(colAvant.getY()) * 255;
-                int B = (int) Math.round(colAvant.getZ()) * 255;
+                float R = (float) colAvant.getX();
+                float G = (float) colAvant.getY();
+                float B = (float) colAvant.getZ();
                     
                 Color col = new Color(R,G,B);
                 int rgb = col.getRGB();

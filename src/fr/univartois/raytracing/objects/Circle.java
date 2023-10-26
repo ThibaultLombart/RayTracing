@@ -111,7 +111,7 @@ public class Circle implements IObjectStage {
      * @param d Vector D
      * @return T
      */
-    public double calculT(Point lookFrom, Vector d) {
+    public double calculateT(Point lookFrom, Vector d) {
         Point o = lookFrom;
         
         Point cc = this.point;
