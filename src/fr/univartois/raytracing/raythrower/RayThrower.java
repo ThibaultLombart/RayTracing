@@ -22,7 +22,7 @@ public class RayThrower {
         try {
             // Retrieve image
             BufferedImage image = CalculRayThrower.getMyImage(scene);
-            File outputfile = new File(scene.getName() + ".png");
+            File outputfile = new File(scene.getName());
             ImageIO.write(image, "png", outputfile);
         } catch (IOException e) {
             // Handle the exception, e.g., by logging an error or taking appropriate action.

@@ -29,7 +29,7 @@ public interface IObjectStage {
      * @param d d 
      * @return T
      */
-    double calculT(Point lookFrom, Vector d);
+    double calculateT(Point lookFrom, Vector d);
     
 }
 
