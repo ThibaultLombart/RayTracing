@@ -56,6 +56,9 @@ public class LocalLight extends Light{
         return super.getColor();
     }
 	
+    public Vector getLdir(Point p) {
+    	return point.substraction(p);
+    }
 
 
     

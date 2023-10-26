@@ -32,6 +32,7 @@ public interface IObjectStage {
     double calculateT(Point lookFrom, Vector d);
     
     Vector getN(Point p);
-    
+
+
 }
 

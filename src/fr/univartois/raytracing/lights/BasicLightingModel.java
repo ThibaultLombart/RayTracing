@@ -23,7 +23,10 @@ public class BasicLightingModel implements LightingModel{
         this.ambient = ambient;
     }
 	
-	public Color calculateColor(IObjectStage shape, Vector toLight) {
+
+	@Override
+	public Color calculateColor(IObjectStage shapes, Vector toLight, Point p) {
+		// TODO Auto-generated method stub
 		return this.ambient;
 	}
 

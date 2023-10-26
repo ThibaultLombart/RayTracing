@@ -53,6 +53,12 @@ public class DirectionalLight extends Light{
     public Color getColor() {
         return super.getColor();
     }
+    
+    @Override
+    public Vector getLdir(Point p) {
+    	return vector.standardization();
+    }
+	
 	
 	
 }

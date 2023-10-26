@@ -83,7 +83,6 @@ public class Triangle implements IObjectStage {
     /**
      * @return Vector N
      */
-    @Override
     public Vector getN(Point p) {
         Point a = points[0];
         Point b = points[1];
@@ -103,8 +102,8 @@ public class Triangle implements IObjectStage {
         Point b = points[1];
         Point c = points[2];
         
-        Vector n = getN(
-                new Point(new Triplet(-1,-1,-1)));
+        Vector n = getN(new Point(
+        		new Triplet(-1,-1,-1)));
         
         Plane plane = new Plane(a,n,new Color(new Triplet(0,0,0)));
         

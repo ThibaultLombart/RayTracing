@@ -119,12 +119,9 @@ public class Plane implements IObjectStage {
         return q.substraction(lookFrom).scalarProduct(n)/d.scalarProduct(n);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see fr.univartois.raytracing.objects.IObjectStage#getN()
+    /**
+     * @return Vector N
      */
-    @Override
     public Vector getN(Point p) {
         return vector;
     }

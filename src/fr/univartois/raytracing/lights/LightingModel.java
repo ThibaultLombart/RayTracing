@@ -7,6 +7,6 @@ import fr.univartois.raytracing.objects.IObjectStage;
 
 public interface LightingModel {
 	
-	Color calculateColor(IObjectStage shapes, Vector toLight);
+	Color calculateColor(IObjectStage shapes, Vector toLight, Point p);
 
 }

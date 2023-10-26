@@ -145,12 +145,10 @@ public class Circle implements IObjectStage {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see fr.univartois.raytracing.objects.IObjectStage#getN()
+    /**
+     * @param p intersection P
+     * @return Vector N
      */
-    @Override
     public Vector getN(Point p) {
         // TODO Auto-generated method stub.
         

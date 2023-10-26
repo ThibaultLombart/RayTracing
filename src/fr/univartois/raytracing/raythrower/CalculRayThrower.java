@@ -148,7 +148,7 @@ public class CalculRayThrower {
         
         if (scene.getAmbient() != null && scene.getDiffuse() != null) {
         	chooseModel=true;
-        	model = new LambertianLightingDecorator(scene.getLights());
+        	model = new LambertianLightingDecorator(scene.getLights(), scene);
         }
         else {
         	chooseModel=false;
@@ -167,7 +167,7 @@ public class CalculRayThrower {
                 if(p != null) {
                     if(min == -1 || min > t) {
                         min = t;
-                        colorMin = model.calculateColor(object,model.getDirection(), d);
+                        colorMin = model.calculateColor(object,d,p);
                     }
                 }
         }
@@ -188,6 +188,7 @@ public class CalculRayThrower {
             for(int j = 0; j < imgHeight; j++) {
                 Vector d = calculD(i,j,scene);
                 Triplet colAvant = parcoursObjets(scene,d).getTriplet();
+                
                 float R = (float) colAvant.getX();
                 float G = (float) colAvant.getY();
                 float B = (float) colAvant.getZ();

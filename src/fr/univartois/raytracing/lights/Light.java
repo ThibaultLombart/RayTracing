@@ -48,5 +48,7 @@ public abstract class Light {
 		this.color = new Color(new Triplet(r,g,b));
 	}
 	
+	public abstract Vector getLdir(Point p);
+	
 	
 }
