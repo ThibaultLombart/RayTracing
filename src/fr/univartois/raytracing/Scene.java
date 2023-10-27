@@ -10,6 +10,7 @@ import fr.univartois.raytracing.digital.triples.Vector;
 import fr.univartois.raytracing.lights.Light;
 import fr.univartois.raytracing.lights.LightingModel;
 import fr.univartois.raytracing.objects.IObjectStage;
+import fr.univartois.raytracing.raythrower.SamplingStrategy;
 
 /**
  * Class Scene
@@ -101,6 +102,10 @@ public class Scene {
 	 */
 	private boolean shadow = false;
 	
+	private SamplingStrategy samplingStrategy;
+	
+	private int samples;
+	
 	/**
 	 * constructor Scene
 	 * @param builder ComplicatedObjectBuilder
@@ -123,6 +128,8 @@ public class Scene {
 		this.points = builder.getPoints();
 		this.shapes = builder.getShapes();
 		this.shadow = builder.getShadow();
+		this.samplingStrategy = builder.getSamplingStrategy();
+		this.samples = builder.getSamples();
 		
 	}
 
@@ -140,9 +147,35 @@ public class Scene {
 	public void setShadow(boolean shadow) {
 	    this.shadow = shadow;
 	}
+	
+	
 
     
-    /**
+    public SamplingStrategy getSamplingStrategy() {
+		return samplingStrategy;
+	}
+
+
+
+	public void setSamplingStrategy(SamplingStrategy samplingStrategy) {
+		this.samplingStrategy = samplingStrategy;
+	}
+
+
+
+	public int getSamples() {
+		return samples;
+	}
+
+
+
+	public void setSamples(int samples) {
+		this.samples = samples;
+	}
+
+
+
+	/**
      * Give Attribute sizeX .
      *
      * @return Attribute sizeX .

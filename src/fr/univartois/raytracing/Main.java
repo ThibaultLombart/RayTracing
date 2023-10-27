@@ -10,10 +10,8 @@ package fr.univartois.raytracing;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
-import fr.univartois.raytracing.raythrower.CalculRayThrower;
 import fr.univartois.raytracing.raythrower.RayThrower;
 
 /**
@@ -50,7 +48,7 @@ public class Main {
         System.out.println("FAIT");
         */
         
-        RayThrower.rayThrower(scene);
+        RayThrower.rayThrower(scene,scene.getSamplingStrategy(),scene.getSamples());
         System.out.println("FINI");
         
         
