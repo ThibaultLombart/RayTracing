@@ -8,7 +8,6 @@ import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
 import fr.univartois.raytracing.lights.Light;
-import fr.univartois.raytracing.lights.LightingModel;
 import fr.univartois.raytracing.objects.IObjectStage;
 
 /**
@@ -81,16 +80,16 @@ public class Scene {
      */
 	private List<IObjectStage> shapes = new ArrayList<>();
 	
-	private LightingModel model;
+	private String model = "Normal";
 	
 	
-	public LightingModel getModel() {
+	public String getModel() {
 		return model;
 	}
 
 
 
-	public void setModel(LightingModel model) {
+	public void setModel(String model) {
 		this.model = model;
 	}
 
@@ -123,6 +122,7 @@ public class Scene {
 		this.points = builder.getPoints();
 		this.shapes = builder.getShapes();
 		this.shadow = builder.getShadow();
+		this.model = builder.getModel();
 		
 	}
 
