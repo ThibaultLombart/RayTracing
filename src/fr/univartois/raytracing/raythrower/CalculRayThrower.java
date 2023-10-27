@@ -166,7 +166,7 @@ public class CalculRayThrower {
      * @param scene The Scene object to render.
      * @return A BufferedImage representing the rendered image.
      */
-    public static BufferedImage getMyImage(Scene scene) {
+    public static BufferedImage getMyImage(Scene scene, SamplingStrategy samplingStrategy, int samples) {
         NormalLighting strategy = new NormalLighting(scene);
         IStrategyLight model = strategy.chooseModel();
         System.out.println(scene.getModel());
@@ -175,18 +175,28 @@ public class CalculRayThrower {
         BufferedImage image = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
         for (int i = 0; i < imgWidth; i++) {
             for(int j = 0; j < imgHeight; j++) {
-                Vector d = calculD(i,j,scene);
-                Triplet colAvant = parcoursObjets(scene,d,model).getTriplet();
+            	fr.univartois.raytracing.digital.triples.Color totalColor = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0,0,0));
+                List<Vector> listeSamples = samplingStrategy.generateSamples(samples);
                 
-                
-                float R = (float) colAvant.getX();
-                float G = (float) colAvant.getY();
-                float B = (float) colAvant.getZ();
-                
+                for (Vector d : listeSamples) {
+                	d = calculD(i,j,scene);
+                    Triplet colAvant = parcoursObjets(scene, d,model).getTriplet();
                     
+                    System.out.println("colAvant :");
+                    System.out.println(colAvant);
+                    
+                    totalColor = totalColor.add(new fr.univartois.raytracing.digital.triples.Color(colAvant));
+                }
+                
+                totalColor = totalColor.multiplication(1.0 / samples);
+
+                float R = (float) totalColor.getTriplet().getX();
+                float G = (float) totalColor.getTriplet().getY();
+                float B = (float) totalColor.getTriplet().getZ();
                 Color col = new Color(R,G,B);
                 int rgb = col.getRGB();
                 image.setRGB(i, j, rgb);
+
             }
         }
         return image;

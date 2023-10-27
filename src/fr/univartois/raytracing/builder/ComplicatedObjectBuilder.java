@@ -16,6 +16,7 @@ import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
 import fr.univartois.raytracing.lights.Light;
 import fr.univartois.raytracing.objects.IObjectStage;
+import fr.univartois.raytracing.raythrower.SamplingStrategy;
 
 /**
  * Class ComplicatedObjectBuilder
@@ -92,6 +93,11 @@ public class ComplicatedObjectBuilder {
      */
     private boolean shadow = false;
     
+
+    private SamplingStrategy samplingStrategy;
+    
+    private int samples;
+
     private String model = "Normal";
     
     
@@ -105,6 +111,7 @@ public class ComplicatedObjectBuilder {
         this.model = model;
     }
     
+
     
     
     /**
@@ -141,9 +148,25 @@ public class ComplicatedObjectBuilder {
     public void setShadow(boolean shadow) {
         this.shadow = shadow;
     }
-
     
-    /**
+    
+    public SamplingStrategy getSamplingStrategy() {
+		return samplingStrategy;
+	}
+
+	public void setSamplingStrategy(SamplingStrategy samplingStrategy) {
+		this.samplingStrategy = samplingStrategy;
+	}
+
+	public int getSamples() {
+		return samples;
+	}
+
+	public void setSamples(int samples) {
+		this.samples = samples;
+	}
+
+	/**
      * Give Attribute sizeX .
      *
      * @return Attribute sizeX .
