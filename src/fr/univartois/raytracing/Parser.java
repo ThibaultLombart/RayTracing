@@ -94,6 +94,7 @@ public class Parser {
 	                
 					case "specular":
 	                	if (scanner.hasNext()) {
+	                	    scene.setModel("Blinn");
 	                		scene.setSpecular(new Color(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()))));
 	                	}
 						break;
@@ -106,6 +107,8 @@ public class Parser {
 	                
 					case "directional":
 	                	if (scanner.hasNext()) {
+	                	    if(scene.getModel() == "Normal")
+	                	        scene.setModel("Lambert");
 	                		Triplet t1 = new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()));
 	                		Triplet t2 = new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()));
 	                		List<Light> l1 = scene.getLights();
@@ -129,6 +132,8 @@ public class Parser {
 	                
 					case "point":
 	                	if (scanner.hasNext()) {
+	                	    if(scene.getModel() == "Normal")
+                                scene.setModel("Lambert");
 	                		Triplet t1 = new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()));
 	                		Triplet t2 = new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()));
 	                		List<Light> l1 = scene.getLights();

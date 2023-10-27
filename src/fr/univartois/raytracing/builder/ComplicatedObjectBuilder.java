@@ -93,9 +93,25 @@ public class ComplicatedObjectBuilder {
      */
     private boolean shadow = false;
     
+
     private SamplingStrategy samplingStrategy;
     
     private int samples;
+
+    private String model = "Normal";
+    
+    
+    public String getModel() {
+        return model;
+    }
+
+
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+    
+
     
     
     /**

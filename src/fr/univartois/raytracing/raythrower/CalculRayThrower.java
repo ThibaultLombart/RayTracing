@@ -15,10 +15,9 @@ import fr.univartois.raytracing.Scene;
 import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
-import fr.univartois.raytracing.lights.BasicLightingModel;
-import fr.univartois.raytracing.lights.LambertianLightingDecorator;
-import fr.univartois.raytracing.lights.LightingModel;
 import fr.univartois.raytracing.lights.LocalLight;
+import fr.univartois.raytracing.lights.strategy.IStrategyLight;
+import fr.univartois.raytracing.lights.strategy.NormalLighting;
 import fr.univartois.raytracing.objects.Circle;
 import fr.univartois.raytracing.objects.IObjectStage;
 
@@ -137,25 +136,12 @@ public class CalculRayThrower {
      * @param d The direction vector.
      * @return The color determined by ray tracing.
      */
-    public static fr.univartois.raytracing.digital.triples.Color parcoursObjets(Scene scene, Vector d) {
+    public static fr.univartois.raytracing.digital.triples.Color parcoursObjets(Scene scene, Vector d,IStrategyLight model) {
         List<IObjectStage> objects = scene.getShapes();
         double min = -1;
-        boolean chooseModel;
-        LightingModel model;
+        
         fr.univartois.raytracing.digital.triples.Color colorMin = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0,0,0));
-        
-        
-        
-        if (scene.getAmbient() != null && scene.getDiffuse() != null) {
-        	chooseModel=true;
-        	model = new LambertianLightingDecorator(scene.getLights(), scene);
-        }
-        else {
-        	chooseModel=false;
-        	model = new BasicLightingModel(scene.getAmbient());
-        }	
 
-        
         
         for (int y = 0; y < objects.size(); y++) {
            IObjectStage object = objects.get(y);
@@ -180,18 +166,21 @@ public class CalculRayThrower {
      * @param scene The Scene object to render.
      * @return A BufferedImage representing the rendered image.
      */
-    public static BufferedImage getMyImage(Scene scene, SamplingStrategy strategy, int samples) {
+    public static BufferedImage getMyImage(Scene scene, SamplingStrategy samplingStrategy, int samples) {
+        NormalLighting strategy = new NormalLighting(scene);
+        IStrategyLight model = strategy.chooseModel();
+        System.out.println(scene.getModel());
         int imgWidth = scene.getSizeX();
         int imgHeight = scene.getSizeY();
         BufferedImage image = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
         for (int i = 0; i < imgWidth; i++) {
             for(int j = 0; j < imgHeight; j++) {
             	fr.univartois.raytracing.digital.triples.Color totalColor = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0,0,0));
-                List<Vector> listeSamples = strategy.generateSamples(samples);
+                List<Vector> listeSamples = samplingStrategy.generateSamples(samples);
                 
                 for (Vector d : listeSamples) {
                 	d = calculD(i,j,scene);
-                    Triplet colAvant = parcoursObjets(scene, d).getTriplet();
+                    Triplet colAvant = parcoursObjets(scene, d,model).getTriplet();
                     
                     System.out.println("colAvant :");
                     System.out.println(colAvant);
