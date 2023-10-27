@@ -180,25 +180,25 @@ public class CalculRayThrower {
      * @param scene The Scene object to render.
      * @return A BufferedImage representing the rendered image.
      */
-    public static BufferedImage getMyImage(Scene scene) {
+    public static BufferedImage getMyImage(Scene scene, SamplingStrategy strategy, int samples) {
         int imgWidth = scene.getSizeX();
         int imgHeight = scene.getSizeY();
         BufferedImage image = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
         for (int i = 0; i < imgWidth; i++) {
             for(int j = 0; j < imgHeight; j++) {
-                Vector d = calculD(i,j,scene);
-                Triplet colAvant = parcoursObjets(scene,d).getTriplet();
+            	fr.univartois.raytracing.digital.triples.Color totalColor = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0, 0, 0));
+                List<Vector> listeSamples = strategy.generateSamples(samples);
                 
+                for (Vector d : listeSamples) {
+                    Triplet colAvant = parcoursObjets(scene, d).getTriplet();
+                    totalColor = totalColor.add(new fr.univartois.raytracing.digital.triples.Color(colAvant));
+                }
                 
-                
-                float R = (float) colAvant.getX();
-                float G = (float) colAvant.getY();
-                float B = (float) colAvant.getZ();
-                
-                    
-                Color col = new Color(R,G,B);
+                totalColor = totalColor.multiplication(1.0 / samples);
+                Color col = new Color((int) totalColor.getTriplet().getX(), (int) totalColor.getTriplet().getY(), (int) totalColor.getTriplet().getZ());
                 int rgb = col.getRGB();
                 image.setRGB(i, j, rgb);
+
             }
         }
         return image;
