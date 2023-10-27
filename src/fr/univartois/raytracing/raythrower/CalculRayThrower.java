@@ -186,16 +186,25 @@ public class CalculRayThrower {
         BufferedImage image = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
         for (int i = 0; i < imgWidth; i++) {
             for(int j = 0; j < imgHeight; j++) {
-            	fr.univartois.raytracing.digital.triples.Color totalColor = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0, 0, 0));
+            	fr.univartois.raytracing.digital.triples.Color totalColor = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0,0,0));
                 List<Vector> listeSamples = strategy.generateSamples(samples);
                 
                 for (Vector d : listeSamples) {
+                	d = calculD(i,j,scene);
                     Triplet colAvant = parcoursObjets(scene, d).getTriplet();
+                    
+                    System.out.println("colAvant :");
+                    System.out.println(colAvant);
+                    
                     totalColor = totalColor.add(new fr.univartois.raytracing.digital.triples.Color(colAvant));
                 }
                 
                 totalColor = totalColor.multiplication(1.0 / samples);
-                Color col = new Color((int) totalColor.getTriplet().getX(), (int) totalColor.getTriplet().getY(), (int) totalColor.getTriplet().getZ());
+
+                float R = (float) totalColor.getTriplet().getX();
+                float G = (float) totalColor.getTriplet().getY();
+                float B = (float) totalColor.getTriplet().getZ();
+                Color col = new Color(R,G,B);
                 int rgb = col.getRGB();
                 image.setRGB(i, j, rgb);
 
