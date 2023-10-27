@@ -14,6 +14,9 @@ import fr.univartois.raytracing.lights.LocalLight;
 import fr.univartois.raytracing.objects.Circle;
 import fr.univartois.raytracing.objects.Plane;
 import fr.univartois.raytracing.objects.Triangle;
+import fr.univartois.raytracing.raythrower.CenterSampling;
+import fr.univartois.raytracing.raythrower.GridSampling;
+import fr.univartois.raytracing.raythrower.RandomSampling;
 /**
  * The Parser class is responsible for reading scene information from a text file
  * and constructing a Scene object based on the provided data.
@@ -27,6 +30,7 @@ public class Parser {
      * @return The constructed Scene object.
      * @throws Exception If there is an error while parsing the file or if values exceed certain limits.
      */
+
     public static Scene lecture(String nomFichier) throws Exception {
         ComplicatedObjectBuilder scene = ComplicatedObjectBuilder.newInstance();
         try {
@@ -90,6 +94,7 @@ public class Parser {
 	                
 					case "specular":
 	                	if (scanner.hasNext()) {
+	                	    scene.setModel("Blinn");
 	                		scene.setSpecular(new Color(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()))));
 	                	}
 						break;
@@ -102,6 +107,8 @@ public class Parser {
 	                
 					case "directional":
 	                	if (scanner.hasNext()) {
+	                	    if(scene.getModel() == "Normal")
+	                	        scene.setModel("Lambert");
 	                		Triplet t1 = new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()));
 	                		Triplet t2 = new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()));
 	                		List<Light> l1 = scene.getLights();
@@ -125,6 +132,8 @@ public class Parser {
 	                
 					case "point":
 	                	if (scanner.hasNext()) {
+	                	    if(scene.getModel() == "Normal")
+                                scene.setModel("Lambert");
 	                		Triplet t1 = new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()));
 	                		Triplet t2 = new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()));
 	                		List<Light> l1 = scene.getLights();
@@ -199,6 +208,25 @@ public class Parser {
 							                Double.parseDouble(scanner.next().trim()),
 							                Double.parseDouble(scanner.next().trim()))) ,
 							        couleur));
+						}
+						break;
+						
+						
+					case "sampling":
+						if (scanner.hasNext()) {
+							String verif = scanner.next().trim();
+							if (verif.equals("middle")) {
+								scene.setSamplingStrategy(new CenterSampling());
+							}
+							if (verif.equals("random")) {
+								scene.setSamplingStrategy(new RandomSampling());
+							}
+							if (verif.equals("grid")) {
+								scene.setSamplingStrategy(new GridSampling());
+							}
+					        if (scanner.hasNext()) {
+					            scene.setSamples(Integer.parseInt(scanner.next().trim()));
+					        }
 						}
 						break;
 					}

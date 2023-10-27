@@ -10,10 +10,9 @@ package fr.univartois.raytracing;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
-import fr.univartois.raytracing.raythrower.CalculRayThrower;
+import fr.univartois.raytracing.raythrower.CenterSampling;
 import fr.univartois.raytracing.raythrower.RayThrower;
 
 /**
@@ -50,7 +49,15 @@ public class Main {
         System.out.println("FAIT");
         */
         
-        RayThrower.rayThrower(scene);
+        if (scene.getSamplingStrategy()==null) {
+        	scene.setSamplingStrategy(new CenterSampling());
+        }
+        
+        if (scene.getSamples()==0) {
+        	scene.setSamples(1);
+        }
+        
+        RayThrower.rayThrower(scene,scene.getSamplingStrategy(),scene.getSamples());
         System.out.println("FINI");
         
         
