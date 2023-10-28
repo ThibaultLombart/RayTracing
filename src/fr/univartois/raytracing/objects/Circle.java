@@ -6,7 +6,6 @@
 
 package fr.univartois.raytracing.objects;
 
-import fr.univartois.raytracing.Scene;
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
@@ -141,8 +140,7 @@ public class Circle implements IObjectStage {
         if (delta < 0) {
             return -1;
         } else if (delta == 0) {
-            double t = (-b) / 2;
-            return t;
+            return (-b) / 2;
         } else {
             double t1 = (-b + Math.sqrt(delta)) / 2;
             double t2 = (-b - Math.sqrt(delta)) / 2;
@@ -162,21 +160,16 @@ public class Circle implements IObjectStage {
      * @return Vector N
      */
     public Vector getN(Point p) {
-        // TODO Auto-generated method stub.
-        
-        Vector n = p.substraction(point).standardization();
-        return n;
+        return p.substraction(point).standardization();
     }
 
 	@Override
 	public Color getSpecular() {
-		// TODO Auto-generated method stub
 		return specular;
 	}
 
 	@Override
 	public int getShininess() {
-		// TODO Auto-generated method stub
 		return shininess;
 	}
 

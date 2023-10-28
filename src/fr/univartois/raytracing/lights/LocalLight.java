@@ -49,13 +49,6 @@ public class LocalLight extends Light{
 		this.point = new Point(new Triplet(x,y,z));
 	}
 	
-	/*
-	 * Using the legacy method to get the color of the light
-	 */
-    public Color getColor() {
-        return super.getColor();
-    }
-	
     public Vector getLdir(Point p) {
     	return point.substraction(p).standardization();
     }

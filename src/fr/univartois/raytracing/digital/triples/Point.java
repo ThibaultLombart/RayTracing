@@ -58,7 +58,6 @@ public Point multiplication(Double d) {
     
 	@Override
     public String toString() {
-        // TODO Auto-generated method stub.
         return this.triplet.toString();
 	}
 }

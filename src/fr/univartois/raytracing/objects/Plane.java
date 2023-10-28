@@ -140,13 +140,11 @@ public class Plane implements IObjectStage {
 
 	@Override
 	public Color getSpecular() {
-		// TODO Auto-generated method stub
 		return specular;
 	}
 
 	@Override
 	public int getShininess() {
-		// TODO Auto-generated method stub
 		return shininess;
 	}
     

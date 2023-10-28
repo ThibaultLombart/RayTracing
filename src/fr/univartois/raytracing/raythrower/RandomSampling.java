@@ -9,10 +9,10 @@ import fr.univartois.raytracing.digital.triples.Vector;
 
 public class RandomSampling implements SamplingStrategy {
 
+	private final Random random = new Random();
 
     public List<Vector> generateSamples(int numSamples) {
         List<Vector> samples = new ArrayList<>();
-        Random random = new Random();
 
         for (int i = 0; i < numSamples; i++) {
             double u = random.nextDouble();

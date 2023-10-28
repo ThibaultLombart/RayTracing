@@ -27,6 +27,10 @@ import fr.univartois.raytracing.objects.IObjectStage;
  * @version 0.1.0
  */
 public class CalculRayThrower {
+	
+	private CalculRayThrower() {
+		// Utility Class
+	}
     
     /**
      * Calculates the pixel height based on the field of view (FOV).
@@ -148,12 +152,10 @@ public class CalculRayThrower {
                 if(t > -1) {
                     p = d.multiplication(t).add(scene.getLookFrom());
                 }
-                if(p != null) {
-                    if(min == -1 || min > t) {
-                        min = t;
-                        ReflectedLight rf = new ReflectedLight(model,scene.getMaxDepth());
-                        colorMin = rf.calculateColor(object, d, p);
-                    }
+                if(p != null && (min == -1 || min > t)) {
+                    min = t;
+                    ReflectedLight rf = new ReflectedLight(model,scene.getMaxDepth());
+                    colorMin = rf.calculateColor(object, d, p);
                 }
         }
         return colorMin;
@@ -168,7 +170,6 @@ public class CalculRayThrower {
     public static BufferedImage getMyImage(Scene scene, SamplingStrategy samplingStrategy, int samples) {
         NormalLighting strategy = new NormalLighting(scene);
         IStrategyLight model = strategy.chooseModel();
-        System.out.println(scene.getModel());
         int imgWidth = scene.getSizeX();
         int imgHeight = scene.getSizeY();
         BufferedImage image = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
@@ -178,9 +179,9 @@ public class CalculRayThrower {
             	if(samplingStrategy != null) {
             		List<Vector> listeSamples = samplingStrategy.generateSamples(samples);
                     
-                    for (Vector d : listeSamples) {
-                    	d = calculD(i,j,scene);
-                        Triplet colAvant = objectIterator(scene, d,model).getTriplet();
+                    for (int l = 0; l < listeSamples.size(); l++) {
+                    	Vector dPrime = calculD(i,j,scene);
+                        Triplet colAvant = objectIterator(scene, dPrime,model).getTriplet();
                         
                         totalColor = totalColor.add(new fr.univartois.raytracing.digital.triples.Color(colAvant));
                     }
@@ -193,10 +194,10 @@ public class CalculRayThrower {
                 
                 
 
-                float R = (float) totalColor.getTriplet().getX();
-                float G = (float) totalColor.getTriplet().getY();
-                float B = (float) totalColor.getTriplet().getZ();
-                Color col = new Color(R,G,B);
+                float r = (float) totalColor.getTriplet().getX();
+                float g = (float) totalColor.getTriplet().getY();
+                float b = (float) totalColor.getTriplet().getZ();
+                Color col = new Color(r,g,b);
                 int rgb = col.getRGB();
                 image.setRGB(i, j, rgb);
 
