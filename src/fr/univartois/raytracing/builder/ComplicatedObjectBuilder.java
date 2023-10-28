@@ -27,91 +27,121 @@ import fr.univartois.raytracing.raythrower.SamplingStrategy;
  */
 public class ComplicatedObjectBuilder {
     
-    /**
-     * Attribute sizeX
-     */
-    private int sizeX;
-    /**
-     * Attribute sizeY
-     */
-    private int sizeY;
-    /**
-     * Attribute fov
-     */
-    private int fov;
-    /**
-     * Attribute shininess
-     */
-    private int shininess = 0;
-    /**
-     * Attribute maxVerts
-     */
-    private int maxVerts = 0; 
-    /**
-     * Attribute name
-     */
-    private String name = "output.png";
-    /**
-     * Attribute lookFrom
-     */
-    private Point lookFrom;
-    /**
-     * Attribute lookAt
-     */
-    private Point lookAt;
-    /**
-     * Attribute up
-     */
-    private Vector up;
-    /**
-     * Attribute ambient
-     */
-    private Color ambient = new Color(new Triplet(0,0,0));
-    /**
-     * Attribute diffuse
-     */
-    private Color diffuse = new Color(new Triplet(0,0,0));
-    /**
-     * Attribute specular
-     */
-    private Color specular = new Color(new Triplet(0,0,0));
-    /**
-     * Attribute lights
-     */
-    private List<Light> lights = new ArrayList<>();
-    /**
-     * Attribute points
-     */
-    private List<Point> points = new ArrayList<>();
-    /**
-     * Attribute shapes
-     */
-    private List<IObjectStage> shapes = new ArrayList<>();
-    
-    /**
-     * Shadow Attribute 
-     */
-    private boolean shadow = false;
-    
-    /**
-     * maxDepth attribute
-     */
-    private int maxDepth = 1;
+	/**
+	 * The width of the rendering image.
+	 */
+	private int sizeX;
+
+	/**
+	 * The height of the rendering image.
+	 */
+	private int sizeY;
+
+	/**
+	 * The field of view (FOV) for rendering.
+	 */
+	private int fov;
+
+	/**
+	 * The shininess attribute, representing the material shininess. The default value is 0.
+	 */
+	private int shininess = 0;
+
+	/**
+	 * The maximum number of verts for rendering. The default value is 0.
+	 */
+	private int maxVerts = 0;
+
+	/**
+	 * The name of the output image file. The default value is "output.png."
+	 */
+	private String name = "output.png";
+
+	/**
+	 * The camera's look-from point.
+	 */
+	private Point lookFrom;
+
+	/**
+	 * The camera's look-at point.
+	 */
+	private Point lookAt;
+
+	/**
+	 * The up vector for the camera.
+	 */
+	private Vector up;
+
+	/**
+	 * The ambient color for rendering. The default is black.
+	 */
+	private Color ambient = new Color(new Triplet(0, 0, 0));
+
+	/**
+	 * The diffuse color for rendering. The default is black.
+	 */
+	private Color diffuse = new Color(new Triplet(0, 0, 0));
+
+	/**
+	 * The specular color for rendering. The default is black.
+	 */
+	private Color specular = new Color(new Triplet(0, 0, 0));
+
+	/**
+	 * The list of lights used in the scene.
+	 */
+	private List<Light> lights = new ArrayList<>();
+
+	/**
+	 * The list of points in the scene.
+	 */
+	private List<Point> points = new ArrayList<>();
+
+	/**
+	 * The list of shapes or objects in the scene.
+	 */
+	private List<IObjectStage> shapes = new ArrayList<>();
+
+	/**
+	 * A flag indicating whether shadows should be enabled. The default is false (disabled).
+	 */
+	private boolean shadow = false;
+
+	/**
+	 * The maximum depth for rendering, indicating the level of recursion. The default value is 1.
+	 */
+	private int maxDepth = 1;
     
 
-    private SamplingStrategy samplingStrategy;
-    
-    private int samples;
+    /**
+     * The strategy used for sampling during rendering. It is initially set to null.
+     */
+    private SamplingStrategy samplingStrategy = null;
 
+    /**
+     * The number of samples used during rendering. The default value is 0.
+     */
+    private int samples = 0;
+
+    /**
+     * The rendering model. The default value is "Normal."
+     */
     private String model = "Normal";
-    
-    
+
+    /**
+     * Gets the current rendering model.
+     *
+     * @return The current rendering model.
+     */
     public String getModel() {
         return model;
     }
 
-
-
+    /**
+     * Sets the rendering model to be used.
+     *
+     * @param model The rendering model to set.
+     */
     public void setModel(String model) {
         this.model = model;
     }
@@ -155,21 +185,41 @@ public class ComplicatedObjectBuilder {
     }
     
     
+    /**
+     * Gets the current sampling strategy used for rendering.
+     *
+     * @return The current SamplingStrategy for rendering.
+     */
     public SamplingStrategy getSamplingStrategy() {
-		return samplingStrategy;
-	}
+        return samplingStrategy;
+    }
 
-	public void setSamplingStrategy(SamplingStrategy samplingStrategy) {
-		this.samplingStrategy = samplingStrategy;
-	}
+    /**
+     * Sets the sampling strategy to be used for rendering.
+     *
+     * @param samplingStrategy The SamplingStrategy to set for rendering.
+     */
+    public void setSamplingStrategy(SamplingStrategy samplingStrategy) {
+        this.samplingStrategy = samplingStrategy;
+    }
 
-	public int getSamples() {
-		return samples;
-	}
+    /**
+     * Gets the number of samples used for rendering.
+     *
+     * @return The number of samples used for rendering.
+     */
+    public int getSamples() {
+        return samples;
+    }
 
-	public void setSamples(int samples) {
-		this.samples = samples;
-	}
+    /**
+     * Sets the number of samples to be used for rendering.
+     *
+     * @param samples The number of samples to set for rendering.
+     */
+    public void setSamples(int samples) {
+        this.samples = samples;
+    }
 
 	/**
      * Give Attribute sizeX .
@@ -533,15 +583,25 @@ public class ComplicatedObjectBuilder {
 
 
 
-	public ComplicatedObjectBuilder setMaxDepth(int maxDepth) {
-		// TODO Auto-generated method stub
-		this.maxDepth = maxDepth;
-		return this;
-	}
-	
-	public int getMaxDepth() {
-		return maxDepth;
-	}
+    /**
+     * Sets the maximum depth
+     *
+     * @param maxDepth The maximum depth
+     * @return This ComplicatedObjectBuilder object
+     */
+    public ComplicatedObjectBuilder setMaxDepth(int maxDepth) {
+        this.maxDepth = maxDepth;
+        return this;
+    }
+
+    /**
+     * Gets the maximum depth
+     *
+     * @return The maximum depth
+     */
+    public int getMaxDepth() {
+        return maxDepth;
+    }
     
     
 }

@@ -48,39 +48,44 @@ public class Triplet {
         return z;
     }
 
+	/*
+	 * This method is used to make an addition between two triples.
+	 */
+	
 
 	public Triplet addition(Triplet triple) {
 		return new Triplet(this.x+triple.getX(),this.y+triple.getY(),this.z+triple.getZ());
 	}
 	
 	/*
-	 * This method is used to make an addition between two triples.
+	 * This method is used to make a substraction between two triples.
 	 */
-	
+
 	public Triplet substraction(Triplet triple) {
 		return new Triplet(this.x-triple.getX(),this.y-triple.getY(),this.z-triple.getZ());
 	}
 	
+
 	/*
-	 * This method is used to make a substraction between two triples.
+	 * This method is used to make a multiplication of a triple with a scalar.
 	 */
 	
 	public Triplet scalarMultiplication(double d) {
 		return new Triplet(this.x*d,this.y*d,this.z*d);
 	}
 	
-	/*
-	 * This method is used to make a multiplication of a triple with a scalar.
-	 */
-	
-	public double scalarProduct(Triplet triple) {
-		return (this.x*triple.getX()+this.y*triple.getY()+this.z*triple.getZ());
-	}
 	
 	/*
 	 * This method is used to make the scalar product between two triples.
 	 */
+	public double scalarProduct(Triplet triple) {
+		return (this.x*triple.getX()+this.y*triple.getY()+this.z*triple.getZ());
+	}
 	
+	
+	/*
+	 * This method is used to make the vertical product between two triples.
+	 */
 	public Triplet vectorialProduct(Triplet triple) {
 		return new Triplet(this.y*triple.getZ()-this.z*triple.getY(),
 		                   this.z*triple.getX()-this.x*triple.getZ(),
@@ -88,7 +93,7 @@ public class Triplet {
 	}
 	
 	/*
-	 * This method is used to make the vertical product between two triples.
+	 * This method is used to make the schur product between two triples.
 	 */
 	
 	public Triplet schurProduct(Triplet triple) {
@@ -96,7 +101,7 @@ public class Triplet {
 	}
 	
 	/*
-	 * This method is used to make the schur product between two triples.
+	 * This method is used to get the length/standard of a triple.
 	 */
 	
 	public double length() {
@@ -104,7 +109,7 @@ public class Triplet {
 	}
 	
 	/*
-	 * This method is used to get the length/standard of a triple.
+	 * This method is used to get the normalization of a triplet
 	 */
 	
 	public Triplet standardization() {
@@ -121,8 +126,5 @@ public class Triplet {
 	    // TODO Auto-generated method stub.
 	    return "" + this.x + " " + this.y + " " + this.z;
 	}
-	
-	/*
-	 * This method is used to make the standardization of a triple.
-	 */
+
 }
