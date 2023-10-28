@@ -123,7 +123,6 @@ public class Triangle implements IObjectStage {
         
         Point p = d.multiplication(tPlane).add(lookFrom);
         
-        //System.out.println(tPlane);
         
         Vector verif1a = b.substraction(a);
         Vector verif1b = p.substraction(a);
@@ -151,13 +150,11 @@ public class Triangle implements IObjectStage {
 
 	@Override
 	public Color getSpecular() {
-		// TODO Auto-generated method stub
 		return specular;
 	}
 
 	@Override
 	public int getShininess() {
-		// TODO Auto-generated method stub
 		return shininess;
 	}
 }

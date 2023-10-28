@@ -9,8 +9,12 @@ package fr.univartois.raytracing;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
 
+import fr.univartois.raytracing.exceptions.MainException;
 import fr.univartois.raytracing.raythrower.CalculRayThrower;
 import fr.univartois.raytracing.raythrower.CenterSampling;
 
@@ -23,19 +27,21 @@ import fr.univartois.raytracing.raythrower.CenterSampling;
  * @version 0.1.0
  */
 public class Main {
+	
+	private static  final Logger logger = Logger.getLogger(Main.class.getName());
 
     /**
      * @param args Command Line
      * @throws Exception Exception if no args or too much args
      */
     public static void main(String[] args) throws Exception {
-        
+    	
         Scene scene;
         
         if(args.length == 1) {
-            scene = Parser.lecture(args[0]);
+            scene = Parser.reading(args[0]);
         } else {
-            throw new Exception("No args or too much args in Main.main()");
+            throw new MainException("No args or too much args in Main.main()");
         }
         
         try {
@@ -55,8 +61,8 @@ public class Main {
         	scene.setSamples(1);
         }
         
-        System.out.println("Generated");
-        
+        String generated = String.format("Picture %s Generated", scene.getName());
+        logger.log(Level.INFO,generated);
         
         
         

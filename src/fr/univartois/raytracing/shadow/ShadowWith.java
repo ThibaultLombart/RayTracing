@@ -10,12 +10,9 @@ package fr.univartois.raytracing.shadow;
 import java.util.List;
 
 import fr.univartois.raytracing.Scene;
-import fr.univartois.raytracing.Triplet;
-import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
 import fr.univartois.raytracing.lights.LocalLight;
-import fr.univartois.raytracing.lights.strategy.IStrategyLight;
 import fr.univartois.raytracing.objects.IObjectStage;
 
 /**

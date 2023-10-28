@@ -47,12 +47,6 @@ public class DirectionalLight extends Light{
 		this.vector = new Vector(new Triplet(x,y,z));
 	}
 	
-	/*
-	 * Using the legacy method to get the color of the light
-	 */
-    public Color getColor() {
-        return super.getColor();
-    }
     
     @Override
     public Vector getLdir(Point p) {

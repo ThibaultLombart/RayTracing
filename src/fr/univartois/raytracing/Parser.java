@@ -8,6 +8,7 @@ import fr.univartois.raytracing.builder.ComplicatedObjectBuilder;
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
+import fr.univartois.raytracing.exceptions.ParserException;
 import fr.univartois.raytracing.lights.DirectionalLight;
 import fr.univartois.raytracing.lights.Light;
 import fr.univartois.raytracing.lights.LocalLight;
@@ -22,6 +23,12 @@ import fr.univartois.raytracing.raythrower.RandomSampling;
  * and constructing a Scene object based on the provided data.
  */
 public class Parser {
+	
+	private Parser() {
+		// Utility Class
+	}
+	
+	private static final String EXCEPTIONCOLORVALUE = "Color Values > 1";
 
     /**
      * Reads a scene description from a file and constructs a Scene object.
@@ -31,13 +38,13 @@ public class Parser {
      * @throws Exception If there is an error while parsing the file or if values exceed certain limits.
      */
 
-    public static Scene lecture(String nomFichier) throws Exception {
+    public static Scene reading(String nomFichier) throws ParserException {
         ComplicatedObjectBuilder scene = ComplicatedObjectBuilder.newInstance();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(nomFichier));
+        
+        try(BufferedReader readerBuff = new BufferedReader(new FileReader(nomFichier))) {
             String line;
 
-            while ((line = reader.readLine()) != null) {
+            while ((line = readerBuff.readLine()) != null) {
                 Scanner scanner = new Scanner(line);
                 String token = null;
                 if (scanner.hasNext()) {
@@ -107,7 +114,7 @@ public class Parser {
 	                
 					case "directional":
 	                	if (scanner.hasNext()) {
-	                	    if(scene.getModel() == "Normal")
+	                	    if(scene.getModel().equals("Normal"))
 	                	        scene.setModel("Lambert");
 	                		Triplet t1 = new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()));
 	                		Triplet t2 = new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()));
@@ -122,7 +129,7 @@ public class Parser {
 	                		}
 							if (x>1 || y>1 || z>1) {
 								scanner.close();
-								throw new Exception("Valeur(s) supérieure(s) à 1");
+								throw new ParserException(EXCEPTIONCOLORVALUE);
 							}
 							else {
 	                		scene.addLight(new DirectionalLight(new Color(t2),(new Vector(t1))));
@@ -132,7 +139,7 @@ public class Parser {
 	                
 					case "point":
 	                	if (scanner.hasNext()) {
-	                	    if(scene.getModel() == "Normal")
+	                	    if(scene.getModel().equals("Normal"))
                                 scene.setModel("Lambert");
 	                		Triplet t1 = new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()));
 	                		Triplet t2 = new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()));
@@ -147,7 +154,7 @@ public class Parser {
 	                		}
 							if (x>1 || y>1 || z>1) {
 								scanner.close();
-								throw new Exception("Valeur(s) supérieure(s) à 1");
+								throw new ParserException(EXCEPTIONCOLORVALUE);
 							}
 							else {
 	                		scene.addLight(new LocalLight(new Color(t2),(new Point(t1))));
@@ -174,7 +181,7 @@ public class Parser {
 							Color couleur = scene.getDiffuse();
 							if (couleur.getTriplet().getX()>1 || couleur.getTriplet().getY()>1 || couleur.getTriplet().getZ()>1) {
 								scanner.close();
-								throw new Exception("Valeur(s) supérieure(s) à 1");
+								throw new ParserException(EXCEPTIONCOLORVALUE);
 							}
 							else {
 							Point[] listePoints = {scene.getPoints().get(Integer.parseInt(scanner.next().trim())),scene.getPoints().get(Integer.parseInt(scanner.next().trim())),scene.getPoints().get(Integer.parseInt(scanner.next().trim()))};
@@ -214,9 +221,7 @@ public class Parser {
 					case "shadow":
 						if (scanner.hasNext()) {
 							boolean shadow = Boolean.parseBoolean(scanner.next().trim());
-							if (shadow == true || shadow == false) {
-								scene.setShadow(shadow);
-							}
+							scene.setShadow(shadow);
 						}
 						break;
 	
@@ -243,13 +248,13 @@ public class Parser {
 							scene.setMaxDepth(Integer.parseInt(scanner.next().trim()));
 						}
 						break;
+					default:
+						// argument not found
 					}
 	                scanner.close();
                 }
 	        }
-	        reader.close();
-	    }
-	    catch(IOException e){
+        }catch(IOException e){
 	      e.printStackTrace();
 	    }
 		return scene.build();

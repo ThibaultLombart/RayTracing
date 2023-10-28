@@ -24,7 +24,7 @@ public class ReflectedLight implements IDecoratorLight{
 	@Override
 	public Color calculateColor(IObjectStage shape, Vector toLight, Point p) {
 		Vector n = shape.getN(p);
-		Vector r = n.multiplication(2*n.scalarProduct(toLight.multiplication(-1))).add(toLight).standardization();
+		r = n.multiplication(2*n.scalarProduct(toLight.multiplication(-1))).add(toLight).standardization();
 		
 		double t = shape.calculateT(p, r);
 		
@@ -35,7 +35,6 @@ public class ReflectedLight implements IDecoratorLight{
 		double specularZ = specular.getZ();
 		
 		if(t > 0 && (specularX > 0 || specularY > 0 || specularZ > 0) && maxDepth > 1) {
-			this.r = r;
 			this.shape = shape;
 			return recursifColor(1,p,t);
 		} else {

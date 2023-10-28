@@ -15,7 +15,7 @@ public abstract class Light {
 	 * constructor Light
 	 * @param color Color
 	 */
-	public Light(Color color) {
+	protected Light(Color color) {
 		this.color = color;
 	}
 	/**

@@ -30,6 +30,10 @@ import fr.univartois.raytracing.shadow.ShadowWithout;
  * @version 0.1.0
  */
 public class CalculRayThrower {
+	
+	private CalculRayThrower() {
+		// Utility Class
+	}
     
     /**
      * Calculates the pixel height based on the field of view (FOV).
@@ -141,7 +145,7 @@ public class CalculRayThrower {
         List<IObjectStage> objects = scene.getShapes();
         double min = -1;
         ShadowStrategy shadow;
-        if (scene.getShadow() == true) {
+        if (scene.getShadow()) {
         	shadow = new ShadowWith();
         }
         else {
@@ -158,12 +162,10 @@ public class CalculRayThrower {
                 if(t > -1) {
                     p = d.multiplication(t).add(scene.getLookFrom());
                 }
-                if(p != null) {
-                    if(min == -1 || min > t) {
-                        min = t;
-                        ReflectedLight rf = new ReflectedLight(model,scene.getMaxDepth());
-                        colorMin = rf.calculateColor(object, d, p);
-                    }
+                if(p != null && (min == -1 || min > t)) {
+                    min = t;
+                    ReflectedLight rf = new ReflectedLight(model,scene.getMaxDepth());
+                    colorMin = rf.calculateColor(object, d, p);
                 
 	                Point shadowPoint;
 	                
@@ -171,11 +173,9 @@ public class CalculRayThrower {
 	                     if (scene.getLights().get(j).transformLocalLight() != null) {
 	                     	shadowPoint = shadow.calculateShadowPoint(scene.getLights().get(j).transformLocalLight(),p.substraction(scene.getLights().get(j).transformLocalLight().getPoint()).standardization(),scene);
 	 
-	                     	if(shadowPoint != null) {
-	                             if(min == -1 || min > t) {
-	                                 min = t;
-	                                 colorMin = model.calculateColor(object,d,shadowPoint);
-	                             }
+	                     	if(shadowPoint != null && (min == -1 || min > t)) {
+	                     		min = t;
+	                     		colorMin = model.calculateColor(object,d,shadowPoint);
 	                     	}
 	                     }
 	                }
@@ -194,7 +194,6 @@ public class CalculRayThrower {
     public static BufferedImage getMyImage(Scene scene, SamplingStrategy samplingStrategy, int samples) {
         NormalLighting strategy = new NormalLighting(scene);
         IStrategyLight model = strategy.chooseModel();
-        // System.out.println(scene.getModel());
         int imgWidth = scene.getSizeX();
         int imgHeight = scene.getSizeY();
         BufferedImage image = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
@@ -203,10 +202,10 @@ public class CalculRayThrower {
             	fr.univartois.raytracing.digital.triples.Color totalColor = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0,0,0));
             	if(samplingStrategy != null) {
             		List<Vector> listeSamples = samplingStrategy.generateSamples(samples);
-                    for (Vector d : listeSamples) {
-                    	d = calculD(i,j,scene);
-                        Triplet colAvant = objectIterator(scene, d,model).getTriplet();
-                        
+                    for (int l = 0; l < listeSamples.size(); l++) {
+                    	Vector dPrime = calculD(i,j,scene);
+                        Triplet colAvant = objectIterator(scene, dPrime,model).getTriplet();
+
                         totalColor = totalColor.add(new fr.univartois.raytracing.digital.triples.Color(colAvant));
                     }
                     totalColor = totalColor.multiplication(1.0 / samples);
@@ -214,11 +213,11 @@ public class CalculRayThrower {
             		Vector d = calculD(i,j,scene);
             		totalColor = objectIterator(scene, d,model);
             	}
-                
-                float R = (float) totalColor.getTriplet().getX();
-                float G = (float) totalColor.getTriplet().getY();
-                float B = (float) totalColor.getTriplet().getZ();
-                Color col = new Color(R,G,B);
+                float r = (float) totalColor.getTriplet().getX();
+                float g = (float) totalColor.getTriplet().getY();
+                float b = (float) totalColor.getTriplet().getZ();
+                Color col = new Color(r,g,b);
+
                 int rgb = col.getRGB();
                 image.setRGB(i, j, rgb);
 

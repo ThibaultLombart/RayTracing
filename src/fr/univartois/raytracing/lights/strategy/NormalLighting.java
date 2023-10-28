@@ -55,7 +55,6 @@ public class NormalLighting implements IStrategyLight,IDecoratorLight{
      */
     @Override
     public Color calculateColor(IObjectStage shape, Vector toLight, Point p) {
-        // TODO Auto-generated method stub.
         return scene.getAmbient();
     }
 

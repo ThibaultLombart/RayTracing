@@ -24,7 +24,7 @@ public abstract class LambertDecorator implements IDecoratorLight{
     
     private IDecoratorLight decorated;
     
-    public LambertDecorator(NormalLighting decorated) {
+    protected LambertDecorator(NormalLighting decorated) {
         this.decorated = decorated;
     }
 
