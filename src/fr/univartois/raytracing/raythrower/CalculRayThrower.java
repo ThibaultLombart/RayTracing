@@ -8,17 +8,15 @@ package fr.univartois.raytracing.raythrower;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 import java.util.List;
 
 import fr.univartois.raytracing.Scene;
 import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
-import fr.univartois.raytracing.lights.LocalLight;
+import fr.univartois.raytracing.lights.reflect.ReflectedLight;
 import fr.univartois.raytracing.lights.strategy.IStrategyLight;
 import fr.univartois.raytracing.lights.strategy.NormalLighting;
-import fr.univartois.raytracing.objects.Circle;
 import fr.univartois.raytracing.objects.IObjectStage;
 
 /**
@@ -153,7 +151,8 @@ public class CalculRayThrower {
                 if(p != null) {
                     if(min == -1 || min > t) {
                         min = t;
-                        colorMin = model.calculateColor(object,d,p);
+                        ReflectedLight rf = new ReflectedLight(model,scene.getMaxDepth());
+                        colorMin = rf.calculateColor(object, d, p);
                     }
                 }
         }
@@ -181,9 +180,6 @@ public class CalculRayThrower {
                 for (Vector d : listeSamples) {
                 	d = calculD(i,j,scene);
                     Triplet colAvant = parcoursObjets(scene, d,model).getTriplet();
-                    
-                    System.out.println("colAvant :");
-                    System.out.println(colAvant);
                     
                     totalColor = totalColor.add(new fr.univartois.raytracing.digital.triples.Color(colAvant));
                 }

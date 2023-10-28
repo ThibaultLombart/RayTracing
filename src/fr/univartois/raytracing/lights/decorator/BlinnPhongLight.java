@@ -33,7 +33,7 @@ public class BlinnPhongLight extends BlinnPhongLightingDecorator implements IStr
 	    Vector eyedir = d.multiplication(-1);
 	    Vector h = ldir.add(eyedir).standardization();
 
-	    return scene.getSpecular().schur(light.getColor().multiplication(Math.pow(Math.max(n.scalarProduct(h),0),scene.getShininess())));
+	    return shape.getSpecular().schur(light.getColor().multiplication(Math.pow(Math.max(n.scalarProduct(h),0),shape.getShininess())));
 	}
 	
 	public List<Light> getLights() {
@@ -60,7 +60,7 @@ public class BlinnPhongLight extends BlinnPhongLightingDecorator implements IStr
             sommeColorBlinnPhong = sommeColorBlinnPhong.add(calculateBlinnPhong(shape, lights.get(i),p,toLight));
         }
         sommeColor = sommeColorLambert.add(sommeColorBlinnPhong);
-        return sommeColor.add(scene.getAmbient());
+        return sommeColor;
     }
     
 }
