@@ -134,7 +134,7 @@ public class CalculRayThrower {
      * @param d The direction vector.
      * @return The color determined by ray tracing.
      */
-    public static fr.univartois.raytracing.digital.triples.Color parcoursObjets(Scene scene, Vector d,IStrategyLight model) {
+    public static fr.univartois.raytracing.digital.triples.Color objectIterator(Scene scene, Vector d,IStrategyLight model) {
         List<IObjectStage> objects = scene.getShapes();
         double min = -1;
         
@@ -175,16 +175,23 @@ public class CalculRayThrower {
         for (int i = 0; i < imgWidth; i++) {
             for(int j = 0; j < imgHeight; j++) {
             	fr.univartois.raytracing.digital.triples.Color totalColor = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0,0,0));
-                List<Vector> listeSamples = samplingStrategy.generateSamples(samples);
-                
-                for (Vector d : listeSamples) {
-                	d = calculD(i,j,scene);
-                    Triplet colAvant = parcoursObjets(scene, d,model).getTriplet();
+            	if(samplingStrategy != null) {
+            		List<Vector> listeSamples = samplingStrategy.generateSamples(samples);
                     
-                    totalColor = totalColor.add(new fr.univartois.raytracing.digital.triples.Color(colAvant));
-                }
+                    for (Vector d : listeSamples) {
+                    	d = calculD(i,j,scene);
+                        Triplet colAvant = objectIterator(scene, d,model).getTriplet();
+                        
+                        totalColor = totalColor.add(new fr.univartois.raytracing.digital.triples.Color(colAvant));
+                    }
+                    totalColor = totalColor.multiplication(1.0 / samples);
+            	} else {
+            		Vector d = calculD(i,j,scene);
+            		totalColor = objectIterator(scene, d,model);
+            	}
                 
-                totalColor = totalColor.multiplication(1.0 / samples);
+                
+                
 
                 float R = (float) totalColor.getTriplet().getX();
                 float G = (float) totalColor.getTriplet().getY();

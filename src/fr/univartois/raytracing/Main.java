@@ -1,8 +1,7 @@
 /**
- * Ce fichier fait partie du projet SAE RayTracing.
+ * Project SAE RayTracing.
  *
  * (c) 2023 thibault.lombart
- * Tous droits réservés.
  */
 
 package fr.univartois.raytracing;
@@ -12,11 +11,12 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import fr.univartois.raytracing.raythrower.CalculRayThrower;
 import fr.univartois.raytracing.raythrower.CenterSampling;
-import fr.univartois.raytracing.raythrower.RayThrower;
+
 
 /**
- * Le type Main
+ * Main Class
  *
  * @author thibault.lombart
  *
@@ -31,8 +31,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         
         Scene scene;
-        scene = Parser.lecture("src/fr/univartois/resources/test.txt");
-        /*
+        
         if(args.length == 1) {
             scene = Parser.lecture(args[0]);
         } else {
@@ -40,14 +39,13 @@ public class Main {
         }
         
         try {
-            BufferedImage image = CalculRayThrower.getMyImage(scene);
-            File outputfile = new File("output.png");
+            BufferedImage image = CalculRayThrower.getMyImage(scene, scene.getSamplingStrategy(), scene.getSamples());
+            File outputfile = new File(scene.getName());
             ImageIO.write(image, "png", outputfile);
         } catch (IOException e) {
             //..
         }
-        System.out.println("FAIT");
-        */
+        
         
         if (scene.getSamplingStrategy()==null) {
         	scene.setSamplingStrategy(new CenterSampling());
@@ -57,8 +55,7 @@ public class Main {
         	scene.setSamples(1);
         }
         
-        RayThrower.rayThrower(scene,scene.getSamplingStrategy(),scene.getSamples());
-        System.out.println("FINI");
+        System.out.println("Generated");
         
         
         
