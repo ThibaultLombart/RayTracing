@@ -33,6 +33,16 @@ public class Plane implements IObjectStage {
      * The color of the plane.
      */
     private Color color;
+    
+    /**
+     * Attribute specular...
+     */
+    private Color specular;
+    
+    /**
+     * Attribute shininess...
+     */
+    private int shininess;
 
     /**
      * Constructs a Plane with the specified point, normal vector, and color.
@@ -41,10 +51,12 @@ public class Plane implements IObjectStage {
      * @param vector The normal vector of the plane.
      * @param color  The color of the plane.
      */
-    public Plane(Point point, Vector vector, Color color) {
+    public Plane(Point point, Vector vector, Color color, Color specular, int shininess) {
         this.point = point;
         this.vector = vector;
         this.color = color;
+        this.specular = specular;
+        this.shininess = shininess;
     }
 
     /**
@@ -125,6 +137,18 @@ public class Plane implements IObjectStage {
     public Vector getN(Point p) {
         return vector;
     }
+
+	@Override
+	public Color getSpecular() {
+		// TODO Auto-generated method stub
+		return specular;
+	}
+
+	@Override
+	public int getShininess() {
+		// TODO Auto-generated method stub
+		return shininess;
+	}
     
     
 

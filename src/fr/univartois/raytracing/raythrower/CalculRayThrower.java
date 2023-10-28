@@ -8,17 +8,15 @@ package fr.univartois.raytracing.raythrower;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 import java.util.List;
 
 import fr.univartois.raytracing.Scene;
 import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
-import fr.univartois.raytracing.lights.LocalLight;
+import fr.univartois.raytracing.lights.reflect.ReflectedLight;
 import fr.univartois.raytracing.lights.strategy.IStrategyLight;
 import fr.univartois.raytracing.lights.strategy.NormalLighting;
-import fr.univartois.raytracing.objects.Circle;
 import fr.univartois.raytracing.objects.IObjectStage;
 import fr.univartois.raytracing.shadow.ShadowStrategy;
 import fr.univartois.raytracing.shadow.ShadowWith;
@@ -139,7 +137,7 @@ public class CalculRayThrower {
      * @param d The direction vector.
      * @return The color determined by ray tracing.
      */
-    public static fr.univartois.raytracing.digital.triples.Color parcoursObjets(Scene scene, Vector d,IStrategyLight model) {
+    public static fr.univartois.raytracing.digital.triples.Color objectIterator(Scene scene, Vector d,IStrategyLight model) {
         List<IObjectStage> objects = scene.getShapes();
         double min = -1;
         ShadowStrategy shadow;
@@ -163,7 +161,8 @@ public class CalculRayThrower {
                 if(p != null) {
                     if(min == -1 || min > t) {
                         min = t;
-                        colorMin = model.calculateColor(object,d,p);
+                        ReflectedLight rf = new ReflectedLight(model,scene.getMaxDepth());
+                        colorMin = rf.calculateColor(object, d, p);
                     }
                 
 	                Point shadowPoint;
@@ -202,20 +201,20 @@ public class CalculRayThrower {
         for (int i = 0; i < imgWidth; i++) {
             for(int j = 0; j < imgHeight; j++) {
             	fr.univartois.raytracing.digital.triples.Color totalColor = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0,0,0));
-                List<Vector> listeSamples = samplingStrategy.generateSamples(samples);
+            	if(samplingStrategy != null) {
+            		List<Vector> listeSamples = samplingStrategy.generateSamples(samples);
+                    for (Vector d : listeSamples) {
+                    	d = calculD(i,j,scene);
+                        Triplet colAvant = objectIterator(scene, d,model).getTriplet();
+                        
+                        totalColor = totalColor.add(new fr.univartois.raytracing.digital.triples.Color(colAvant));
+                    }
+                    totalColor = totalColor.multiplication(1.0 / samples);
+            	} else {
+            		Vector d = calculD(i,j,scene);
+            		totalColor = objectIterator(scene, d,model);
+            	}
                 
-                for (Vector d : listeSamples) {
-                	d = calculD(i,j,scene);
-                    Triplet colAvant = parcoursObjets(scene, d,model).getTriplet();
-                    
-                   // System.out.println("colAvant :");
-                    // System.out.println(colAvant);
-                    
-                    totalColor = totalColor.add(new fr.univartois.raytracing.digital.triples.Color(colAvant));
-                }
-                
-                totalColor = totalColor.multiplication(1.0 / samples);
-
                 float R = (float) totalColor.getTriplet().getX();
                 float G = (float) totalColor.getTriplet().getY();
                 float B = (float) totalColor.getTriplet().getZ();

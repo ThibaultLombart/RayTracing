@@ -81,7 +81,16 @@ public class Scene {
      */
 	private List<IObjectStage> shapes = new ArrayList<>();
 	
+	
+	/**
+     * Attribute Model
+     */
 	private String model = "Normal";
+	
+	/**
+     * maxDepth attribute
+     */
+    private int maxDepth = 1;
 	
 	
 	public String getModel() {
@@ -130,6 +139,7 @@ public class Scene {
 		this.samplingStrategy = builder.getSamplingStrategy();
 		this.samples = builder.getSamples();
 		this.model = builder.getModel();
+		this.setMaxDepth(builder.getMaxDepth());
 		
 	}
 
@@ -499,4 +509,16 @@ public class Scene {
         this.shapes = shapes;
          
     }
+
+
+
+	public int getMaxDepth() {
+		return maxDepth;
+	}
+
+
+
+	public void setMaxDepth(int maxDepth) {
+		this.maxDepth = maxDepth;
+	}
 }
