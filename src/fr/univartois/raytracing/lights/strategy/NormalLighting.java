@@ -11,6 +11,7 @@ import fr.univartois.raytracing.Scene;
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
+import fr.univartois.raytracing.lights.decorator.BlinnPhongLight;
 import fr.univartois.raytracing.lights.decorator.IDecoratorLight;
 import fr.univartois.raytracing.objects.IObjectStage;
 import fr.univartois.raytracing.lights.decorator.LambertLight;
@@ -39,6 +40,9 @@ public class NormalLighting implements IStrategyLight,IDecoratorLight{
             strategy = this;
         } else if (scene.getModel().equals("Lambert")){
             strategy = new LambertLight(scene.getLights(),this);
+        } else if (scene.getModel().equals("Blinn")) {
+            LambertLight stratLambert = new LambertLight(scene.getLights(),this);
+            strategy = new BlinnPhongLight(scene.getLights(), scene, stratLambert);
         }
         return strategy;
     }
