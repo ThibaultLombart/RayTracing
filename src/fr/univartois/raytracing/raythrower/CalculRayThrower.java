@@ -20,6 +20,9 @@ import fr.univartois.raytracing.lights.strategy.IStrategyLight;
 import fr.univartois.raytracing.lights.strategy.NormalLighting;
 import fr.univartois.raytracing.objects.Circle;
 import fr.univartois.raytracing.objects.IObjectStage;
+import fr.univartois.raytracing.shadow.ShadowStrategy;
+import fr.univartois.raytracing.shadow.ShadowWith;
+import fr.univartois.raytracing.shadow.ShadowWithout;
 
 /**
  * The CalculRayThrower class provides methods for performing ray tracing calculations and generating images.
@@ -139,6 +142,13 @@ public class CalculRayThrower {
     public static fr.univartois.raytracing.digital.triples.Color parcoursObjets(Scene scene, Vector d,IStrategyLight model) {
         List<IObjectStage> objects = scene.getShapes();
         double min = -1;
+        ShadowStrategy shadow;
+        if (scene.getShadow() == true) {
+        	shadow = new ShadowWith();
+        }
+        else {
+        	shadow = new ShadowWithout();
+        }
         
         fr.univartois.raytracing.digital.triples.Color colorMin = new fr.univartois.raytracing.digital.triples.Color(new Triplet(0,0,0));
 
@@ -155,7 +165,23 @@ public class CalculRayThrower {
                         min = t;
                         colorMin = model.calculateColor(object,d,p);
                     }
+                
+	                Point shadowPoint;
+	                
+	                for (int j=0; j<scene.getLights().size(); j++) {
+	                     if (scene.getLights().get(j).transformLocalLight() != null) {
+	                     	shadowPoint = shadow.calculateShadowPoint(scene.getLights().get(j).transformLocalLight(),p.substraction(scene.getLights().get(j).transformLocalLight().getPoint()).standardization(),scene);
+	 
+	                     	if(shadowPoint != null) {
+	                             if(min == -1 || min > t) {
+	                                 min = t;
+	                                 colorMin = model.calculateColor(object,d,shadowPoint);
+	                             }
+	                     	}
+	                     }
+	                }
                 }
+
         }
         return colorMin;
     }
@@ -169,7 +195,7 @@ public class CalculRayThrower {
     public static BufferedImage getMyImage(Scene scene, SamplingStrategy samplingStrategy, int samples) {
         NormalLighting strategy = new NormalLighting(scene);
         IStrategyLight model = strategy.chooseModel();
-        System.out.println(scene.getModel());
+        // System.out.println(scene.getModel());
         int imgWidth = scene.getSizeX();
         int imgHeight = scene.getSizeY();
         BufferedImage image = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
@@ -182,8 +208,8 @@ public class CalculRayThrower {
                 	d = calculD(i,j,scene);
                     Triplet colAvant = parcoursObjets(scene, d,model).getTriplet();
                     
-                    System.out.println("colAvant :");
-                    System.out.println(colAvant);
+                   // System.out.println("colAvant :");
+                    // System.out.println(colAvant);
                     
                     totalColor = totalColor.add(new fr.univartois.raytracing.digital.triples.Color(colAvant));
                 }
