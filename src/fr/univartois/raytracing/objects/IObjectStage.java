@@ -31,6 +31,10 @@ public interface IObjectStage {
      */
     double calculateT(Point lookFrom, Vector d);
     
+    Color getSpecular();
+    
+    int getShininess();
+    
     Vector getN(Point p);
 
 

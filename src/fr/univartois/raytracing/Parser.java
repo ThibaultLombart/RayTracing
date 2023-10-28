@@ -94,13 +94,13 @@ public class Parser {
 	                
 					case "specular":
 	                	if (scanner.hasNext()) {
-	                	    scene.setModel("Blinn");
 	                		scene.setSpecular(new Color(new Triplet(Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()),Double.parseDouble(scanner.next().trim()))));
 	                	}
 						break;
 	                	
 					case "shininess":
 	                	if (scanner.hasNext()) {
+	                		scene.setModel("Blinn");
 	                		scene.setShininess(Integer.parseInt(scanner.next().trim()));
 	                	}
 						break;
@@ -178,7 +178,7 @@ public class Parser {
 							}
 							else {
 							Point[] listePoints = {scene.getPoints().get(Integer.parseInt(scanner.next().trim())),scene.getPoints().get(Integer.parseInt(scanner.next().trim())),scene.getPoints().get(Integer.parseInt(scanner.next().trim()))};
-							scene.addShape(new Triangle(listePoints,couleur));
+							scene.addShape(new Triangle(listePoints,couleur,scene.getSpecular(),scene.getShininess()));
 							} 
 						}
 						break;
@@ -192,7 +192,7 @@ public class Parser {
 							        Double.parseDouble(scanner.next().trim())))
 							        , 
 							        Double.parseDouble(scanner.next().trim()) ,
-							        couleur));
+							        couleur,scene.getSpecular(),scene.getShininess()));
 						}
 						break;
 					
@@ -207,7 +207,7 @@ public class Parser {
 							                Double.parseDouble(scanner.next().trim()),
 							                Double.parseDouble(scanner.next().trim()),
 							                Double.parseDouble(scanner.next().trim()))) ,
-							        couleur));
+							        couleur,scene.getSpecular(),scene.getShininess()));
 						}
 						break;
 						

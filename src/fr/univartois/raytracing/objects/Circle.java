@@ -34,6 +34,16 @@ public class Circle implements IObjectStage {
      * Attribute color...
      */
     private Color color;
+    
+    /**
+     * Attribute specular...
+     */
+    private Color specular;
+    
+    /**
+     * Attribute shininess...
+     */
+    private int shininess;
 
     /**
      * Circle Constructor.
@@ -42,11 +52,13 @@ public class Circle implements IObjectStage {
      * @param r radius
      * @param color Color color
      */
-    public Circle(Point point, double r, Color color) {
+    public Circle(Point point, double r, Color color, Color specular, int shininess) {
         super();
         this.point = point;
         this.r = r;
         this.color = color;
+        this.specular = specular;
+        this.shininess = shininess;
     }
 
     /**
@@ -155,5 +167,17 @@ public class Circle implements IObjectStage {
         Vector n = p.substraction(point).standardization();
         return n;
     }
+
+	@Override
+	public Color getSpecular() {
+		// TODO Auto-generated method stub
+		return specular;
+	}
+
+	@Override
+	public int getShininess() {
+		// TODO Auto-generated method stub
+		return shininess;
+	}
 
 }

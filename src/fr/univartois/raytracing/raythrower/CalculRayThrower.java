@@ -179,9 +179,6 @@ public class CalculRayThrower {
                 	d = calculD(i,j,scene);
                     Triplet colAvant = parcoursObjets(scene, d,model).getTriplet();
                     
-                    System.out.println("colAvant :");
-                    System.out.println(colAvant);
-                    
                     totalColor = totalColor.add(new fr.univartois.raytracing.digital.triples.Color(colAvant));
                 }
                 

@@ -31,6 +31,16 @@ public class Triangle implements IObjectStage {
      * The color of the triangle.
      */
     private Color color;
+    
+    /**
+     * Attribute specular...
+     */
+    private Color specular;
+    
+    /**
+     * Attribute shininess...
+     */
+    private int shininess;
 
     /**
      * Constructs a Triangle with the specified vertices and color.
@@ -38,9 +48,11 @@ public class Triangle implements IObjectStage {
      * @param points The vertices of the triangle (array of 3 points).
      * @param color  The color of the triangle.
      */
-    public Triangle(Point[] points, Color color) {
+    public Triangle(Point[] points, Color color, Color specular, int shininess) {
         this.points = Arrays.copyOf(points, 3);
         this.color = color;
+        this.specular = specular;
+        this.shininess = shininess;
     }
 
     /**
@@ -136,4 +148,16 @@ public class Triangle implements IObjectStage {
 
     
     }
+
+	@Override
+	public Color getSpecular() {
+		// TODO Auto-generated method stub
+		return specular;
+	}
+
+	@Override
+	public int getShininess() {
+		// TODO Auto-generated method stub
+		return shininess;
+	}
 }
