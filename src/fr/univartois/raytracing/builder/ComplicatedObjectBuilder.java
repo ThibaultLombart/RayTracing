@@ -93,6 +93,11 @@ public class ComplicatedObjectBuilder {
      */
     private boolean shadow = false;
     
+    /**
+     * maxDepth attribute
+     */
+    private int maxDepth = 1;
+    
 
     private SamplingStrategy samplingStrategy;
     
@@ -525,6 +530,18 @@ public class ComplicatedObjectBuilder {
         this.shapes.add(shape);
         return this;
     }
+
+
+
+	public ComplicatedObjectBuilder setMaxDepth(int maxDepth) {
+		// TODO Auto-generated method stub
+		this.maxDepth = maxDepth;
+		return this;
+	}
+	
+	public int getMaxDepth() {
+		return maxDepth;
+	}
     
     
 }

@@ -117,7 +117,7 @@ public class Triangle implements IObjectStage {
         Vector n = getN(new Point(
         		new Triplet(-1,-1,-1)));
         
-        Plane plane = new Plane(a,n,new Color(new Triplet(0,0,0)));
+        Plane plane = new Plane(a,n,new Color(new Triplet(0,0,0)), specular, shininess);
         
         double tPlane = plane.calculateT(lookFrom, d);
         

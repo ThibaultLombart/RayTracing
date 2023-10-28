@@ -14,6 +14,7 @@ import fr.univartois.raytracing.Scene;
 import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
+import fr.univartois.raytracing.lights.reflect.ReflectedLight;
 import fr.univartois.raytracing.lights.strategy.IStrategyLight;
 import fr.univartois.raytracing.lights.strategy.NormalLighting;
 import fr.univartois.raytracing.objects.IObjectStage;
@@ -150,7 +151,8 @@ public class CalculRayThrower {
                 if(p != null) {
                     if(min == -1 || min > t) {
                         min = t;
-                        colorMin = model.calculateColor(object,d,p);
+                        ReflectedLight rf = new ReflectedLight(model,scene.getMaxDepth());
+                        colorMin = rf.calculateColor(object, d, p);
                     }
                 }
         }

@@ -229,6 +229,12 @@ public class Parser {
 					        }
 						}
 						break;
+						
+					case "maxdepth":
+						if (scanner.hasNext()) {
+							scene.setMaxDepth(Integer.parseInt(scanner.next().trim()));
+						}
+						break;
 					}
 	                scanner.close();
                 }
