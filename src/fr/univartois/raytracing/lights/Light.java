@@ -48,6 +48,13 @@ public abstract class Light {
 		this.color = new Color(new Triplet(r,g,b));
 	}
 	
+	public LocalLight transformLocalLight() {
+		if (this.getClass()==LocalLight.class) {
+    		return (LocalLight) this;
+		}
+		return null;
+	}
+
 	public abstract Vector getLdir(Point p);
 	
 	

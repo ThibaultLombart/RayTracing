@@ -218,7 +218,13 @@ public class Parser {
 						}
 						break;
 						
-						
+					case "shadow":
+						if (scanner.hasNext()) {
+							boolean shadow = Boolean.parseBoolean(scanner.next().trim());
+							scene.setShadow(shadow);
+						}
+						break;
+	
 					case "sampling":
 						if (scanner.hasNext()) {
 							String verif = scanner.next().trim();
