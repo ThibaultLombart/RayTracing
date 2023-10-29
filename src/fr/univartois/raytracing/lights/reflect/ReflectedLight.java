@@ -1,5 +1,6 @@
 package fr.univartois.raytracing.lights.reflect;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.univartois.raytracing.Scene;
@@ -11,6 +12,9 @@ import fr.univartois.raytracing.lights.Light;
 import fr.univartois.raytracing.lights.decorator.IDecoratorLight;
 import fr.univartois.raytracing.lights.strategy.IStrategyLight;
 import fr.univartois.raytracing.objects.IObjectStage;
+import fr.univartois.raytracing.shadow.ShadowStrategy;
+import fr.univartois.raytracing.shadow.ShadowWith;
+import fr.univartois.raytracing.shadow.ShadowWithout;
 
 public class ReflectedLight implements IDecoratorLight{
 	
@@ -19,7 +23,6 @@ public class ReflectedLight implements IDecoratorLight{
 	
 	private Vector r;
 	private IObjectStage shape;
-	private List<Light> listLights;
 	private Scene scene;
 	
 	public ReflectedLight(IStrategyLight model, int maxDepth,Scene scene) {
@@ -32,7 +35,6 @@ public class ReflectedLight implements IDecoratorLight{
 	public Color calculateColor(IObjectStage shape, Vector toLight, Point p, List<Light> listLights) {
 		Vector n = shape.getN(p);
 		r = n.multiplication(2*n.scalarProduct(toLight.multiplication(-1))).add(toLight).standardization();
-		this.listLights = listLights;
 		
 		double t = shape.calculateT(p, r);
 		
@@ -44,13 +46,13 @@ public class ReflectedLight implements IDecoratorLight{
 		
 		if(t > 0 && (specularX > 0 || specularY > 0 || specularZ > 0) && maxDepth > 1) {
 			this.shape = shape;
-			return recursifColor(1,p,t);
+			return model.calculateColor(shape, toLight, p,listLights).add(recursifColor(1,p,listLights));
 		} else {
 			return model.calculateColor(shape, toLight, p,listLights);
 		}
 	}
 
-	private Color recursifColor(int depth, Point p, double t) {
+	private Color recursifColor(int depth, Point p, List<Light> listLights) {
 		if(depth >= maxDepth) {
 			return new Color(new Triplet(0,0,0));
 		} else {
@@ -72,11 +74,35 @@ public class ReflectedLight implements IDecoratorLight{
 				this.shape = minObject;
 				tPrime = min;
 				
+				// SHADOW
+				ShadowStrategy shadow;
+				if (scene.getShadow()) {
+		        	shadow = new ShadowWith();
+		        }
+				else {
+		        	shadow = new ShadowWithout();
+		        }
+				
+				// LIGHTS
+				List<Light> listLightsTwo = new ArrayList<>();
+                for (int j=0; j<scene.getLights().size(); j++) {
+                	
+                	Light light = scene.getLights().get(j);
+                    Point shadowPoint = null;
+                    
+                    shadowPoint = shadow.calculateShadowPoint(light,light.getLdir(p),scene, p);
+                    
+                    if(shadowPoint == null) {
+                    	listLightsTwo.add(light);
+                    }
+                }
+				
+                // CALCULATIONS
 				Point pPrime = r.multiplication(tPrime).add(p);
 				Vector nPrime = shape.getN(pPrime);
 				Vector rBefore = this.r;
 				this.r = nPrime.multiplication(2*nPrime.scalarProduct(r.multiplication(-1))).add(r).standardization();
-				return shape.getSpecular().schur(recursifColor(depth+1,pPrime,tPrime)).add(model.calculateColor(shape, rBefore, p,listLights));
+				return shape.getSpecular().schur(recursifColor(depth+1,pPrime,listLightsTwo)).add(model.calculateColor(shape, rBefore, p,listLights));
 			} else {
 				return new Color(new Triplet(0,0,0));
 			}
