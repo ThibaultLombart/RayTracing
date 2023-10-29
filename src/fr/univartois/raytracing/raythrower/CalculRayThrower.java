@@ -175,9 +175,7 @@ public class CalculRayThrower {
                     
                     shadowPoint = shadow.calculateShadowPoint(light,light.getLdir(p),scene, p);
                     
-                    double e = Math.pow(10, -4);
-                    
-                    if(shadowPoint == null || p.substraction(shadowPoint).length() < e) {
+                    if(shadowPoint == null) {
                     	listLights.add(light);
                     }
                 }

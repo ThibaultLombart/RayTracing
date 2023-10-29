@@ -30,10 +30,12 @@ public class ShadowWith implements ShadowStrategy {
 		List<IObjectStage> objects = scene.getShapes();
 		for (int i = 0; i < objects.size() ; i++) {
 			t = objects.get(i).calculateT(p, d);
-	        if(t > -1) {
+			double e = Math.pow(10, -2);
+	        if(t > e) {
 	        	pPrime = d.multiplication(t).add(p);
 	        }
 		}
+		
 		return pPrime;
 	}
 }
