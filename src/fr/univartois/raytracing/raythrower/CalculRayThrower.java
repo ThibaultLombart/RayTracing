@@ -179,7 +179,7 @@ public class CalculRayThrower {
                     	listLights.add(light);
                     }
                 }
-                ReflectedLight rf = new ReflectedLight(model,scene.getMaxDepth());
+                ReflectedLight rf = new ReflectedLight(model,scene.getMaxDepth(),scene);
                 colorMin = rf.calculateColor(object, d, p, listLights);
             }
             
@@ -220,9 +220,9 @@ public class CalculRayThrower {
             		Vector d = calculD(i,j,scene);
             		totalColor = objectIterator(scene, d,model);
             	}
-                float r = (float) totalColor.getTriplet().getX();
-                float g = (float) totalColor.getTriplet().getY();
-                float b = (float) totalColor.getTriplet().getZ();
+                float r = Math.min((float) totalColor.getTriplet().getX(),1);
+                float g = Math.min((float) totalColor.getTriplet().getY(),1);
+                float b = Math.min((float) totalColor.getTriplet().getZ(),1);
                 Color col = new Color(r,g,b);
 
                 int rgb = col.getRGB();
