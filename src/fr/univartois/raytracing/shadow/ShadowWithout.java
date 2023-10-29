@@ -1,19 +1,19 @@
 /**
- * Ce fichier fait partie du projet SAE RayTracing.
+ * Project SAE RayTracing.
  *
  * (c) 2023 thibault.lombart
- * Tous droits réservés.
  */
 
 package fr.univartois.raytracing.shadow;
 
 import fr.univartois.raytracing.Scene;
+import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
-import fr.univartois.raytracing.lights.LocalLight;
+import fr.univartois.raytracing.lights.Light;
 
 /**
- * Le type ShadowWithout
+ * Class ShadowWithout
  *
  * @author thibault.lombart
  *
@@ -21,7 +21,7 @@ import fr.univartois.raytracing.lights.LocalLight;
  */
 public class ShadowWithout implements ShadowStrategy {
 	
-	public Point calculateShadowPoint(LocalLight light, Vector d, Scene scene) {
+	public Point calculateShadowPoint(Light light, Vector d, Scene scene, Point p) {
 		return null;
 	}
 

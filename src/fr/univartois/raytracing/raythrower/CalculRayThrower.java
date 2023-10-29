@@ -8,12 +8,14 @@ package fr.univartois.raytracing.raythrower;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.univartois.raytracing.Scene;
 import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
+import fr.univartois.raytracing.lights.Light;
 import fr.univartois.raytracing.lights.reflect.ReflectedLight;
 import fr.univartois.raytracing.lights.strategy.IStrategyLight;
 import fr.univartois.raytracing.lights.strategy.NormalLighting;
@@ -142,7 +144,7 @@ public class CalculRayThrower {
      * @return The color determined by ray tracing.
      */
     public static fr.univartois.raytracing.digital.triples.Color objectIterator(Scene scene, Vector d,IStrategyLight model) {
-        List<IObjectStage> objects = scene.getShapes();
+    	List<IObjectStage> objects = scene.getShapes();
         double min = -1;
         ShadowStrategy shadow;
         if (scene.getShadow()) {
@@ -158,30 +160,35 @@ public class CalculRayThrower {
         for (int y = 0; y < objects.size(); y++) {
            IObjectStage object = objects.get(y);
            double t = object.calculateT(scene.getLookFrom(), d);
-                Point p = null;
-                if(t > -1) {
-                    p = d.multiplication(t).add(scene.getLookFrom());
-                }
-                if(p != null && (min == -1 || min > t)) {
-                    min = t;
-                    ReflectedLight rf = new ReflectedLight(model,scene.getMaxDepth());
-                    colorMin = rf.calculateColor(object, d, p);
+           Point p = null;
+           if(t > -1) {
+                p = d.multiplication(t).add(scene.getLookFrom());
+            }
+            if(p != null && (min == -1 || min > t)) {
+            	min = t;
                 
-	                Point shadowPoint;
-	                
-	                for (int j=0; j<scene.getLights().size(); j++) {
-	                     if (scene.getLights().get(j).transformLocalLight() != null) {
-	                     	shadowPoint = shadow.calculateShadowPoint(scene.getLights().get(j).transformLocalLight(),p.substraction(scene.getLights().get(j).transformLocalLight().getPoint()).standardization(),scene);
-	 
-	                     	if(shadowPoint != null && (min == -1 || min > t)) {
-	                     		min = t;
-	                     		colorMin = model.calculateColor(object,d,shadowPoint);
-	                     	}
-	                     }
-	                }
+                List<Light> listLights = new ArrayList<>();
+                for (int j=0; j<scene.getLights().size(); j++) {
+                	
+                	Light light = scene.getLights().get(j);
+                    Point shadowPoint = null;
+                    
+                    shadowPoint = shadow.calculateShadowPoint(light,light.getLdir(p),scene, p);
+                    
+                    if(shadowPoint == null) {
+                    	listLights.add(light);
+                    }
                 }
+                ReflectedLight rf = new ReflectedLight(model,scene.getMaxDepth());
+                colorMin = rf.calculateColor(object, d, p, listLights);
+            }
+            
 
         }
+        
+        
+          
+    	
         return colorMin;
     }
     

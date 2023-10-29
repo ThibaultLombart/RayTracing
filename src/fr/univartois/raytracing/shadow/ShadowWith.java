@@ -1,8 +1,7 @@
 /**
- * Ce fichier fait partie du projet SAE RayTracing.
+ * Project SAE RayTracing.
  *
  * (c) 2023 thibault.lombart
- * Tous droits réservés.
  */
 
 package fr.univartois.raytracing.shadow;
@@ -12,11 +11,12 @@ import java.util.List;
 import fr.univartois.raytracing.Scene;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
+import fr.univartois.raytracing.lights.Light;
 import fr.univartois.raytracing.lights.LocalLight;
 import fr.univartois.raytracing.objects.IObjectStage;
 
 /**
- * Le type ShadowWith
+ * Class ShadowWith
  *
  * @author thibault.lombart
  *
@@ -24,17 +24,19 @@ import fr.univartois.raytracing.objects.IObjectStage;
  */
 public class ShadowWith implements ShadowStrategy {
 
-	public Point calculateShadowPoint(LocalLight light, Vector d, Scene scene) {
-		Point p = null;
+	public Point calculateShadowPoint(Light light, Vector d, Scene scene, Point p) {
+		Point pPrime = null;
 		double t;
 		List<IObjectStage> objects = scene.getShapes();
 		for (int i = 0; i < objects.size() ; i++) {
-			t = objects.get(i).calculateT(light.getPoint(), d);
-	        if(t == -1) {
-	            p = d.multiplication(t).add(light.getPoint());
+			t = objects.get(i).calculateT(p, d);
+			double e = Math.pow(10, -2);
+	        if(t > e) {
+	        	pPrime = d.multiplication(t).add(p);
 	        }
 		}
-		return p;
+		
+		return pPrime;
 	}
 }
 
