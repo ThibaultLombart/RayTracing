@@ -142,7 +142,7 @@ public class CalculRayThrower {
      * @return The color determined by ray tracing.
      */
     public static fr.univartois.raytracing.digital.triples.Color objectIterator(Scene scene, Vector d,IStrategyLight model) {
-        List<IObjectStage> objects = scene.getShapes();
+    	List<IObjectStage> objects = scene.getShapes();
         double min = -1;
         ShadowStrategy shadow;
         if (scene.getShadow()) {
@@ -163,25 +163,22 @@ public class CalculRayThrower {
                     p = d.multiplication(t).add(scene.getLookFrom());
                 }
                 if(p != null && (min == -1 || min > t)) {
-                    min = t;
-                    ReflectedLight rf = new ReflectedLight(model,scene.getMaxDepth());
-                    colorMin = rf.calculateColor(object, d, p);
-                
-	                Point shadowPoint;
-	                
+                	Point shadowPoint = null;
 	                for (int j=0; j<scene.getLights().size(); j++) {
 	                     if (scene.getLights().get(j).transformLocalLight() != null) {
 	                     	shadowPoint = shadow.calculateShadowPoint(scene.getLights().get(j).transformLocalLight(),p.substraction(scene.getLights().get(j).transformLocalLight().getPoint()).standardization(),scene);
 	 
-	                     	if(shadowPoint != null && (min == -1 || min > t)) {
+	                     	if(shadowPoint == null) {
 	                     		min = t;
-	                     		colorMin = model.calculateColor(object,d,shadowPoint);
+	                            ReflectedLight rf = new ReflectedLight(model,scene.getMaxDepth());
+	                            colorMin = rf.calculateColor(object, d, p);
 	                     	}
 	                     }
-	                }
+	                }           
                 }
 
-        }
+        	}
+    	
         return colorMin;
     }
     
