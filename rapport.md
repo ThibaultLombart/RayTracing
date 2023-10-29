@@ -3,7 +3,8 @@
 ## Répartition des tâches :
 
 Lombart Thibault :
-
+* Gestion des Gits Merges
+* Gestion des Tickets
 * #6 F2B - Créez les classes permettant de représenter les différents objets qui constituent une scène : les plans, les triangles, les sphères, etc.
 * #8 F2D - Quel patron de conception vous permet de créer progressivement une scène, en lui fournissant les éléments qui la constitue au fur et à mesure ? Implantez-le.
 * #10 F2F - Écrivez une classe principale définissant une méthode main qui récupère depuis la ligne de commande le nom du fichier décrivant la scène, puis lit ce fichier à l’aide du parser implanté à la question précédente.
