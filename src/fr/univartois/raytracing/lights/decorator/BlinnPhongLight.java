@@ -3,6 +3,7 @@ package fr.univartois.raytracing.lights.decorator;
 import java.util.List;
 
 import fr.univartois.raytracing.Scene;
+import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
@@ -44,7 +45,9 @@ public class BlinnPhongLight extends BlinnPhongLightingDecorator implements IStr
 
     	
         Color sommeColorLambert = super.calculateColor(shape, toLight, p, listLights);
-        Color sommeColorBlinnPhong = calculateBlinnPhong(shape, listLights.get(0),p, toLight);
+        Color sommeColorBlinnPhong = new Color(new Triplet(0,0,0));
+        if(!listLights.isEmpty())
+        	sommeColorBlinnPhong = calculateBlinnPhong(shape, listLights.get(0),p, toLight);
         Color sommeColor;
         for (int i = 1; i < listLights.size(); i++) {
             sommeColorBlinnPhong = sommeColorBlinnPhong.add(calculateBlinnPhong(shape, listLights.get(i),p,toLight));
