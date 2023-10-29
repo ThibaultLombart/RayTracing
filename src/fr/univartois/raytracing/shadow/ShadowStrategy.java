@@ -1,8 +1,7 @@
 /**
- * Ce fichier fait partie du projet SAE RayTracing.
+ * Project SAE RayTracing.
  *
  * (c) 2023 thibault.lombart
- * Tous droits réservés.
  */
 
 package fr.univartois.raytracing.shadow;
@@ -10,10 +9,11 @@ package fr.univartois.raytracing.shadow;
 import fr.univartois.raytracing.Scene;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
+import fr.univartois.raytracing.lights.Light;
 import fr.univartois.raytracing.lights.LocalLight;
 
 /**
- * Le type ShadowStrategy
+ * Interface ShadowStrategy
  *
  * @author thibault.lombart
  *
@@ -21,7 +21,7 @@ import fr.univartois.raytracing.lights.LocalLight;
  */
 public interface ShadowStrategy {
     
-    Point calculateShadowPoint(LocalLight light, Vector d, Scene scene);
+    Point calculateShadowPoint(Light light, Vector d, Scene scene, Point p);
 
 }
 

@@ -7,9 +7,12 @@
 
 package fr.univartois.raytracing.lights.strategy;
 
+import java.util.List;
+
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
+import fr.univartois.raytracing.lights.Light;
 import fr.univartois.raytracing.objects.IObjectStage;
 
 /**
@@ -21,7 +24,7 @@ import fr.univartois.raytracing.objects.IObjectStage;
  */
 public interface IStrategyLight {
     
-    Color calculateColor(IObjectStage shape, Vector toLight, Point p);
+    Color calculateColor(IObjectStage shape, Vector toLight, Point p,List<Light> listLights);
 
 }
 

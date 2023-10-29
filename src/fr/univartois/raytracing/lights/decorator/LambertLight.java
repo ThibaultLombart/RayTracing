@@ -7,9 +7,9 @@
 
 package fr.univartois.raytracing.lights.decorator;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
@@ -27,11 +27,9 @@ import fr.univartois.raytracing.objects.IObjectStage;
  */
 public class LambertLight extends LambertDecorator implements IStrategyLight{
     
-    List<Light> lights = new ArrayList<>();
     
-    public LambertLight(List<Light> lights, NormalLighting decorated) {
+    public LambertLight(NormalLighting decorated) {
         super(decorated);
-        this.lights = lights;
     }
     
     /**
@@ -53,14 +51,16 @@ public class LambertLight extends LambertDecorator implements IStrategyLight{
      * @see fr.univartois.raytracing.lights.decorator.IDecoratorLight#calculateColorDecorator(fr.univartois.raytracing.objects.IObjectStage, fr.univartois.raytracing.digital.triples.Vector, fr.univartois.raytracing.digital.triples.Point)
      */
     @Override
-    public Color calculateColor(IObjectStage shape, Vector toLight, Point p) {
-        Color la = super.calculateColor(shape, toLight, p);
+    public Color calculateColor(IObjectStage shape, Vector toLight, Point p,List<Light> listLights) {
+        Color la = super.calculateColor(shape, toLight, p, listLights);
         
+        Color sommeColor = new Color(new Triplet(0,0,0));
         
-        Color sommeColor = calculateLambert(shape, lights.get(0),p);
+        if(!listLights.isEmpty())
+        	sommeColor = calculateLambert(shape, listLights.get(0),p);
         
-        for (int i = 1; i < lights.size(); i++) {
-            sommeColor = sommeColor.add(calculateLambert(shape, lights.get(i),p));
+        for (int i = 1; i < listLights.size(); i++) {
+            sommeColor = sommeColor.add(calculateLambert(shape, listLights.get(i),p));
         }
         return sommeColor.schur(shape.getColor()).add(la);
     }

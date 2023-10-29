@@ -1,9 +1,12 @@
 package fr.univartois.raytracing.lights.reflect;
 
+import java.util.List;
+
 import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
+import fr.univartois.raytracing.lights.Light;
 import fr.univartois.raytracing.lights.decorator.IDecoratorLight;
 import fr.univartois.raytracing.lights.strategy.IStrategyLight;
 import fr.univartois.raytracing.objects.IObjectStage;
@@ -15,6 +18,7 @@ public class ReflectedLight implements IDecoratorLight{
 	
 	private Vector r;
 	private IObjectStage shape;
+	private List<Light> listLights;
 	
 	public ReflectedLight(IStrategyLight model, int maxDepth) {
 		this.model = model;
@@ -22,9 +26,10 @@ public class ReflectedLight implements IDecoratorLight{
 	}
 
 	@Override
-	public Color calculateColor(IObjectStage shape, Vector toLight, Point p) {
+	public Color calculateColor(IObjectStage shape, Vector toLight, Point p, List<Light> listLights) {
 		Vector n = shape.getN(p);
 		r = n.multiplication(2*n.scalarProduct(toLight.multiplication(-1))).add(toLight).standardization();
+		this.listLights = listLights;
 		
 		double t = shape.calculateT(p, r);
 		
@@ -38,7 +43,7 @@ public class ReflectedLight implements IDecoratorLight{
 			this.shape = shape;
 			return recursifColor(1,p,t);
 		} else {
-			return model.calculateColor(shape, toLight, p);
+			return model.calculateColor(shape, toLight, p,listLights);
 		}
 	}
 
@@ -47,7 +52,7 @@ public class ReflectedLight implements IDecoratorLight{
 			return new Color(new Triplet(0,0,0));
 		} else {
 			Point pPrime = r.multiplication(t).add(p);
-			return shape.getSpecular().schur(recursifColor(depth+1,pPrime,t)).add(model.calculateColor(shape, r, p));
+			return shape.getSpecular().schur(recursifColor(depth+1,pPrime,t)).add(model.calculateColor(shape, r, p,listLights));
 		}
 	}
 

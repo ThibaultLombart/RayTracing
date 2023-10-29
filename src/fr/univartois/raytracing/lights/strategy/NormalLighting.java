@@ -7,10 +7,13 @@
 
 package fr.univartois.raytracing.lights.strategy;
 
+import java.util.List;
+
 import fr.univartois.raytracing.Scene;
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
+import fr.univartois.raytracing.lights.Light;
 import fr.univartois.raytracing.lights.decorator.BlinnPhongLight;
 import fr.univartois.raytracing.lights.decorator.IDecoratorLight;
 import fr.univartois.raytracing.objects.IObjectStage;
@@ -39,10 +42,10 @@ public class NormalLighting implements IStrategyLight,IDecoratorLight{
         if(scene.getModel().equals("Normal")) {
             strategy = this;
         } else if (scene.getModel().equals("Lambert")){
-            strategy = new LambertLight(scene.getLights(),this);
+            strategy = new LambertLight(this);
         } else if (scene.getModel().equals("Blinn")) {
-            LambertLight stratLambert = new LambertLight(scene.getLights(),this);
-            strategy = new BlinnPhongLight(scene.getLights(), scene, stratLambert);
+            LambertLight stratLambert = new LambertLight(this);
+            strategy = new BlinnPhongLight(scene, stratLambert);
         }
         return strategy;
     }
@@ -54,7 +57,7 @@ public class NormalLighting implements IStrategyLight,IDecoratorLight{
      * @see fr.univartois.raytracing.lights.decorator.IDecoratorLight#calculateColorDecorator(fr.univartois.raytracing.objects.IObjectStage, fr.univartois.raytracing.digital.triples.Vector, fr.univartois.raytracing.digital.triples.Point)
      */
     @Override
-    public Color calculateColor(IObjectStage shape, Vector toLight, Point p) {
+    public Color calculateColor(IObjectStage shape, Vector toLight, Point p,List<Light> listLights) {
         return scene.getAmbient();
     }
 
