@@ -2,6 +2,7 @@ package fr.univartois.raytracing.lights.reflect;
 
 import java.util.List;
 
+import fr.univartois.raytracing.Scene;
 import fr.univartois.raytracing.Triplet;
 import fr.univartois.raytracing.digital.triples.Color;
 import fr.univartois.raytracing.digital.triples.Point;
@@ -19,10 +20,12 @@ public class ReflectedLight implements IDecoratorLight{
 	private Vector r;
 	private IObjectStage shape;
 	private List<Light> listLights;
+	private Scene scene;
 	
-	public ReflectedLight(IStrategyLight model, int maxDepth) {
+	public ReflectedLight(IStrategyLight model, int maxDepth,Scene scene) {
 		this.model = model;
 		this.maxDepth = maxDepth;
+		this.scene = scene;
 	}
 
 	@Override
@@ -51,8 +54,33 @@ public class ReflectedLight implements IDecoratorLight{
 		if(depth >= maxDepth) {
 			return new Color(new Triplet(0,0,0));
 		} else {
-			Point pPrime = r.multiplication(t).add(p);
-			return shape.getSpecular().schur(recursifColor(depth+1,pPrime,t)).add(model.calculateColor(shape, r, p,listLights));
+			List<IObjectStage> objects = scene.getShapes();
+			double min = -1;
+			double tPrime;
+			IObjectStage minObject = null;
+			for (int y = 0; y < objects.size(); y++) {
+				IObjectStage object = objects.get(y);
+				tPrime = object.calculateT(p, r);
+				double e = Math.pow(10, -2);
+				if(tPrime > e && (min == -1 || min > tPrime)) {
+					min = tPrime;
+					minObject = object;
+				}
+				
+			}
+			if(minObject != null) {
+				this.shape = minObject;
+				tPrime = min;
+				
+				Point pPrime = r.multiplication(tPrime).add(p);
+				Vector nPrime = shape.getN(pPrime);
+				Vector rBefore = this.r;
+				this.r = nPrime.multiplication(2*nPrime.scalarProduct(r.multiplication(-1))).add(r).standardization();
+				return shape.getSpecular().schur(recursifColor(depth+1,pPrime,tPrime)).add(model.calculateColor(shape, rBefore, p,listLights));
+			} else {
+				return new Color(new Triplet(0,0,0));
+			}
+			
 		}
 	}
 
