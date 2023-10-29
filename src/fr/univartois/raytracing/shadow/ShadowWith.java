@@ -12,7 +12,6 @@ import fr.univartois.raytracing.Scene;
 import fr.univartois.raytracing.digital.triples.Point;
 import fr.univartois.raytracing.digital.triples.Vector;
 import fr.univartois.raytracing.lights.Light;
-import fr.univartois.raytracing.lights.LocalLight;
 import fr.univartois.raytracing.objects.IObjectStage;
 
 /**

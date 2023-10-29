@@ -97,7 +97,7 @@ public class ReflectedLight implements IDecoratorLight{
                     }
                 }
 				
-                // CALCULATIONS
+                // CALCULATIONS 
 				Point pPrime = r.multiplication(tPrime).add(p);
 				Vector nPrime = shape.getN(pPrime);
 				Vector rBefore = this.r;
